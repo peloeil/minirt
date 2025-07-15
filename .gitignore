@@ -1,0 +1,15 @@
+/miniRT
+.vscode/
+log/
+*tmp*
+*.DS_Store
+*.code-workspace
+*.out
+*.o
+*.a
+*.exe
+*.log
+*.json
+*.dSYM
+.cache
+compile_commands.json
