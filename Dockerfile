@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ベースイメージ
-FROM debian:bookworm-slim AS base
+FROM ubuntu:22.04 AS base
 WORKDIR /src
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
