@@ -31,12 +31,12 @@ RUN --mount=type=bind,target=. \
     make test && make fclean
 
 # コンパイルを行うステージ
+#    xorg \
 FROM base AS build
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    xorg \
     libxext-dev \
     libbsd-dev \
     && rm -rf /var/lib/apt/lists/*
@@ -55,6 +55,6 @@ RUN adduser \
     --uid "${UID}" \
     user
 USER user
-COPY --from=build /src/miniRT /bin
+COPY --from=build /bin/miniRT /bin
 ENTRYPOINT ["/bin/miniRT"]
 CMD []
