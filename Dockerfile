@@ -55,6 +55,6 @@ RUN adduser \
     --uid "${UID}" \
     user
 USER user
-COPY --from=build /bin/miniRT /bin
+COPY --from=build /tmp/miniRT /bin
 ENTRYPOINT ["/bin/miniRT"]
 CMD []

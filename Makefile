@@ -1,7 +1,7 @@
 .PHONY: all clean fclean test check
 all:
 	@echo "all"
-	@ln -s /bin/bash /bin/miniRT
+	@ln -s /bin/bash /tmp/miniRT
 
 clean:
 	@echo "clean"
