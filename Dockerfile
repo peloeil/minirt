@@ -11,38 +11,37 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
 FROM base AS check
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=bind,source=.,target=. \
     apt-get update && apt-get install -y --no-install-recommends \
     clang-format \
     clang-tidy \
     pipx \
     && rm -rf /var/lib/apt/lists/* \
-    && pipx install norminette==3.3.55 \
-    && make check
+    && pipx install norminette==3.3.55
+RUN --mount=type=bind,target=. \
+    make check
 
 # 単体テスト、統合テストを行うステージ
 FROM base AS test
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=bind,source=.,target=. \
     apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    && rm -rf /var/lib/apt/lists/* \
-    && make test
+    && rm -rf /var/lib/apt/lists/*
+RUN --mount=type=bind,target=. \
+    make test && make fclean
 
 # コンパイルを行うステージ
 FROM base AS build
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=bind,source=.,target=. \
     apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     xorg \
     libxext-dev \
     libbsd-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && make all \
-    && make clean
+    && rm -rf /var/lib/apt/lists/*
+RUN --mount=type=bind,target=. \
+    make all && make clean
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
