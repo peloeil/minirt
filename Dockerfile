@@ -5,7 +5,9 @@ FROM ubuntu:22.04 AS base
 WORKDIR /src
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends make
+    apt-get update && apt-get install -y --no-install-recommends \
+    make \
+    && rm -rf /var/lib/apt/lists/*
 
 # 静的解析などを行うステージ
 FROM base AS check
