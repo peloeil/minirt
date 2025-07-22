@@ -15,8 +15,9 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     clang-format \
     clang-tidy \
     pipx \
-    && rm -rf /var/lib/apt/lists/* \
-    && pipx install norminette==3.3.55
+    && rm -rf /var/lib/apt/lists/*
+RUN pipx install norminette==3.3.55
+RUN echo 'export PATH="/root/.local/bin:$PATH"' > /root/.bashrc
 RUN --mount=type=bind,target=. \
     make check
 
