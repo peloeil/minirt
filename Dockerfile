@@ -21,16 +21,6 @@ RUN echo 'export PATH="/root/.local/bin:$PATH"' > /root/.bashrc
 RUN --mount=type=bind,target=. \
     make check
 
-# 単体テスト、統合テストを行うステージ
-FROM base AS test
-RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-RUN --mount=type=bind,target=. \
-    make test && make fclean
-
 # コンパイルを行うステージ
 #    xorg \
 FROM base AS build
@@ -43,6 +33,18 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     && rm -rf /var/lib/apt/lists/*
 RUN --mount=type=bind,target=. \
     make all && make clean
+
+# 単体テスト、統合テストを行うステージ
+FROM base AS test
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=build /tmp/miniRT /tmp
+RUN --mount=type=bind,target=. \
+    make test \
+    && rm /tmp/miniRT
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
