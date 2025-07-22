@@ -1,34 +1,61 @@
 # syntax=docker/dockerfile:1
 
 # ベースイメージ
-FROM --platform=linux/amd64 debian:bookwarm AS base
-
+FROM debian:bookworm-slim AS base
+WORKDIR /src
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get update && apt-get install -y --no-install-recommends make
 
-# formatter, norm のチェックを行うステージ
+# 静的解析などを行うステージ
 FROM base AS check
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=bind,source=.,target=. \
+    apt-get update && apt-get install -y --no-install-recommends \
+    clang-format \
+    clang-tidy \
+    pipx \
+    && rm -rf /var/lib/apt/lists/* \
+    && pipx install norminette==3.3.55 \
+    && make check
+
+# 単体テスト、統合テストを行うステージ
+FROM base AS test
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=bind,source=.,target=. \
+    apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/* \
+    && make test
 
 # コンパイルを行うステージ
 FROM base AS build
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=bind,source=.,target=. \
+    apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    xorg \
+    libxext-dev \
+    libbsd-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && make all \
+    && make clean
 
 # 実行を行うステージ
-FROM --platform=linux/amd64 ubuntu:22.04 AS final
-
+FROM ubuntu:22.04 AS final
+ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home "/user" \
+    --home "/nonexistent" \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \
     user
 USER user
-WORKDIR /user
-COPY --from=build /minirt/miniRT /user/miniRT
-ENTRYPOINT ["/user/miniRT"]
+COPY --from=build /src/miniRT /bin
+ENTRYPOINT ["/bin/miniRT"]
 CMD []
