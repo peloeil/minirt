@@ -1,5 +1,8 @@
 NAME := miniRT
-OUT_DIR := /tmp
+OUT_DIR := .
+ifneq ($(shell echo -n $$IN_DOCKER),)
+	OUT_DIR := /tmp
+endif
 
 .PHONY: all clean fclean test check
 all:

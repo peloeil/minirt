@@ -20,6 +20,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     && rm -rf /var/lib/apt/lists/*
 RUN pipx install norminette==3.3.55
 ENV PATH="/root/.local/bin:$PATH"
+ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make check
 
@@ -33,6 +34,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     && rm -rf /var/lib/apt/lists/*
+ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make all && make clean
 
@@ -44,6 +46,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /tmp/miniRT /tmp
+ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make test \
     && rm /tmp/miniRT
