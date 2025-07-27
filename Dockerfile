@@ -25,14 +25,14 @@ RUN --mount=type=bind,target=. \
     make check
 
 # コンパイルを行うステージ
-#    xorg \
 FROM base AS build
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
+    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     build-essential \
     libxext-dev \
     libbsd-dev \
+    xorg \
     && rm -rf /var/lib/apt/lists/*
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
