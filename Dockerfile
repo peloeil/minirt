@@ -51,6 +51,24 @@ RUN --mount=type=bind,target=. \
     make test \
     && rm /tmp/miniRT
 
+# 開発用コンテナイメージをビルドするステージ
+FROM base as dev
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update && apt-get DEBIAN_FRONTEND=noninteractive install -y --no-install-recommends \
+    clang-format \
+    clang-tidy \
+    pipx \
+    build-essential \
+    libxext-dev \
+    libbsd-dev \
+    xorg \
+    && rm -rf /var/lib/apt/lists/*
+RUN pipx install norminette=3.3.55
+ENV PATH="/root/.local/bin:$PATH"
+WORKDIR /miniRT
+COPY . /miniRT
+
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
 ARG UID=10001
