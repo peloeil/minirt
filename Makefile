@@ -15,7 +15,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 )
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 INC := $(addprefix $(INC_DIR)/, \
-	$(addprefix $(NAME)/, \
+	$(addprefix minirt/, \
 		minirt.h \
 	) \
 )
@@ -29,6 +29,7 @@ INCFLAGS := $(addprefix -I, \
 )
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
