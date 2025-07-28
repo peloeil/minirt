@@ -66,8 +66,6 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     && rm -rf /var/lib/apt/lists/*
 RUN pipx install norminette==3.3.55
 ENV PATH="/root/.local/bin:$PATH"
-WORKDIR /miniRT
-COPY . /miniRT
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
