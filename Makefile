@@ -38,10 +38,6 @@ $(NAME): $(OBJ)
 # 必須ルール
 .PHONY: all clean fclean re
 all: $(NAME)
-	@echo "all"
-	@echo "#!/usr/bin/env bash" > $(OUT_DIR)/miniRT
-	@echo "echo hello" >> $(OUT_DIR)/miniRT
-	@chmod +x $(OUT_DIR)/miniRT
 
 clean:
 	$(RM) -r $(OBJ_DIR)
