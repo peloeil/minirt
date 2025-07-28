@@ -1,5 +1,3 @@
-NAME := miniRT
-
 # ディレクトリ設定
 OUT_DIR := .
 ifneq ($(shell echo -n $$IN_DOCKER),)
@@ -10,6 +8,7 @@ SRC_DIR := ./src
 INC_DIR := ./include
 
 # ファイル
+NAME := $(OUT_DIR)/miniRT
 SRC := $(addprefix $(SRC_DIR)/, \
 	main.c \
 )
