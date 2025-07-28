@@ -52,10 +52,10 @@ RUN --mount=type=bind,target=. \
     && rm /tmp/miniRT
 
 # 開発用コンテナイメージをビルドするステージ
-FROM base as dev
+FROM base AS dev
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get DEBIAN_FRONTEND=noninteractive install -y --no-install-recommends \
+    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     clang-format \
     clang-tidy \
     pipx \
@@ -64,7 +64,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libbsd-dev \
     xorg \
     && rm -rf /var/lib/apt/lists/*
-RUN pipx install norminette=3.3.55
+RUN pipx install norminette==3.3.55
 ENV PATH="/root/.local/bin:$PATH"
 WORKDIR /miniRT
 COPY . /miniRT
