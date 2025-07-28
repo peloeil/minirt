@@ -65,3 +65,45 @@ test:
 
 check:
 	@echo "check"
+
+# docker 関連ルール
+docker-check:
+	@docker image build --tag minirt-check --target check .
+	@docker container run \
+		--rm \
+		--interactive \
+		--tty \
+		minirt-check
+
+docker-build:
+	@docker image build --tag minirt-build --target build .
+	@docker container run \
+		--rm \
+		--interactive \
+		--tty \
+		minirt-build
+
+docker-test:
+	@docker image build --tag minirt-test --target test .
+	@docker container run \
+		--rm \
+		--interactive \
+		--tty \
+		minirt-test
+
+docker-dev:
+	@docker image build --tag minirt-dev --target dev .
+	@docker container run \
+		--rm \
+		--interactive \
+		--tty \
+		--mount type=bind,source=.,target=/src \
+		minirt-dev \
+
+docker-run:
+	@docker image build --tag minirt --target final .
+	@docker container run \
+		--rm \
+		--interactive \
+		--tty \
+		minirt
