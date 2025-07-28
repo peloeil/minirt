@@ -8,14 +8,15 @@ GREEN := $(ESC)[32m
 CYAN := $(ESC)[36m
 
 # ディレクトリ設定
-OBJ_DIR := ./obj
+OUT_DIR := .
+OBJ_DIR := $(OUT_DIR)/obj
 SRC_DIR := ./src
 INC_DIR := ./include
 TEST_DIR := ./test
 
 # ファイル
 LIBRARY := libft
-NAME := $(LIBRARY).a
+NAME := $(OUT_DIR)/$(LIBRARY).a
 SRC := $(addprefix $(SRC_DIR)/, \
 	$(addprefix ctype/, \
 		isalnum.c \

@@ -1,11 +1,12 @@
 # ディレクトリ設定
-OUT_DIR := .
+OUT_DIR := $(shell pwd)
 ifneq ($(shell echo -n $$IN_DOCKER),)
-	OUT_DIR := /tmp
+	OUT_DIR := /tmp/miniRT
 endif
 OBJ_DIR := $(OUT_DIR)/obj
 SRC_DIR := ./src
 INC_DIR := ./include
+LIBFT_DIR := ./libft
 
 # ファイル
 NAME := $(OUT_DIR)/miniRT
@@ -20,8 +21,7 @@ INC := $(addprefix $(INC_DIR)/, \
 )
 
 # ライブラリ
-LIBFT_DIR := ./libft
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT = $(OUT_DIR)/libft/libft.a
 
 # コンパイル方法
 .DEFAULT_GOAL := all
@@ -41,18 +41,18 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-	make --directory=$(LIBFT_DIR) --no-print-directory all
+	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
 
 # 必須ルール
 .PHONY: all clean fclean re
 all: $(NAME)
 
 clean:
-	make --directory=$(LIBFT_DIR) --no-print-directory clean
+	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
 	$(RM) -r $(OBJ_DIR)
 
 fclean:
-	make --directory=$(LIBFT_DIR) --no-print-directory fclean
+	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
 	$(RM) -r $(OBJ_DIR)
 	$(RM) $(NAME)
 
