@@ -78,16 +78,6 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext6 \
     libbsd0 \
     && rm -rf /var/lib/apt/lists/*
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    user
-USER user
 COPY --from=build /tmp/miniRT /bin
 ENTRYPOINT ["/bin/miniRT"]
 CMD []

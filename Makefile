@@ -119,4 +119,7 @@ docker-run:
 		--rm \
 		--interactive \
 		--tty \
+		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
+		--mount type=bind,source=$$HOME/.Xauthority,target=/root/.Xauthority \
+		--env DISPLAY=$$DISPLAY \
 		minirt
