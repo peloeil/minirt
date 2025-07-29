@@ -65,12 +65,19 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     xorg \
+    git \
     && rm -rf /var/lib/apt/lists/*
 RUN pipx install norminette==3.3.55
 ENV PATH="/root/.local/bin:$PATH"
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+    libxext6 \
+    libbsd0 \
+    && rm -rf /var/lib/apt/lists/*
 ARG UID=10001
 RUN adduser \
     --disabled-password \
