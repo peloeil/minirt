@@ -13,3 +13,4 @@ log/
 *.dSYM
 .cache
 compile_commands.json
+mlx_linux/

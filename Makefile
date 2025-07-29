@@ -7,6 +7,7 @@ OBJ_DIR := $(OUT_DIR)/obj
 SRC_DIR := ./src
 INC_DIR := ./include
 LIBFT_DIR := ./libft
+MLX_DIR := $(OUT_DIR)/mlx_linux
 
 # ファイル
 NAME := $(OUT_DIR)/miniRT
@@ -21,13 +22,16 @@ INC := $(addprefix $(INC_DIR)/, \
 )
 
 # ライブラリ
-LIBFT = $(OUT_DIR)/libft/libft.a
+LIBFT := $(OUT_DIR)/libft/libft.a
+MLX := $(OUT_DIR)/mlx_linux/libmlx_Linux.a
+LIBS := $(LIBFT) $(MLX)
 
 # コンパイル方法
 .DEFAULT_GOAL := all
 CC := gcc
 # CC := cc
 CFLAGS := -Wall -Wextra -Werror -ggdb3
+MLXFLAGS := -lXext -lX11 -lm
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
 	$(LIBFT_DIR)/$(INC_DIR) \
@@ -37,24 +41,32 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+$(NAME): $(OBJ) $(LIBS)
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
-	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
+
+$(MLX): | $(MLX_DIR)
+	$(MAKE) --directory=$(MLX_DIR) --no-print-directory all
+
+$(MLX_DIR):
+	git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
 
 # 必須ルール
 .PHONY: all clean fclean re
 all: $(NAME)
 
 clean:
-	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
 	$(RM) -r $(OBJ_DIR)
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
+	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 fclean:
-	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
 	$(RM) -r $(OBJ_DIR)
 	$(RM) $(NAME)
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
+	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 re: fclean all
 
