@@ -33,6 +33,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     xorg \
+    git \
     && rm -rf /var/lib/apt/lists/*
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
@@ -44,6 +45,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    git \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /tmp/miniRT /tmp
 ARG IN_DOCKER=yes
