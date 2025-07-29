@@ -45,10 +45,10 @@ $(NAME): $(OBJ) $(LIBS)
 	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
-	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
 
 $(MLX): | $(MLX_DIR)
-	make --directory=$(MLX_DIR) --no-print-directory all
+	$(MAKE) --directory=$(MLX_DIR) --no-print-directory all
 
 $(MLX_DIR):
 	git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
@@ -59,14 +59,14 @@ all: $(NAME)
 
 clean:
 	$(RM) -r $(OBJ_DIR)
-	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
-	make --directory=$(MLX_DIR) --no-print-directory clean
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
+	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 fclean:
 	$(RM) -r $(OBJ_DIR)
 	$(RM) $(NAME)
-	make --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
-	make --directory=$(MLX_DIR) --no-print-directory clean
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
+	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 re: fclean all
 
