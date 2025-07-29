@@ -22,7 +22,7 @@ INC := $(addprefix $(INC_DIR)/, \
 )
 
 # ライブラリ
-LIBFT = $(OUT_DIR)/libft/libft.a
+LIBFT := $(OUT_DIR)/libft/libft.a
 MLX := $(OUT_DIR)/mlx_linux/libmlx_Linux.a
 LIBS := $(LIBFT) $(MLX)
 
