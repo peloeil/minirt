@@ -111,7 +111,11 @@ docker-dev:
 		--interactive \
 		--tty \
 		--mount type=bind,source=.,target=/src \
-		minirt-dev \
+		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
+		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
+		--mount type=bind,source=$$HOME/.gitconfig,target=$$HOME/.gitconfig \
+		--user $(shell id -u) \
+		minirt-dev
 
 docker-run:
 	@docker image build --tag minirt --target final .
