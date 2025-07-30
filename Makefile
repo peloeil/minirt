@@ -117,7 +117,7 @@ docker-dev:
 		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
 		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
 		--env DISPLAY=$$DISPLAY \
-		--user $(shell id -u) \
+		--user $(shell id -u):$(shell id -g) \
 		minirt-dev
 
 docker-run:
@@ -131,5 +131,5 @@ docker-run:
 		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
 		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
 		--env DISPLAY=$$DISPLAY \
-		--user $(shell id -u) \
+		--user $(shell id -u):$(shell id -g) \
 		minirt
