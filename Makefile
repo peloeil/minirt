@@ -80,6 +80,7 @@ check:
 	@echo "check"
 
 # docker 関連ルール
+.PHONY: docker-check docker-build docker-test docker-dev docker-run
 docker-check:
 	@docker image build --tag minirt-check --target check .
 	@docker container run \
