@@ -18,8 +18,9 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     clang-tidy \
     pipx \
     && rm -rf /var/lib/apt/lists/*
+ARG PIPX_HOME=/opt/pipx
+ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install norminette==3.3.55
-ENV PATH="/root/.local/bin:$PATH"
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make check
@@ -67,8 +68,9 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     xorg \
     git \
     && rm -rf /var/lib/apt/lists/*
+ARG PIPX_HOME=/opt/pipx
+ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install norminette==3.3.55
-ENV PATH="/root/.local/bin:$PATH"
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
