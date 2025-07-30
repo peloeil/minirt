@@ -23,26 +23,27 @@ INC := $(addprefix $(INC_DIR)/, \
 
 # ライブラリ
 LIBFT := $(OUT_DIR)/libft/libft.a
-MLX := $(OUT_DIR)/mlx_linux/libmlx_Linux.a
-LIBS := $(LIBFT) $(MLX)
+MLX := $(MLX_DIR)/libmlx_Linux.a
+LIB := $(LIBFT) $(MLX)
 
 # コンパイル方法
 .DEFAULT_GOAL := all
 CC := gcc
 # CC := cc
 CFLAGS := -Wall -Wextra -Werror -ggdb3
-MLXFLAGS := -lXext -lX11 -lm
+MLXFLAGS := -lX11 -lXext -lm
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
 	$(LIBFT_DIR)/$(INC_DIR) \
+	$(MLX_DIR) \
 )
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ) $(LIBS)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJ) $(LIBS) -o $(NAME)
+$(NAME): $(LIB) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLXFLAGS) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
@@ -118,4 +119,7 @@ docker-run:
 		--rm \
 		--interactive \
 		--tty \
+		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
+		--mount type=bind,source=$$HOME/.Xauthority,target=/root/.Xauthority \
+		--env DISPLAY=$$DISPLAY \
 		minirt

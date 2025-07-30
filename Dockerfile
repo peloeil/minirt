@@ -33,6 +33,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     xorg \
+    git \
     && rm -rf /var/lib/apt/lists/*
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
@@ -44,6 +45,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    git \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /tmp/miniRT /tmp
 ARG IN_DOCKER=yes
@@ -63,22 +65,19 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     xorg \
+    git \
     && rm -rf /var/lib/apt/lists/*
 RUN pipx install norminette==3.3.55
 ENV PATH="/root/.local/bin:$PATH"
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    user
-USER user
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+    libxext6 \
+    libbsd0 \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=build /tmp/miniRT /bin
 ENTRYPOINT ["/bin/miniRT"]
 CMD []
