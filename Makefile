@@ -80,6 +80,7 @@ check:
 	@echo "check"
 
 # docker 関連ルール
+.PHONY: docker-check docker-build docker-test docker-dev docker-run
 docker-check:
 	@docker image build --tag minirt-check --target check .
 	@docker container run \
@@ -111,7 +112,14 @@ docker-dev:
 		--interactive \
 		--tty \
 		--mount type=bind,source=.,target=/src \
-		minirt-dev \
+		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
+		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
+		--mount type=bind,source=$$HOME/.gitconfig,target=$$HOME/.gitconfig \
+		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
+		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
+		--env DISPLAY=$$DISPLAY \
+		--user $(shell id -u):$(shell id -g) \
+		minirt-dev
 
 docker-run:
 	@docker image build --tag minirt --target final .
@@ -119,7 +127,10 @@ docker-run:
 		--rm \
 		--interactive \
 		--tty \
+		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
+		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
 		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
-		--mount type=bind,source=$$HOME/.Xauthority,target=/root/.Xauthority \
+		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
 		--env DISPLAY=$$DISPLAY \
+		--user $(shell id -u):$(shell id -g) \
 		minirt
