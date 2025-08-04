@@ -35,7 +35,10 @@ t_vec3	vec3_norm(t_vec3 v)
 {
 	const double	v_abs = vec3_abs(v);
 
-	return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs, 0});
+	if (v_abs == 0.0)
+		return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs, 0});
+	else
+		return ((t_vec3){0, 0, 0, 0});
 }
 
 double	vec3_rad(t_vec3 v1, t_vec3 v2)
@@ -43,7 +46,8 @@ double	vec3_rad(t_vec3 v1, t_vec3 v2)
 	const double	v1_abs = vec3_abs(v1);
 	const double	v2_abs = vec3_abs(v2);
 	const double	v_dot_prod = vec3_dot_prod(v1, v2);
-	const double	cos = v_dot_prod / (v1_abs * v2_abs);
 
-	return (acos(cos));
+	if (v1_abs == 0.0 || v2_abs == 0.0)
+		return (0.0);
+	return (acos(v_dot_prod / (v1_abs * v2_abs)));
 }
