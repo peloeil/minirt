@@ -19,7 +19,10 @@ t_vec3	vec3_init(double x, double y, double z, int color)
 
 bool	vec3_eq(t_vec3 v1, t_vec3 v2)
 {
-	if (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z)
+	if (
+		fabs(v1.x - v2.x) < EPSILON &&
+		fabs(v1.y - v2.y) < EPSILON &&
+		fabs(v1.z - v2.z) < EPSILON)
 		return (true);
 	return (false);
 }
