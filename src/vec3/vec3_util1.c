@@ -41,7 +41,7 @@ t_vec3	vec3_sub(t_vec3 v1_from, t_vec3 v2_offset)
 		0});
 }
 
-t_vec3	vec3_mult(t_vec3 v, double scalar)
+t_vec3	vec3_mult(double scalar, t_vec3 v)
 {
-	return ((t_vec3){v.x * scalar, v.y * scalar, v.z * scalar, v.color});
+	return ((t_vec3){scalar * v.x, scalar * v.y, scalar * v.z, v.color});
 }
