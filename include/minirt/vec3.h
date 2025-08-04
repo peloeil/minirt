@@ -26,17 +26,17 @@ typedef struct s_vec3
 }	t_vec3;
 
 // vec3_util1.c
-t_vec3	vec3_init(double x, double y, double z, int color);
-bool	vec3_eq(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_sub(t_vec3 v1_from, t_vec3 v2_offset);
-t_vec3	vec3_mult(t_vec3 v, double scalar);
+t_vec3	vec3_init(const double x, const double y, const double z, const int color);
+bool	vec3_eq(const t_vec3 v1, const t_vec3 v2);
+t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
+t_vec3	vec3_sub(const t_vec3 v1_from, const t_vec3 v2_offset);
+t_vec3	vec3_mult(const double scalar, const t_vec3 v);
 
 // vec3_util2.c
-double	vec3_abs(t_vec3 v);
-double	vec3_dot_prod(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_cross_prod(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_norm(t_vec3 v);
-double	vec3_rad(t_vec3 v1, t_vec3 v2);
+double	vec3_abs(const t_vec3 v);
+double	vec3_dot_prod(const t_vec3 v1, const t_vec3 v2);
+t_vec3	vec3_cross_prod(const t_vec3 v1, const t_vec3 v2);
+t_vec3	vec3_norm(const t_vec3 v);
+double	vec3_rad(const t_vec3 v1, const t_vec3 v2);
 
 #endif

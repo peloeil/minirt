@@ -12,12 +12,12 @@
 
 #include <minirt/vec3.h>
 
-t_vec3	vec3_init(double x, double y, double z, int color)
+t_vec3	vec3_init(const double x, const double y, const double z, const int color)
 {
 	return ((t_vec3){x, y, z, color});
 }
 
-bool	vec3_eq(t_vec3 v1, t_vec3 v2)
+bool	vec3_eq(const t_vec3 v1, const t_vec3 v2)
 {
 	if (
 		fabs(v1.x - v2.x) < EPSILON &&
@@ -27,12 +27,12 @@ bool	vec3_eq(t_vec3 v1, t_vec3 v2)
 	return (false);
 }
 
-t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
+t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 {
 	return ((t_vec3){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, 0});
 }
 
-t_vec3	vec3_sub(t_vec3 v1_from, t_vec3 v2_offset)
+t_vec3	vec3_sub(const t_vec3 v1_from, const t_vec3 v2_offset)
 {
 	return ((t_vec3){
 		v1_from.x - v2_offset.x,
@@ -41,7 +41,7 @@ t_vec3	vec3_sub(t_vec3 v1_from, t_vec3 v2_offset)
 		0});
 }
 
-t_vec3	vec3_mult(double scalar, t_vec3 v)
+t_vec3	vec3_mult(const double scalar, const t_vec3 v)
 {
 	return ((t_vec3){scalar * v.x, scalar * v.y, scalar * v.z, v.color});
 }

@@ -12,17 +12,17 @@
 
 #include <minirt/vec3.h>
 
-double	vec3_abs(t_vec3 v)
+double	vec3_abs(const t_vec3 v)
 {
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-double	vec3_dot_prod(t_vec3 v1, t_vec3 v2)
+double	vec3_dot_prod(const t_vec3 v1, const t_vec3 v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-t_vec3	vec3_cross_prod(t_vec3 v1, t_vec3 v2)
+t_vec3	vec3_cross_prod(const t_vec3 v1, const t_vec3 v2)
 {
 	return ((t_vec3){
 		v1.y * v2.z - v1.z * v2.y,
@@ -31,7 +31,7 @@ t_vec3	vec3_cross_prod(t_vec3 v1, t_vec3 v2)
 		0});
 }
 
-t_vec3	vec3_norm(t_vec3 v)
+t_vec3	vec3_norm(const t_vec3 v)
 {
 	const double	v_abs = vec3_abs(v);
 
@@ -41,7 +41,7 @@ t_vec3	vec3_norm(t_vec3 v)
 		return ((t_vec3){0, 0, 0, 0});
 }
 
-double	vec3_rad(t_vec3 v1, t_vec3 v2)
+double	vec3_rad(const t_vec3 v1, const t_vec3 v2)
 {
 	const double	v1_abs = vec3_abs(v1);
 	const double	v2_abs = vec3_abs(v2);
