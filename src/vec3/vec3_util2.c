@@ -19,7 +19,7 @@ double	vec3_abs(t_vec3 v)
 
 double	vec3_dot_prod(t_vec3 v1, t_vec3 v2)
 {
-	return (v1.x * v2.x + v2.y * v2.y);
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
 t_vec3	vec3_cross_prod(t_vec3 v1, t_vec3 v2)
