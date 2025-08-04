@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vec3.h>
+#include <minirt/vec3.h>
 
 double	vec3_abs(t_vec3 v)
 {
@@ -27,7 +27,8 @@ t_vec3	vec3_cross_prod(t_vec3 v1, t_vec3 v2)
 	return ((t_vec3){
 		v1.y * v2.z - v1.z * v2.y,
 		v1.z * v2.x - v1.x * v2.z,
-		v1.x * v2.y - v1.y * v2.x});
+		v1.x * v2.y - v1.y * v2.x,
+		0});
 }
 
 t_vec3	vec3_norm(t_vec3 v)

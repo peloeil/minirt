@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vec3.h>
+#include <minirt/vec3.h>
 
 t_vec3	vec3_init(double x, double y, double z, int color)
 {
