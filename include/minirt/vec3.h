@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef VEC3_H
+# define VEC3_H
 
 # include <stdbool.h>
 # include <math.h>
