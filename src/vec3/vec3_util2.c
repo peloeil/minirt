@@ -14,7 +14,7 @@
 
 double	vec3_abs(t_vec3 v)
 {
-	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
 double	vec3_dot_prod(t_vec3 v1, t_vec3 v2)
@@ -33,7 +33,7 @@ t_vec3	vec3_cross_prod(t_vec3 v1, t_vec3 v2)
 
 t_vec3	vec3_norm(t_vec3 v)
 {
-	const double v_abs = vec3_abs(v);
+	const double	v_abs = vec3_abs(v);
 
 	return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs, 0});
 }
