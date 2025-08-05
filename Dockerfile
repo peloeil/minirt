@@ -3,6 +3,7 @@
 # ベースイメージ
 FROM ubuntu:22.04 AS base
 WORKDIR /src
+ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -30,7 +31,7 @@ RUN --mount=type=bind,target=. \
 FROM base AS build
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libxext-dev \
     libbsd-dev \
@@ -59,7 +60,7 @@ RUN --mount=type=bind,target=. \
 FROM base AS dev
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    apt-get update && apt-get install -y --no-install-recommends \
     clang-format \
     clang-tidy \
     pipx \
