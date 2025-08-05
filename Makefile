@@ -143,3 +143,6 @@ check:
 norm:
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
 	norminette $(SRC) $(INC)
+
+format: $(SRC)
+	c_formatter_42 $(SRC)
