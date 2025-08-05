@@ -48,5 +48,5 @@ double	vec3_rad(const t_vec3 v1, const t_vec3 v2)
 
 	if (v1_abs == 0.0 || v2_abs == 0.0)
 		return (0.0);
-	return (acos(v_dot_prod / (v1_abs * v2_abs)));
+	return (acos(fmax(-1.0, fmin(v_dot_prod / (v1_abs * v2_abs), 1.0))));
 }
