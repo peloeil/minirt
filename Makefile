@@ -139,3 +139,7 @@ test:
 
 check:
 	@echo "check"
+
+norm:
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
+	norminette $(SRC) $(INC)
