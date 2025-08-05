@@ -14,8 +14,8 @@ NAME := $(OUT_DIR)/miniRT
 SRC := $(addprefix $(SRC_DIR)/, \
 	main.c \
 	$(addprefix vec3/, \
-		vec3/vec3_util1.c \
-		vec3/vec3_util2.c \
+		vec3_util1.c \
+		vec3_util2.c \
 	)
 )
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
