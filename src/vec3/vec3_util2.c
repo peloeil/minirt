@@ -36,9 +36,9 @@ t_vec3	vec3_norm(const t_vec3 v)
 	const double	v_abs = vec3_abs(v);
 
 	if (v_abs == 0.0)
-		return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs, 0});
-	else
 		return ((t_vec3){0, 0, 0, 0});
+	else
+		return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs, 0});
 }
 
 double	vec3_rad(const t_vec3 v1, const t_vec3 v2)
