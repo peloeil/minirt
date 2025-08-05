@@ -29,7 +29,7 @@ typedef struct s_vec3
 t_vec3	vec3_init(const double x, const double y, const double z, const int color);
 bool	vec3_eq(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
-t_vec3	vec3_sub(const t_vec3 v1_from, const t_vec3 v2_offset);
+t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_mult(const double scalar, const t_vec3 v);
 
 // vec3_util2.c

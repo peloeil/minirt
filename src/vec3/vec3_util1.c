@@ -30,13 +30,9 @@ t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 	return ((t_vec3){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, 0});
 }
 
-t_vec3	vec3_sub(const t_vec3 v1_from, const t_vec3 v2_offset)
+t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2)
 {
-	return ((t_vec3){
-		v1_from.x - v2_offset.x,
-		v1_from.y - v2_offset.y,
-		v1_from.z - v2_offset.z,
-		0});
+	return ((t_vec3){v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, 0});
 }
 
 t_vec3	vec3_mult(const double scalar, const t_vec3 v)
