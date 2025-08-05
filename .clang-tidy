@@ -1,0 +1,21 @@
+Checks: '
+  -*,
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  clang-diagnostic-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+
+  cppcoreguidelines-*,
+  -cppcoreguidelines-init-variables,
+
+  misc-*,
+  -misc-no-recursion,
+
+  readability-*,
+  -readability-avoid-const-params-in-decls,
+  -readability-braces-around-statements,
+  -readability-identifier-length,
+  '
