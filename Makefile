@@ -13,11 +13,16 @@ MLX_DIR := $(OUT_DIR)/mlx_linux
 NAME := $(OUT_DIR)/miniRT
 SRC := $(addprefix $(SRC_DIR)/, \
 	main.c \
+	$(addprefix vec3/, \
+		vec3_util1.c \
+		vec3_util2.c \
+	) \
 )
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		minirt.h \
+		vec3.h \
 	) \
 )
 
