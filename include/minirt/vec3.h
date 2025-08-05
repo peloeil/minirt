@@ -22,11 +22,16 @@ typedef struct s_vec3
 	double	x;
 	double	y;
 	double	z;
-	int		color;
 }	t_vec3;
 
+typedef struct s_point
+{
+	t_vec3	vector;
+	int		color;
+}	t_point;
+
 // vec3_util1.c
-t_vec3	vec3_init(const double x, const double y, const double z, const int color);
+t_vec3	vec3_init(const double x, const double y, const double z);
 bool	vec3_eq(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2);
