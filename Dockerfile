@@ -16,7 +16,6 @@ FROM base AS check
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
-    clang-format \
     clang-tidy \
     pipx \
     && rm -rf /var/lib/apt/lists/*
@@ -61,7 +60,6 @@ FROM base AS dev
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
-    clang-format \
     clang-tidy \
     pipx \
     build-essential \
@@ -73,6 +71,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
 ARG PIPX_HOME=/opt/pipx
 ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install norminette==3.3.55
+RUN pipx install c-formatter-42
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final

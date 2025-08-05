@@ -162,8 +162,11 @@ fclean: clean
 
 re: fclean all
 
-# テストルール
-.PHONY: test
+# その他のルール
+.PHONY: norm test
+norm:
+	norminette $(SRC) $(INC)
+
 test: $(NAME) $(TEST) $(TEST_UTILS)
 	@printf "%-15s: start test\n" $(LIBRARY)
 	@$(RM) result.log

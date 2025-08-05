@@ -76,14 +76,6 @@ fclean:
 
 re: fclean all
 
-# テストルール
-.PHONY: test check
-test:
-	@echo "test"
-
-check:
-	@echo "check"
-
 # docker 関連ルール
 .PHONY: docker-check docker-build docker-test docker-dev docker-run
 docker-check:
@@ -139,3 +131,18 @@ docker-run:
 		--env DISPLAY=$$DISPLAY \
 		--user $(shell id -u):$(shell id -g) \
 		minirt
+
+# その他のルール
+.PHONY: test check norm format
+test:
+	@echo "test"
+
+check:
+	@echo "check"
+
+norm:
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
+	norminette $(SRC) $(INC)
+
+format: $(SRC)
+	c_formatter_42 $(SRC)
