@@ -16,7 +16,7 @@
 # # --> 例 "fix: window 関数のメモリリークを修正"
 # # --> 例 "fix: convert 関数内の暗黙的型変換を修正"
 # # 
-# # refactor: 入出力や実行結果の差異が実装の変更
+# # refactor: 入出力や実行結果の差異ない実装の変更
 # # --> 例 "refactor: parse 関数の行数を削減"
 # # --> 例 "refactor: render 関数のアルゴリズムを変更"
 # # 
