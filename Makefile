@@ -8,6 +8,7 @@ SRC_DIR := ./src
 INC_DIR := ./include
 LIBFT_DIR := ./libft
 MLX_DIR := $(OUT_DIR)/mlx_linux
+TEST_DIR := ./test
 
 # ファイル
 NAME := $(OUT_DIR)/miniRT
@@ -18,13 +19,16 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		vec3_util2.c \
 	) \
 )
+SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		minirt.h \
 		vec3.h \
 	) \
 )
+TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
 
 # ライブラリ
 LIBFT := $(OUT_DIR)/libft/libft.a
@@ -134,8 +138,21 @@ docker-run:
 
 # その他のルール
 .PHONY: test check norm format
-test:
-	@echo "test"
+test: $(LIB) $(OBJ)
+	@echo "----- test -----"
+	@$(RM) result.log
+	@for test in $(TEST); do \
+		if [ -f $$test ]; then \
+			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $${test%.c}.out; \
+			printf "%-20s: " "$$test"; \
+			if $${test%.c}.out >> result.log 2>&1; then \
+				printf "\033[92mSUCCESS\033[0m\n"; \
+			else \
+				printf "\033[91mFAIL\033[0m\n"; \
+			fi; \
+			$(RM) $${test%.c}.out; \
+		fi; \
+	done;
 
 check:
 	@echo "check"
