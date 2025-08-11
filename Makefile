@@ -152,9 +152,9 @@ test: $(LIB) $(OBJ)
 			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $${test%.c}.out; \
 			printf "%-30s: " "$$test"; \
 			if $${test%.c}.out >> result.log 2>&1; then \
-				printf "$(GREEN)SUCCESSE$(END)\n"; \
+				printf "$(GREEN)SUCCESS$(END)\n"; \
 			else \
-				printf "$(RED)FAILE$(END)\n"; \
+				printf "$(RED)FAILED$(END)\n"; \
 			fi; \
 			$(RM) $${test%.c}.out; \
 		fi; \
