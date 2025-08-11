@@ -1,3 +1,9 @@
+# 出力の設定
+ESC := $(shell printf "\033")
+END := $(ESC)[m
+RED := $(ESC)[91m
+GREEN := $(ESC)[92m
+
 # ディレクトリ設定
 OUT_DIR := $(shell pwd)
 ifneq ($(shell echo -n $$IN_DOCKER),)
@@ -139,16 +145,16 @@ docker-run:
 # その他のルール
 .PHONY: test check norm format
 test: $(LIB) $(OBJ)
-	@echo "----- test -----"
+	@echo "------------ test ------------"
 	@$(RM) result.log
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
 			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $${test%.c}.out; \
-			printf "%-20s: " "$$test"; \
+			printf "%-30s: " "$$test"; \
 			if $${test%.c}.out >> result.log 2>&1; then \
-				printf "\033[92mSUCCESS\033[0m\n"; \
+				printf "$(GREEN)SUCCESSE$(END)\n"; \
 			else \
-				printf "\033[91mFAIL\033[0m\n"; \
+				printf "$(RED)FAILE$(END)\n"; \
 			fi; \
 			$(RM) $${test%.c}.out; \
 		fi; \
