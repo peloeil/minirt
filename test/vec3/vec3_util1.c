@@ -5,7 +5,7 @@
 void	assert_result(char *name, bool result, bool expected)
 {
 	if (result == expected)
-		printf("%-20s: %s\n", name, "\033[92mSUCESS\033[0m");
+		printf("%-30s: %s\n", name, "\033[92mSUCESS\033[0m");
 	else
 	{
 		printf("%-30s: %s\n", name, "\033[91mFAIL\033[0m");
