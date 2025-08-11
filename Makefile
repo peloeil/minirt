@@ -144,21 +144,23 @@ docker-run:
 
 # その他のルール
 .PHONY: test check norm format
-test: $(LIB) $(OBJ)
+test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
-	@$(RM) result.log
+	@$(RM) $(OUT_DIR)/result.log
+	@mkdir -p $(OUT_DIR)/out
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
-			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $${test%.c}.out; \
+			out_file=$(OUT_DIR)/out/$$(basename $$test .c).out; \
+			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$out_file; \
 			printf "%-30s: " "$$test"; \
-			if $${test%.c}.out >> result.log 2>&1; then \
+			if $$out_file >> $(OUT_DIR)/result.log 2>&1; then \
 				printf "$(GREEN)SUCCESS$(END)\n"; \
 			else \
 				printf "$(RED)FAILED$(END)\n"; \
 			fi; \
-			$(RM) $${test%.c}.out; \
 		fi; \
 	done;
+	@$(RM) -rf $(OUT_DIR)/out \
 
 check:
 	@echo "check"
