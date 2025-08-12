@@ -98,6 +98,7 @@ docker-test:
 	@docker image build --tag minirt-test --target test .
 
 docker-dev:
+	@xhost +local:docker
 	@docker image build --tag minirt-dev --target dev .
 	@docker container run \
 		--rm \
@@ -114,6 +115,7 @@ docker-dev:
 		minirt-dev
 
 docker-run:
+	@xhost +local:docker
 	@docker image build --tag minirt --target final .
 	@docker container run \
 		--rm \
