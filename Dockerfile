@@ -83,6 +83,6 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext6 \
     libbsd0 \
     && rm -rf /var/lib/apt/lists/*
-COPY --from=build /tmp/miniRT /bin
+COPY --from=build /tmp/miniRT/miniRT /bin
 ENTRYPOINT ["/bin/miniRT"]
 CMD []
