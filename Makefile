@@ -90,27 +90,12 @@ re: fclean all
 .PHONY: docker-check docker-build docker-test docker-dev docker-run
 docker-check:
 	@docker image build --tag minirt-check --target check .
-	@docker container run \
-		--rm \
-		--interactive \
-		--tty \
-		minirt-check
 
 docker-build:
 	@docker image build --tag minirt-build --target build .
-	@docker container run \
-		--rm \
-		--interactive \
-		--tty \
-		minirt-build
 
 docker-test:
 	@docker image build --tag minirt-test --target test .
-	@docker container run \
-		--rm \
-		--interactive \
-		--tty \
-		minirt-test
 
 docker-dev:
 	@docker image build --tag minirt-dev --target dev .
