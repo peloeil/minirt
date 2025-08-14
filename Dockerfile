@@ -11,21 +11,6 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     make \
     && rm -rf /var/lib/apt/lists/*
 
-# 静的解析などを行うステージ
-FROM base AS check
-RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
-    clang-tidy \
-    pipx \
-    && rm -rf /var/lib/apt/lists/*
-ARG PIPX_HOME=/opt/pipx
-ARG PIPX_BIN_DIR=/usr/local/bin
-RUN pipx install norminette==3.3.55
-ARG IN_DOCKER=yes
-RUN --mount=type=bind,target=. \
-    make check
-
 # コンパイルを行うステージ
 FROM base AS build
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -40,6 +25,23 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make all && make clean
+
+# 静的解析などを行うステージ
+FROM build AS check
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+    clang-tidy \
+    pipx \
+    bear \
+    moreutils \
+    && rm -rf /var/lib/apt/lists/*
+ARG PIPX_HOME=/opt/pipx
+ARG PIPX_BIN_DIR=/usr/local/bin
+RUN pipx install norminette==3.3.55
+ARG IN_DOCKER=yes
+RUN --mount=type=bind,target=. \
+    make check
 
 # 単体テスト、統合テストを行うステージ
 FROM base AS test
