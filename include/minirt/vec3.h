@@ -24,12 +24,6 @@ typedef struct s_vec3
 	double	z;
 }	t_vec3;
 
-typedef struct s_point
-{
-	t_vec3	vector;
-	int		color;
-}	t_point;
-
 // vec3_util1.c
 t_vec3	vec3_init(const double x, const double y, const double z);
 bool	vec3_eq(const t_vec3 v1, const t_vec3 v2);
