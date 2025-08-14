@@ -76,13 +76,13 @@ all: $(NAME)
 clean:
 	$(RM) -r $(OBJ_DIR)
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
-	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 fclean:
 	$(RM) -r $(OBJ_DIR)
 	$(RM) $(NAME)
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
-	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 re: fclean all
 
@@ -156,8 +156,8 @@ format: $(SRC)
 check: norm lint
 
 norm:
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
-	norminette $(SRC) $(INC)
+	-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
+	-norminette $(SRC) $(INC)
 
 lint: $(OUT_DIR)/compile_commands.json
 	if [ -f /.dockerenv ]; then \
