@@ -111,6 +111,7 @@ docker-dev:
 		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
 		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
 		--env DISPLAY=$$DISPLAY \
+		--env HOST_CWD=$$PWD \
 		--user $(shell id -u):$(shell id -g) \
 		minirt-dev
 
@@ -160,12 +161,11 @@ norm:
 
 lint: compile_commands.json
 	if [ -f /.dockerenv ]; then \
-		sed -i 's@/home/sota/workspace/42tokyo/minirt@/minirt-src@g' compile_commands.json; \
+		sed -i 's@$(HOST_CWD)@/minirt-src@g' compile_commands.json; \
 	fi;
 	clang-tidy $(SRC)
-	sed -i 's@/minirt-src@/home/sota/workspace/42tokyo/minirt@g' compile_commands.json
+	sed -i 's@/minirt-src@$(HOST_CWD)@g' compile_commands.json
 
 compile_commands.json: fclean $(SRC) $(INC)
 	bear -- $(MAKE) --no-print-directory all
 	compdb list | sponge compile_commands.json
-	sed -i 's@/minirt-src@/home/sota/workspace/42tokyo/minirt@g' compile_commands.json
