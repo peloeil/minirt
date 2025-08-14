@@ -13,7 +13,7 @@
 #ifndef SCENE_H
 # define SCENE_H
 
-# include <vec3.h>
+# include <minirt/vec3.h>
 
 typedef struct s_line
 {
