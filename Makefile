@@ -104,13 +104,14 @@ docker-dev:
 		--rm \
 		--interactive \
 		--tty \
-		--mount type=bind,source=.,target=/src \
+		--mount type=bind,source=.,target=/minirt-src \
 		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
 		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
 		--mount type=bind,source=$$HOME/.gitconfig,target=$$HOME/.gitconfig \
 		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
 		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
 		--env DISPLAY=$$DISPLAY \
+		--env HOST_CWD=$$PWD \
 		--user $(shell id -u):$(shell id -g) \
 		minirt-dev
 
@@ -130,7 +131,7 @@ docker-run:
 		minirt
 
 # その他のルール
-.PHONY: test check norm format
+.PHONY: test check format norm lint
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
@@ -149,12 +150,22 @@ test: $(LIB) $(OBJ_TEST)
 	done;
 	@$(RM) -rf $(OUT_DIR)/out \
 
-check:
-	@echo "check"
+check: format norm lint
+
+format: $(SRC)
+	c_formatter_42 $(SRC)
 
 norm:
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
 	norminette $(SRC) $(INC)
 
-format: $(SRC)
-	c_formatter_42 $(SRC)
+lint: compile_commands.json
+	if [ -f /.dockerenv ]; then \
+		sed -i 's@$(HOST_CWD)@/minirt-src@g' compile_commands.json; \
+	fi;
+	clang-tidy $(SRC)
+	sed -i 's@/minirt-src@$(HOST_CWD)@g' compile_commands.json
+
+compile_commands.json: fclean $(SRC) $(INC)
+	bear -- $(MAKE) --no-print-directory all
+	compdb list | sponge compile_commands.json
