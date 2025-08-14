@@ -40,7 +40,7 @@ typedef struct s_cylinder
 	double	radius;
 	double	height;
 	t_vec3	bottom_center;
-	t_line	axis;
+	t_vec3	axis;
 	int		color;
 }	t_cylinder;
 
