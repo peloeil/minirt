@@ -131,7 +131,7 @@ docker-run:
 		minirt
 
 # その他のルール
-.PHONY: test check format norm lint
+.PHONY: test format check norm lint
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
@@ -150,10 +150,10 @@ test: $(LIB) $(OBJ_TEST)
 	done;
 	@$(RM) -rf $(OUT_DIR)/out \
 
-check: format norm lint
-
 format: $(SRC)
 	c_formatter_42 $(SRC)
+
+check: norm lint
 
 norm:
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
