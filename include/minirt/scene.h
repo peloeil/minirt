@@ -13,7 +13,7 @@
 #ifndef SCENE_H
 # define SCENE_H
 
-# include <ft_list.h>
+# include <libft/ft_list.h>
 # include <minirt/vec3.h>
 
 typedef	t_list s_scene;
