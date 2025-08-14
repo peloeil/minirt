@@ -104,7 +104,7 @@ docker-dev:
 		--rm \
 		--interactive \
 		--tty \
-		--mount type=bind,source=.,target=/src \
+		--mount type=bind,source=.,target=/minirt-src \
 		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
 		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
 		--mount type=bind,source=$$HOME/.gitconfig,target=$$HOME/.gitconfig \
@@ -130,7 +130,7 @@ docker-run:
 		minirt
 
 # その他のルール
-.PHONY: test check norm format
+.PHONY: test check format norm lint
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
@@ -149,12 +149,19 @@ test: $(LIB) $(OBJ_TEST)
 	done;
 	@$(RM) -rf $(OUT_DIR)/out \
 
-check:
-	@echo "check"
+check: format norm lint
+
+format: $(SRC)
+	c_formatter_42 $(SRC)
 
 norm:
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
 	norminette $(SRC) $(INC)
 
-format: $(SRC)
-	c_formatter_42 $(SRC)
+lint: compile_commands.json
+	clang-tidy $(SRC)
+
+compile_commands.json: fclean $(SRC) $(INC)
+	bear -- $(MAKE) --no-print-directory all
+	compdb list | sponge compile_commands.json
+	sed -i 's@/minirt-src@/home/sota/workspace/42tokyo/minirt@g' compile_commands.json

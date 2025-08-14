@@ -2,7 +2,7 @@
 
 # ベースイメージ
 FROM ubuntu:22.04 AS base
-WORKDIR /src
+WORKDIR /minirt-src
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -69,11 +69,14 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libbsd-dev \
     xorg \
     git \
+    bear \
+    moreutils \
     && rm -rf /var/lib/apt/lists/*
 ARG PIPX_HOME=/opt/pipx
 ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install norminette==3.3.55
 RUN pipx install c-formatter-42
+RUN pipx install compdb
 
 # 実行を行うステージ
 FROM ubuntu:22.04 AS final
