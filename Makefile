@@ -159,7 +159,11 @@ norm:
 	norminette $(SRC) $(INC)
 
 lint: compile_commands.json
+	if [ -f /.dockerenv ]; then \
+		sed -i 's@/home/sota/workspace/42tokyo/minirt@/minirt-src@g' compile_commands.json; \
+	fi;
 	clang-tidy $(SRC)
+	sed -i 's@/minirt-src@/home/sota/workspace/42tokyo/minirt@g' compile_commands.json
 
 compile_commands.json: fclean $(SRC) $(INC)
 	bear -- $(MAKE) --no-print-directory all
