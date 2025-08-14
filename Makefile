@@ -159,13 +159,13 @@ norm:
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
 	norminette $(SRC) $(INC)
 
-lint: compile_commands.json
+lint: $(OUT_DIR)/compile_commands.json
 	if [ -f /.dockerenv ]; then \
-		sed -i 's@$(HOST_CWD)@/minirt-src@g' compile_commands.json; \
+		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(OUT_DIR)/compile_commands.json; \
 	fi;
-	clang-tidy $(SRC)
-	sed -i 's@/minirt-src@$(HOST_CWD)@g' compile_commands.json
+	-clang-tidy -p $(OUT_DIR)/compile_commands.json $(SRC)
+	sed -i 's@/minirt-src@$(HOST_CWD)@g' $(OUT_DIR)/compile_commands.json
 
-compile_commands.json: fclean $(SRC) $(INC)
-	bear -- $(MAKE) --no-print-directory all
-	compdb list | sponge compile_commands.json
+$(OUT_DIR)/compile_commands.json: fclean $(SRC) $(INC)
+	bear --output $(OUT_DIR)/compile_commands.json -- $(MAKE) --no-print-directory all
+	compdb list | sponge $(OUT_DIR)/compile_commands.json
