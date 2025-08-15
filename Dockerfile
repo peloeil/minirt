@@ -31,20 +31,36 @@ ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make all && make clean
 
-# 静的解析などを行うステージ
-FROM build-base AS check-base
+# compile_commands.json を生成するステージ
+FROM build-base AS compile-commands
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
-    clang-tidy \
-    pipx \
     bear \
+    pipx \
     moreutils \
     && rm -rf /var/lib/apt/lists/*
 ARG PIPX_HOME=/opt/pipx
 ARG PIPX_BIN_DIR=/usr/local/bin
-RUN pipx install norminette==3.3.55
 RUN pipx install compdb
+ARG IN_DOCKER=yes
+RUN --mount=type=bind,target=. \
+    make /tmp/miniRT/compile_commands.json
+
+# 静的解析を行うステージ
+FROM archlinux:base-devel AS check-base
+WORKDIR /minirt-src
+RUN pacman -Syu --noconfirm --needed \
+    clang \
+    python-pipx
+ARG PIPX_HOME=/opt/pipx
+ARG PIPX_BIN_DIR=/usr/local/bin
+RUN pipx install norminette==3.3.55
+ARG HOST_CWD
+ENV HOST_CWD=$HOST_CWD
+COPY --from=compile-commands /tmp/miniRT/mlx_linux/mlx.h /tmp/miniRT/mlx_linux/
+COPY --from=compile-commands /tmp/miniRT/mlx_linux/mlx_int.h /tmp/miniRT/mlx_linux/
+COPY --from=compile-commands /tmp/miniRT/compile_commands.json /tmp/miniRT/
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make check
