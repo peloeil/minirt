@@ -89,7 +89,11 @@ re: fclean all
 # docker 関連ルール
 .PHONY: docker-check docker-build docker-test docker-dev docker-run
 docker-check:
-	@docker image build --tag minirt-check --target check .
+	@docker image build \
+		--build-arg HOST_CWD=$(CURDIR) \
+		--progress=plain \
+		--tag minirt-check \
+		--target check .
 
 docker-build:
 	@docker image build --tag minirt-build --target build .

@@ -4,6 +4,8 @@
 FROM ubuntu:22.04 AS base
 WORKDIR /minirt-src
 ENV DEBIAN_FRONTEND=noninteractive
+ARG HOST_CWD
+ENV HOST_CWD=$HOST_CWD
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
