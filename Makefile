@@ -165,7 +165,10 @@ norm:
 	-norminette $(SRC) $(INC)
 
 COMPILE_COMMANDS := $(OUT_DIR)/compile_commands.json
-lint: $(COMPILE_COMMANDS)
+lint:
+	if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
+		$(MAKE) $(COMPILE_COMMANDS); \
+	fi
 	if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
 		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(COMPILE_COMMANDS); \
 	fi
