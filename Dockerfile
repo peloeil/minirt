@@ -13,8 +13,8 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     make \
     && rm -rf /var/lib/apt/lists/*
 
-# コンパイルを行うステージ
-FROM base AS build
+# コンパイルを行うステージのベース
+FROM base AS build-base
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
@@ -24,12 +24,15 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     xorg \
     git \
     && rm -rf /var/lib/apt/lists/*
+
+# コンパイルを行うステージ
+FROM build-base AS build
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make all && make clean
 
 # 静的解析などを行うステージ
-FROM build AS check-base
+FROM build-base AS check-base
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
