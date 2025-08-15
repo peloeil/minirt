@@ -8,8 +8,7 @@ RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.l
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
-    make \
-    && rm -rf /var/lib/apt/lists/*
+    make
 ARG HOST_CWD
 ENV HOST_CWD=$HOST_CWD
 
@@ -22,8 +21,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     xorg \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    git
 
 # コンパイルを行うステージ
 FROM build-base AS build
@@ -38,8 +36,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
     bear \
     pipx \
-    moreutils \
-    && rm -rf /var/lib/apt/lists/*
+    moreutils
 ARG PIPX_HOME=/opt/pipx
 ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install compdb
@@ -50,7 +47,8 @@ RUN --mount=type=bind,target=. \
 # 静的解析を行うステージ
 FROM archlinux:base-devel AS check-base
 WORKDIR /minirt-src
-RUN pacman -Syu --noconfirm --needed \
+RUN --mount=type=cache,target=/var/cache/pacman,sharing=locked \
+    pacman -Syu --noconfirm --needed \
     clang \
     python-pipx
 ARG PIPX_HOME=/opt/pipx
@@ -78,8 +76,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     libxext-dev \
     libbsd-dev \
     xorg \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    git
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make test \
@@ -98,8 +95,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     xorg \
     git \
     bear \
-    moreutils \
-    && rm -rf /var/lib/apt/lists/*
+    moreutils
 ARG PIPX_HOME=/opt/pipx
 ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install norminette==3.3.55
@@ -112,8 +108,7 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
-    libbsd0 \
-    && rm -rf /var/lib/apt/lists/*
+    libbsd0
 COPY --from=build /tmp/miniRT/miniRT /bin
 ENTRYPOINT ["/bin/miniRT"]
 CMD []
