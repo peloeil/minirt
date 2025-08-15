@@ -164,13 +164,15 @@ norm:
 	-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
 	-norminette $(SRC) $(INC)
 
-lint: $(OUT_DIR)/compile_commands.json
-	if [ -f /.dockerenv ]; then \
-		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(OUT_DIR)/compile_commands.json; \
-	fi;
-	-clang-tidy -p $(OUT_DIR)/compile_commands.json $(SRC)
-	sed -i 's@/minirt-src@$(HOST_CWD)@g' $(OUT_DIR)/compile_commands.json
+COMPILE_COMMANDS := $(OUT_DIR)/compile_commands.json
+lint: $(COMPILE_COMMANDS)
+	if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
+		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(COMPILE_COMMANDS); \
+	fi
+	-clang-tidy -p $(OUT_DIR) $(SRC)
+	sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
+	sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
 
-$(OUT_DIR)/compile_commands.json: fclean $(SRC) $(INC)
-	bear --output $(OUT_DIR)/compile_commands.json -- $(MAKE) --no-print-directory all
-	compdb list | sponge $(OUT_DIR)/compile_commands.json
+$(COMPILE_COMMANDS): fclean $(SRC) $(INC)
+	bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
+	compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
