@@ -29,7 +29,7 @@ RUN --mount=type=bind,target=. \
     make all && make clean
 
 # 静的解析などを行うステージ
-FROM build AS check
+FROM build AS check-base
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
@@ -45,6 +45,10 @@ RUN pipx install compdb
 ARG IN_DOCKER=yes
 RUN --mount=type=bind,target=. \
     make check
+
+# compile_commands.json を取り出すためのステージ
+FROM scratch AS check
+COPY --from=check-base /tmp/miniRT/compile_commands.json /
 
 # 単体テスト、統合テストを行うステージ
 FROM base AS test

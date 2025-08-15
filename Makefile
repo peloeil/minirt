@@ -91,6 +91,7 @@ re: fclean all
 docker-check:
 	@docker image build \
 		--build-arg HOST_CWD=$(CURDIR) \
+		--output=. \
 		--progress=plain \
 		--tag minirt-check \
 		--target check .
