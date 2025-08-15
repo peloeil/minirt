@@ -73,12 +73,12 @@ $(MLX_DIR):
 .PHONY: all clean fclean re
 all: $(NAME)
 
-clean:
+clean: | $(MLX_DIR)
 	$(RM) -r $(OBJ_DIR)
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
 	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
-fclean:
+fclean: | $(MLX_DIR)
 	$(RM) -r $(OBJ_DIR)
 	$(RM) $(NAME)
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
