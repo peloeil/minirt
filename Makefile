@@ -73,23 +73,28 @@ $(MLX_DIR):
 .PHONY: all clean fclean re
 all: $(NAME)
 
-clean:
+clean: | $(MLX_DIR)
 	$(RM) -r $(OBJ_DIR)
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
-	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
-fclean:
+fclean: | $(MLX_DIR)
 	$(RM) -r $(OBJ_DIR)
 	$(RM) $(NAME)
 	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
-	$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
 
 re: fclean all
 
 # docker 関連ルール
 .PHONY: docker-check docker-build docker-test docker-dev docker-run
 docker-check:
-	@docker image build --tag minirt-check --target check .
+	@docker image build \
+		--build-arg HOST_CWD=$(CURDIR) \
+		--output=. \
+		--progress=plain \
+		--tag minirt-check \
+		--target check .
 
 docker-build:
 	@docker image build --tag minirt-build --target build .
@@ -131,7 +136,7 @@ docker-run:
 		minirt
 
 # その他のルール
-.PHONY: test check format norm lint
+.PHONY: test format check norm lint
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
@@ -150,22 +155,27 @@ test: $(LIB) $(OBJ_TEST)
 	done;
 	@$(RM) -rf $(OUT_DIR)/out \
 
-check: format norm lint
-
 format: $(SRC)
 	c_formatter_42 $(SRC)
 
+check: norm lint
+
 norm:
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
-	norminette $(SRC) $(INC)
+	-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
+	-norminette $(SRC) $(INC)
 
-lint: compile_commands.json
-	if [ -f /.dockerenv ]; then \
-		sed -i 's@$(HOST_CWD)@/minirt-src@g' compile_commands.json; \
-	fi;
-	clang-tidy $(SRC)
-	sed -i 's@/minirt-src@$(HOST_CWD)@g' compile_commands.json
+COMPILE_COMMANDS := $(OUT_DIR)/compile_commands.json
+lint:
+	if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
+		$(MAKE) $(COMPILE_COMMANDS); \
+	fi
+	if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
+		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(COMPILE_COMMANDS); \
+	fi
+	-clang-tidy -p $(OUT_DIR) $(SRC)
+	sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
+	sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
 
-compile_commands.json: fclean $(SRC) $(INC)
-	bear -- $(MAKE) --no-print-directory all
-	compdb list | sponge compile_commands.json
+$(COMPILE_COMMANDS): fclean $(SRC) $(INC)
+	bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
+	compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
