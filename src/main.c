@@ -10,18 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <minirt/minirt.h>
-#include <mlx.h>
+#include <minirt/parser.h>
+#include <stdlib.h>
 
-int	main(void)
+int	main(const int argc, const char *const argv[static argc])
 {
-	void	*mlx;
-	void	*mlx_win;
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	(void)mlx_win;
-	mlx_loop(mlx);
-	return (0);
+	if (argc != 2)
+		return (EXIT_FAILURE);
+	if (!is_rt_file_path(argv[1]))
+		return (EXIT_FAILURE);
+	parse_rt_file(argv[1]);
+	return (EXIT_SUCCESS);
 }

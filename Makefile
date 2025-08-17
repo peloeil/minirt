@@ -30,6 +30,9 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		sphere.c \
 		cylinder.c \
 	) \
+	$(addprefix parser/, \
+		parser.c \
+	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
@@ -38,6 +41,7 @@ INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		minirt.h \
 		vec3.h \
+		parser.h \
 		ray_tracing.h \
 	) \
 )

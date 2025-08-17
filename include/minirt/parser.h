@@ -13,12 +13,9 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-#include <stdbool.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <ft_stdio.h>
-#include <ft_stdlib.h>
-#include <ft_string.h>
+# include <stdbool.h>
+
+bool	is_rt_file_path(const char file_path[static 1]);
+void	parse_rt_file(const char file_path[static 1]);
 
 #endif

@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <minirt/parser.h>
+#include <fcntl.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <libft/ft_stdio.h>
+#include <libft/ft_string.h>
 
-void	parse_rt_file(const char *file_path)
+void	parse_rt_file(const char file_path[static 1])
 {
-	int		fd;
-	char	*lineptr;
+	const int	fd = open(file_path, O_RDONLY);
+	char		*lineptr;
 
-	if (validate_file_extension(file_path))
-		exit(1);
-	lineptr = ft_calloc(BUFFER_SIZE, sizeof(char));
-	if (!lineptr)
-		exit(1);
-	fd = open(file_path, O_RDONLY);
-	while (ft_getline(&lineptr, BUFFER_SIZE, fd) != -1)
+	if (fd == -1)
+		exit(EXIT_FAILURE);
+	while (ft_getline(&lineptr, 0, fd) != -1)
 	{
 		// [TODO] オブジェクトの識別子を探してオブジェクトの種類を判定する
 		// [TODO] 識別子が存在しなければエラー
@@ -32,13 +32,16 @@ void	parse_rt_file(const char *file_path)
 	}
 }
 
-bool	validate_file_extension(const char *file_path)
+bool	is_rt_file_path(const char file_path[static 1])
 {
-	const char	*extension = ".rt";
-	const char	*dotptr;
+	const int			fd = open(file_path, O_RDONLY);
+	const size_t		len = ft_strlen(file_path);
+	const char *const	ext = file_path - 3 + len;
 
-	dotptr = ft_strrchr(file_path, '.');
-	if (dotptr && ft_strnstr(dotptr, extension, ft_strlen(dotptr)))
-		return (true);
-	return (false);
+	if (fd == -1)
+		return (false);
+	close(fd);
+	if (len < 3 || ft_strcmp(ext, ".rt") != 0)
+		return (false);
+	return (true);
 }
