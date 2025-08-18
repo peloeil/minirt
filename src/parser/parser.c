@@ -10,38 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <minirt/scene.h>
+#include <minirt/parser.h>
 #include <fcntl.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <libft/ft_stdio.h>
-#include <libft/ft_string.h>
 
-void	parse_rt_file(const char file_path[static 1])
+static int	get_next_line(const char **lineptr, const int fd)
 {
-	const int	fd = open(file_path, O_RDONLY);
-	char		*lineptr;
+	size_t	size;
+	int		status;
 
-	if (fd == -1)
+	*lineptr = NULL;
+	size = 0;
+	status = ft_getline((char **)lineptr, &size, fd);
+	if (status == -2)
 		exit(EXIT_FAILURE);
-	while (ft_getline(&lineptr, 0, fd) != -1)
-	{
-		// [TODO] オブジェクトの識別子を探してオブジェクトの種類を判定する
-		// [TODO] 識別子が存在しなければエラー
-		// [TODO] 仕様で定義された識別子 (A・C・L・sp・pl・cy) 以外があったらエラー
-		// [TODO] 大文字の識別で表されるオブジェクトが 2 個以上あればエラー
-	}
+	return (status);
 }
 
-bool	is_rt_file_path(const char file_path[static 1])
+t_scene	*parse_rt_file(const char file_path[static 1])
 {
-	const int			fd = open(file_path, O_RDONLY);
-	const size_t		len = ft_strlen(file_path);
-	const char *const	ext = file_path - 3 + len;
+	const int		fd = open(file_path, O_RDONLY);
+	const t_scene	*scene;
+	const char		*line;
+	int				status;
 
-	if (fd == -1)
-		return (false);
+	scene = NULL;
+	while (true)
+	{
+		status = get_next_line(&line, fd);
+		ft_list_push_back(
+			(t_list **)&scene,
+			convert_line_into_object(scene, line)
+		);
+		free((void *)line);
+		if (status == -1)
+			break ;
+	}
 	close(fd);
-	if (len < 3 || ft_strcmp(ext, ".rt") != 0)
-		return (false);
-	return (true);
+	return ((t_scene *)scene);
 }

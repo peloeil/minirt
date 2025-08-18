@@ -13,9 +13,9 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <stdbool.h>
+# include <minirt/scene.h>
 
-bool	is_rt_file_path(const char file_path[static 1]);
-void	parse_rt_file(const char file_path[static 1]);
+t_scene	*convert_line_into_object(const t_scene *const scene, const char line[static 1]);
+t_scene	*parse_rt_file(const char file_path[static 1]);
 
 #endif
