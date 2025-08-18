@@ -32,6 +32,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 	) \
 	$(addprefix parser/, \
 		parser.c \
+		line.c \
 	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
