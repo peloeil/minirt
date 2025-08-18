@@ -4,6 +4,26 @@
 #include <libft/ft_string.h>
 #include <libft/ft_stdlib.h>
 
+static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *const obj)
+{
+	const t_scene	*cur;
+	t_tag			obj_tag;
+
+	cur = scene;
+	while (true)
+	{
+		obj_tag = *(t_tag *)obj->content;
+		if ((obj_tag == CAMERA
+			|| obj_tag == AMBIENT_LIGHT
+			|| obj_tag == LIGHT_SOURCE)
+			&& obj_tag == *(t_tag *)cur->content)
+			exit(EXIT_FAILURE);
+		cur = cur->next;
+		if (cur == scene)
+			break ;
+	}
+}
+
 static void	free_2darray(void *array[static 1])
 {
 	size_t	i;
@@ -28,5 +48,6 @@ t_scene	*convert_line_into_object(const t_scene *const scene, const char line[st
 		i++;
 	}
 	free_2darray((void **)info);
+	validate_duplicate_tag(scene, obj);
 	return (obj);
 }
