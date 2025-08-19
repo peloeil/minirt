@@ -1,6 +1,5 @@
 Checks: '
   -*,
-  bugprone-*,
   cert-*,
   clang-analyzer-*,
   clang-diagnostic-*,
@@ -8,7 +7,11 @@ Checks: '
   performance-*,
   portability-*,
 
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+
   cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-init-variables,
 
   misc-*,
@@ -18,4 +21,6 @@ Checks: '
   -readability-avoid-const-params-in-decls,
   -readability-braces-around-statements,
   -readability-identifier-length,
+  -readability-magic-numbers,
+  -readability-math-missing-parentheses,
   '
