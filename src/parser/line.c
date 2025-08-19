@@ -66,6 +66,7 @@ void	free_2darray(void *array[static 1])
 	i = 0;
 	while (array[i] != NULL)
 		free(array[i++]);
+	free(array);
 }
 
 t_scene	*convert_line_into_object(
