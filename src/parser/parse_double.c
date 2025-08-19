@@ -31,7 +31,7 @@ static double	parse_fractional_part(const char str[static 1])
 	res = 0.0;
 	while (ft_isdigit(str[i]))
 	{
-		res += (str[i] - '0') * pow(10, point_idx - i);
+		res += (str[i] - '0') * pow(10.0, (double)point_idx - i);
 		i++;
 	}
 	if (str[i] != '\0')
