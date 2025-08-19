@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:43 by sota              #+#    #+#             */
-/*   Updated: 2025/08/20 00:57:07 by sota             ###   ########.fr       */
+/*   Updated: 2025/08/20 01:19:03 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,6 @@ static void	validate_object_filled(const t_scene *const obj, const size_t i)
 	if (tag == LIGHT_SOURCE && i == 4)
 		return ;
 	exit(EXIT_FAILURE);
-}
-
-void	free_2darray(void **array)
-{
-	size_t	i;
-
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i] != NULL)
-		free(array[i++]);
-	free((void *)array);
 }
 
 t_scene	*parse_rt_line(
