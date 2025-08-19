@@ -24,6 +24,10 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		vec3_util1.c \
 		vec3_util2.c \
 	) \
+	$(addprefix ray_tracing/, \
+		core.c \
+		sphere.c \
+	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

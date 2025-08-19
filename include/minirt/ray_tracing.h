@@ -15,7 +15,6 @@
 
 #include <stdbool.h>
 #include <minirt/vec3.h>
-#include <minirt/scene.h>
 
 typedef struct s_quad_eq
 {
@@ -32,5 +31,13 @@ typedef struct s_ray
 	t_vec3	intersection;
 	bool	exits_intersection;
 }	t_ray;
+
+// core.c
+t_quad_eq	solve_quadratic_equation(const t_quad_eq coef);
+t_vec3		solve_ray_intersection(const t_line line, const t_quad_eq quad_eq);
+
+// sphere.c
+t_ray		solve_sphere_ray_intersection(const t_line line, const t_sphere sphere);
+t_quad_eq	solve_sphere_quadratic_equation(const t_line line, const t_sphere sphere);
 
 #endif
