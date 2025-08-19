@@ -24,6 +24,25 @@ static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *co
 	}
 }
 
+static void	validate_object_filled(const t_scene *const obj, const int i)
+{
+	const t_tag	tag = *(t_tag *)obj;
+
+	if (tag == PLANE && i == 3)
+		return ;
+	if (tag == SPHERE && i == 3)
+		return ;
+	if (tag == CYLINDER && i == 5)
+		return ;
+	if (tag == CAMERA && i == 3)
+		return ;
+	if (tag == AMBIENT_LIGHT && i == 2)
+		return ;
+	if (tag == LIGHT_SOURCE && i == 3)
+		return ;
+	exit(EXIT_FAILURE);
+}
+
 void	free_2darray(void *array[static 1])
 {
 	size_t	i;
@@ -48,6 +67,7 @@ t_scene	*convert_line_into_object(const t_scene *const scene, const char line[st
 		i++;
 	}
 	free_2darray((void **)info);
+	validate_object_filled(obj, i);
 	validate_duplicate_tag(scene, obj);
 	return (obj);
 }
