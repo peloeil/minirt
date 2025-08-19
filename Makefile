@@ -50,7 +50,6 @@ OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
-		minirt.h \
 		vec3.h \
 		parser.h \
 		ray_tracing.h \
