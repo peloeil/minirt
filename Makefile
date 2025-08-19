@@ -26,6 +26,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 	) \
 	$(addprefix ray_tracing/, \
 		core.c \
+		plane.c \
 		sphere.c \
 	) \
 )
