@@ -26,7 +26,7 @@ static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *co
 
 static void	validate_object_filled(const t_scene *const obj, const int i)
 {
-	const t_tag	tag = *(t_tag *)obj;
+	const t_tag	tag = *(t_tag *)obj->content;
 
 	if (tag == PLANE && i == 4)
 		return ;
