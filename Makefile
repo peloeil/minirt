@@ -34,6 +34,12 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		parser.c \
 		line.c \
 		assign.c \
+		ambient_light.c \
+		camera.c \
+		light.c \
+		sphere.c \
+		plane.c \
+		cylinder.c \
 	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
