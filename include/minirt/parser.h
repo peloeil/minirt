@@ -16,7 +16,7 @@
 # include <minirt/scene.h>
 
 void	free_2darray(void *array[static 1]);
-void	assign_info_to_obj(const int i, const char info[static 1], const t_scene *const obj);
+void	assign_info_to_obj(const int i, const char info[static 1], t_scene *const obj);
 void	assign_ambient_light_info(t_ambient_light *const node, const char info[static 1], const int i);
 void	assign_camera_info(t_camera *const node, const char info[static 1], const int i);
 void	assign_light_source_info(t_light_source *const node, const char info[static 1], const int i);

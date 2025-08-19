@@ -54,7 +54,7 @@ void	free_2darray(void *array[static 1])
 
 t_scene	*convert_line_into_object(const t_scene *const scene, const char line[static 1])
 {
-	t_scene *const				obj = ft_calloc(1, sizeof(t_scene));
+	t_scene *const				obj = ft_list_new(NULL);
 	const char *const *const	info = (const char **)ft_split(line, ' ');
 	size_t						i;
 
