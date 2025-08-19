@@ -59,14 +59,16 @@ static void	validate_object_filled(const t_scene *const obj, const size_t i)
 	exit(EXIT_FAILURE);
 }
 
-void	free_2darray(void *array[static 1])
+void	free_2darray(void **array)
 {
 	size_t	i;
 
+	if (array == NULL)
+		return ;
 	i = 0;
 	while (array[i] != NULL)
 		free(array[i++]);
-	free(array);
+	free((void *)array);
 }
 
 t_scene	*convert_line_into_object(
