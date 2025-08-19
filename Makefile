@@ -51,6 +51,7 @@ OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		vec3.h \
+		scene.h \
 		parser.h \
 		ray_tracing.h \
 	) \
