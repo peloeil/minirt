@@ -67,7 +67,7 @@ t_scene	*parse_rt_file(const char file_path[static 1])
 	{
 		ft_list_push_back(
 			(t_list **)&scene,
-			convert_line_into_object(scene, lines[i])
+			parse_rt_line(scene, lines[i])
 			);
 		i++;
 	}

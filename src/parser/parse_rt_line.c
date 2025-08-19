@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line.c                                             :+:      :+:    :+:   */
+/*   parse_rt_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:43 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:42:22 by sota             ###   ########.fr       */
+/*   Updated: 2025/08/20 00:57:07 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	free_2darray(void **array)
 	free((void *)array);
 }
 
-t_scene	*convert_line_into_object(
+t_scene	*parse_rt_line(
 			const t_scene *const scene,
 			const char line[static 1])
 {

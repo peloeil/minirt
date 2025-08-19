@@ -52,7 +52,7 @@ void	assign_cylinder_info(
 int		parse_color(const char str[static 1]);
 t_vec3	parse_vec3(const char str[static 1]);
 double	parse_double(const char str[static 1]);
-t_scene	*convert_line_into_object(
+t_scene	*parse_rt_line(
 			const t_scene *const scene,
 			const char line[static 1]);
 t_scene	*parse_rt_file(const char file_path[static 1]);

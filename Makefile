@@ -32,7 +32,6 @@ SRC := $(addprefix $(SRC_DIR)/, \
 	) \
 	$(addprefix parser/, \
 		parser.c \
-		line.c \
 		assign.c \
 		ambient_light.c \
 		camera.c \
@@ -40,6 +39,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		sphere.c \
 		plane.c \
 		cylinder.c \
+		parse_rt_line.c \
 		parse_double.c \
 		parse_vec3.c \
 		parse_color.c \
