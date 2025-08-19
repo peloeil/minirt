@@ -37,17 +37,18 @@ static t_tag	*allocate_node(const t_tag tag)
 {
 	t_tag	*res;
 
+	res = NULL;
 	if (tag == PLANE)
 		res = (t_tag *)ft_calloc(1, sizeof(t_plane));
-	if (tag == SPHERE)
+	else if (tag == SPHERE)
 		res = (t_tag *)ft_calloc(1, sizeof(t_sphere));
-	if (tag == CYLINDER)
+	else if (tag == CYLINDER)
 		res = (t_tag *)ft_calloc(1, sizeof(t_cylinder));
-	if (tag == CAMERA)
+	else if (tag == CAMERA)
 		res = (t_tag *)ft_calloc(1, sizeof(t_camera));
-	if (tag == AMBIENT_LIGHT)
+	else if (tag == AMBIENT_LIGHT)
 		res = (t_tag *)ft_calloc(1, sizeof(t_ambient_light));
-	if (tag == LIGHT_SOURCE)
+	else if (tag == LIGHT_SOURCE)
 		res = (t_tag *)ft_calloc(1, sizeof(t_light_source));
 	if (res == NULL)
 		exit(EXIT_FAILURE);
