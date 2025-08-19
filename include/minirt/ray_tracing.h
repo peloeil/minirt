@@ -36,6 +36,10 @@ typedef struct s_ray
 t_quad_eq	solve_quadratic_equation(const t_quad_eq coef);
 t_vec3		solve_ray_intersection(const t_line line, const t_quad_eq quad_eq);
 
+// plane.c
+t_ray		solve_plane_ray_intersection(const t_line line, const t_plane plane);
+double		solve_plane_quadratic_equation(const t_line line, const t_plane plane);
+
 // sphere.c
 t_ray		solve_sphere_ray_intersection(const t_line line, const t_sphere sphere);
 t_quad_eq	solve_sphere_quadratic_equation(const t_line line, const t_sphere sphere);
