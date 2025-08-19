@@ -2,7 +2,6 @@
 #include <minirt/parser.h>
 #include <stdlib.h>
 #include <libft/ft_string.h>
-#include <libft/ft_stdlib.h>
 #include <libft/ft_list.h>
 
 static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *const obj)
@@ -27,7 +26,7 @@ static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *co
 	}
 }
 
-static void	validate_object_filled(const t_scene *const obj, const int i)
+static void	validate_object_filled(const t_scene *const obj, const size_t i)
 {
 	const t_tag	tag = *(t_tag *)obj->content;
 

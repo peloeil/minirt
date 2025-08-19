@@ -15,10 +15,10 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <libft/std_string.h>
 #include <libft/ft_string.h>
-
-# define BUF_SIZE 1024 + 1
+#include <libft/ft_list.h>
 
 static t_string	read_rt_file(const char file_path[static 1])
 {

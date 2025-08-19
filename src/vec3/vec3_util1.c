@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <minirt/vec3.h>
+#include <math.h>
 
 t_vec3	vec3_init(const double x, const double y, const double z)
 {

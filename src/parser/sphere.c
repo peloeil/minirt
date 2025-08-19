@@ -1,7 +1,8 @@
 #include <minirt/scene.h>
 #include <minirt/parser.h>
+#include <stddef.h>
 
-void	assign_sphere_info(t_sphere *const node, const char info[static 1], const int i)
+void	assign_sphere_info(t_sphere *const node, const char info[static 1], const size_t i)
 {
 	if (i == 1)
 		node->center = parse_vec3(info);

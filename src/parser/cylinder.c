@@ -1,7 +1,8 @@
 #include <minirt/scene.h>
 #include <minirt/parser.h>
+#include <stddef.h>
 
-void	assign_cylinder_info(t_cylinder *const node, const char info[static 1], const int i)
+void	assign_cylinder_info(t_cylinder *const node, const char info[static 1], const size_t i)
 {
 	if (i == 1)
 		node->bottom_center = parse_vec3(info); // TODO: center

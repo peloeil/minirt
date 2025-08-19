@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <libft/ft_string.h>
+#include <libft/ft_list.h>
 
 static void	validate_rt_file_path(const char file_path[static 1])
 {

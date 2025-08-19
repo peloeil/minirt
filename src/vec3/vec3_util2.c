@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <minirt/vec3.h>
+#include <math.h>
 
 double	vec3_abs(const t_vec3 v)
 {
@@ -36,8 +37,7 @@ t_vec3	vec3_norm(const t_vec3 v)
 
 	if (v_abs == 0.0)
 		return ((t_vec3){0, 0, 0});
-	else
-		return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs});
+	return ((t_vec3){v.x / v_abs, v.y / v_abs, v.z / v_abs});
 }
 
 double	vec3_rad(const t_vec3 v1, const t_vec3 v2)
