@@ -13,6 +13,7 @@
 #include <minirt/scene.h>
 #include <minirt/parser.h>
 #include <stddef.h>
+#include <math.h>
 
 void	assign_camera_info(
 			t_camera *const node,
@@ -24,5 +25,5 @@ void	assign_camera_info(
 	if (i == 2)
 		node->direction = parse_vec3(info);
 	if (i == 3)
-		node->radian = parse_double(info);
+		node->radian = parse_double(info) * M_PI / 180.0;
 }
