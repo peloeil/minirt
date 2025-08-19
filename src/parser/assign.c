@@ -67,5 +67,6 @@ void	assign_info_to_obj(const int i, const char info[static 1], t_scene *const o
 		assign_plane_info((t_plane *)node, info, i);
 	else if (tag == CYLINDER)
 		assign_cylinder_info((t_cylinder *)node, info, i);
-	exit(EXIT_FAILURE);
+	else
+		exit(EXIT_FAILURE);
 }
