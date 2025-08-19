@@ -1,0 +1,45 @@
+#include <minirt/parser.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <libft/ft_ctype.h>
+#include <libft/ft_string.h>
+
+static uint8_t	parse_8bit_value(const char str[static 1])
+{
+	size_t			i;
+	unsigned int	res;
+
+	if (ft_strlen(str) > 3)
+		exit(EXIT_FAILURE);
+	i = 0;
+	res = 0;
+	while (ft_isdigit(str[i]))
+	{
+		res = 10 * res + str[i] - '0';
+		i++;
+	}
+	if (str[i] != '\0' || res > 0xff)
+		exit(EXIT_FAILURE);
+	return ((uint8_t)res);
+}
+
+int	parse_color(const char str[static 1])
+{
+	const char *const *const	rgb = (const char **)ft_split(str, ',');
+	size_t						i;
+	int							color;
+
+	if (rgb == NULL)
+		exit(EXIT_FAILURE);
+	i = 0;
+	color = 0x00000000;
+	while (rgb[i] != NULL)
+	{
+		color = (color << 8) + parse_8bit_value(rgb[i]);
+		i++;
+	}
+	if (i != 3)
+		exit(EXIT_FAILURE);
+	free_2darray((void **)rgb);
+	return (color);
+}
