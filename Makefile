@@ -40,6 +40,9 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		sphere.c \
 		plane.c \
 		cylinder.c \
+		parse_double.c \
+		parse_vec3.c \
+		parse_color.c \
 	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
