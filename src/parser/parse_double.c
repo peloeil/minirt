@@ -48,5 +48,8 @@ double	parse_double(const char str[static 1])
 	sign = 1;
 	if (str[0] == '+' || str[0] == '-')
 		sign = ('-' + '+' - 2 * str[i++]) / ('-' - '+');
-	return (sign * (parse_integral_part(&str[i]) + parse_fractional_part(&str[i])));
+	return (sign
+		* (parse_integral_part(&str[i])
+			+ parse_fractional_part(&str[i])
+		));
 }

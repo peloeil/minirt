@@ -46,8 +46,8 @@ static t_string	read_rt_file(const char file_path[static 1])
 
 static char	**read_rt_lines(const char file_path[static 1])
 {
-	const t_string	file = read_rt_file(file_path);
-	const char *const *const lines = (const char **)ft_split(file.str, '\n');
+	const t_string				file = read_rt_file(file_path);
+	const char *const *const	lines = (const char **)ft_split(file.str, '\n');
 
 	if (lines == NULL || lines[0] == NULL)
 		exit(EXIT_FAILURE);
@@ -68,7 +68,7 @@ t_scene	*parse_rt_file(const char file_path[static 1])
 		ft_list_push_back(
 			(t_list **)&scene,
 			convert_line_into_object(scene, lines[i])
-		);
+			);
 		i++;
 	}
 	free_2darray((void **)lines);
