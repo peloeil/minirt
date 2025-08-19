@@ -3,12 +3,15 @@
 #include <stdlib.h>
 #include <libft/ft_string.h>
 #include <libft/ft_stdlib.h>
+#include <libft/ft_list.h>
 
 static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *const obj)
 {
 	const t_scene	*cur;
 	t_tag			obj_tag;
 
+	if (scene == NULL)
+		return ;
 	cur = scene;
 	while (true)
 	{
