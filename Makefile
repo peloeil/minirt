@@ -28,6 +28,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		core.c \
 		plane.c \
 		sphere.c \
+		cylinder.c \
 	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
