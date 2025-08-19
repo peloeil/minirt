@@ -14,40 +14,63 @@
 #include <minirt/parser.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <libft/ft_stdio.h>
+#include <unistd.h>
+#include <libft/std_string.h>
+#include <libft/ft_string.h>
 
-static int	get_next_line(const char **lineptr, const int fd)
+# define BUF_SIZE 1024 + 1
+
+static t_string	read_rt_file(const char file_path[static 1])
 {
-	size_t	size;
-	int		status;
+	const int	fd = open(file_path, O_RDONLY);
+	char		buf[BUF_SIZE];
+	ssize_t		nbyte;
+	t_string	res;
 
-	*lineptr = NULL;
-	size = 0;
-	status = ft_getline((char **)lineptr, &size, fd);
-	if (status == -2)
+	if (ft_str_new(&res) == -1)
 		exit(EXIT_FAILURE);
-	return (status);
+	while (true)
+	{
+		nbyte = read(fd, buf, BUF_SIZE - 1);
+		if (nbyte == -1)
+			exit(EXIT_FAILURE);
+		if (nbyte == 0)
+			break ;
+		buf[nbyte] = '\0';
+		if (ft_str_push_str(&res, buf) == -1)
+			exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return (res);
+}
+
+static char	**read_rt_lines(const char file_path[static 1])
+{
+	const t_string	file = read_rt_file(file_path);
+	const char *const *const lines = (const char **)ft_split(file.str, '\n');
+
+	if (lines == NULL || lines[0] == NULL)
+		exit(EXIT_FAILURE);
+	free(file.str);
+	return ((char **)lines);
 }
 
 t_scene	*parse_rt_file(const char file_path[static 1])
 {
-	const int		fd = open(file_path, O_RDONLY);
-	const t_scene	*scene;
-	const char		*line;
-	int				status;
+	const char *const *const	lines = (const char **)read_rt_lines(file_path);
+	size_t						i;
+	const t_scene				*scene;
 
+	i = 0;
 	scene = NULL;
-	while (true)
+	while (lines[i] != NULL)
 	{
-		status = get_next_line(&line, fd);
 		ft_list_push_back(
 			(t_list **)&scene,
-			convert_line_into_object(scene, line)
+			convert_line_into_object(scene, lines[i])
 		);
-		free((void *)line);
-		if (status == -1)
-			break ;
+		i++;
 	}
-	close(fd);
+	free_2darray((void **)lines);
 	return ((t_scene *)scene);
 }

@@ -15,6 +15,7 @@
 
 # include <minirt/scene.h>
 
+void	free_2darray(void *array[static 1]);
 t_scene	*convert_line_into_object(const t_scene *const scene, const char line[static 1]);
 t_scene	*parse_rt_file(const char file_path[static 1]);
 

@@ -24,7 +24,7 @@ static void	validate_duplicate_tag(const t_scene *const scene, const t_scene *co
 	}
 }
 
-static void	free_2darray(void *array[static 1])
+void	free_2darray(void *array[static 1])
 {
 	size_t	i;
 
