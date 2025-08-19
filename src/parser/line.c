@@ -28,17 +28,17 @@ static void	validate_object_filled(const t_scene *const obj, const int i)
 {
 	const t_tag	tag = *(t_tag *)obj;
 
-	if (tag == PLANE && i == 3)
+	if (tag == PLANE && i == 4)
 		return ;
-	if (tag == SPHERE && i == 3)
+	if (tag == SPHERE && i == 4)
 		return ;
-	if (tag == CYLINDER && i == 5)
+	if (tag == CYLINDER && i == 6)
 		return ;
-	if (tag == CAMERA && i == 3)
+	if (tag == CAMERA && i == 4)
 		return ;
-	if (tag == AMBIENT_LIGHT && i == 2)
+	if (tag == AMBIENT_LIGHT && i == 3)
 		return ;
-	if (tag == LIGHT_SOURCE && i == 3)
+	if (tag == LIGHT_SOURCE && i == 4)
 		return ;
 	exit(EXIT_FAILURE);
 }
