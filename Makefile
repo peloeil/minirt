@@ -86,7 +86,7 @@ $(NAME): $(LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLXFLAGS) -o $(NAME)
 
 $(LIBFT):
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
+	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR="$(OUT_DIR)/libft" CC="$(CC)" all
 
 $(MLX): | $(MLX_DIR)
 	$(MAKE) --directory=$(MLX_DIR) --no-print-directory all
