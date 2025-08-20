@@ -5,7 +5,7 @@ RED := $(ESC)[91m
 GREEN := $(ESC)[92m
 
 # ディレクトリ設定
-OUT_DIR := $(shell pwd)
+OUT_DIR := $(CURDIR)
 ifneq ($(shell echo -n $$IN_DOCKER),)
 	OUT_DIR := /tmp/miniRT
 endif
