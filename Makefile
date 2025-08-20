@@ -161,7 +161,11 @@ docker-run:
 		minirt
 
 # その他のルール
-.PHONY: test format check norm lint
+.PHONY: debug test format check norm lint
+
+debug: CFLAGS += -fanalyzer -Og -ggdb3
+debug: re
+
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
