@@ -6,6 +6,7 @@ log/
 *.code-workspace
 *.out
 *.o
+*.d
 *.a
 *.exe
 *.log

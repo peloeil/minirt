@@ -49,6 +49,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
+DEPEND := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		vec3.h \
@@ -68,7 +69,7 @@ LIB := $(LIBFT) $(MLX)
 .DEFAULT_GOAL := all
 CC := gcc
 # CC := cc
-CFLAGS := -Wall -Wextra -Werror -ggdb3
+CFLAGS := -Wall -Wextra -Werror -MMD -MP
 MLXFLAGS := -lX11 -lXext -lm
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
@@ -76,7 +77,9 @@ INCFLAGS := $(addprefix -I, \
 	$(MLX_DIR) \
 )
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
+-include $(DEPEND)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
