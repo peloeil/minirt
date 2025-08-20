@@ -178,7 +178,7 @@ test: $(LIB) $(OBJ_TEST)
 			fi; \
 		fi; \
 	done;
-	@$(RM) -rf $(OUT_DIR)/out \
+	@$(RM) -rf $(OUT_DIR)/out
 
 format: $(SRC)
 	c_formatter_42 $(SRC)
