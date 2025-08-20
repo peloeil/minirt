@@ -18,8 +18,7 @@ TEST_DIR := ./test
 
 # ファイル
 NAME := $(OUT_DIR)/miniRT
-SRC := $(addprefix $(SRC_DIR)/, \
-	main.c \
+SRC_TEST := $(addprefix $(SRC_DIR)/, \
 	$(addprefix vec3/, \
 		vec3_util1.c \
 		vec3_util2.c \
@@ -46,9 +45,9 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		free.c \
 	) \
 )
-SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
-OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+SRC := $(SRC_DIR)/main.c $(SRC_TEST)
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
+OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPEND := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
