@@ -25,7 +25,7 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 	quad_eq.root_pos_is_valid = false;
 	quad_eq.root_neg_is_valid = false;
 	quad_eq.has_real_roots = false;
-	if (fabs(coefs.a) < EPSILON && -EPSILON < discriminant)
+	if (EPSILON < fabs(coefs.a) && -EPSILON < discriminant)
 	{
 		quad_eq.root_pos = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
 		quad_eq.root_neg = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
