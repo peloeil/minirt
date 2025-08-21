@@ -13,6 +13,9 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
+static int	validate_cylinder_vertical_position(
+	const t_cylinder cylinder, const t_vec3 intersection);
+
 t_ray	solve_cylinder_ray_intersection(const t_line line, const t_cylinder cylinder)
 {
 	t_ray			ray;
@@ -30,7 +33,7 @@ t_ray	solve_cylinder_ray_intersection(const t_line line, const t_cylinder cylind
 	return (ray);
 }
 
-t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cylinder cylinder)
+static t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cylinder cylinder)
 {
 	t_quad_coefs	coefs;
 	const double	d1_dot_d2 = vec3_dot_prod(line.direction, cylinder.axis);
@@ -43,7 +46,7 @@ t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cylinder 
 	return (solve_quadratic_equation(coefs));
 }
 
-int	validate_cylinder_vertical_position(const t_cylinder cylinder, const t_vec3 intersection)
+static int	validate_cylinder_vertical_position(const t_cylinder cylinder, const t_vec3 intersection)
 {
 	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.bottom_center);
 	const double	projection = vec3_dot_prod(c_to_p, cylinder.axis);

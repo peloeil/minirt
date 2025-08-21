@@ -13,6 +13,9 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
+static t_quad_eq	solve_sphere_quadratic_equation(
+	const t_line line, const t_sphere sphere);
+
 t_ray	solve_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 {
 	t_ray			ray;
@@ -29,7 +32,7 @@ t_ray	solve_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 	return (ray);
 }
 
-t_quad_eq	solve_sphere_quadratic_equation(const t_line line, const t_sphere sphere)
+static t_quad_eq	solve_sphere_quadratic_equation(const t_line line, const t_sphere sphere)
 {
 	t_quad_coefs	coefs;
 	const t_vec3	line_sphere_sub = vec3_sub(line.position, sphere.center);
