@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
