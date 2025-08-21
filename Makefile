@@ -1,8 +1,9 @@
 # 出力の設定
 ESC := $(shell printf "\033")
 END := $(ESC)[m
-RED := $(ESC)[91m
-GREEN := $(ESC)[92m
+BRIGHT_RED := $(ESC)[91m
+BRIGHT_GREEN := $(ESC)[92m
+BRIGHT_CYAN := $(ESC)[96m
 
 # ディレクトリ設定
 OUT_DIR := $(CURDIR)
@@ -176,9 +177,9 @@ test: $(LIB) $(OBJ_TEST)
 			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$out_file; \
 			printf "%-30s: " "$$test"; \
 			if $$out_file >> $(OUT_DIR)/result.log 2>&1; then \
-				printf "$(GREEN)SUCCESS$(END)\n"; \
+				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
 			else \
-				printf "$(RED)FAILED$(END)\n"; \
+				printf "$(BRIGHT_RED)FAILED$(END)\n"; \
 			fi; \
 		fi; \
 	done;
