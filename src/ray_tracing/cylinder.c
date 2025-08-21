@@ -32,18 +32,15 @@ t_ray	solve_cylinder_ray_intersection(const t_line line, const t_cylinder cylind
 
 t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cylinder cylinder)
 {
-	t_quad_eq		quad_eq;
+	t_quad_coefs	coefs;
 	const double	d1_dot_d2 = vec3_dot_prod(line.direction, cylinder.axis);
 	const t_vec3	c1_sub_c2 = vec3_sub(line.position, cylinder.bottom_center);
 	const double	d2_dot_c1_sub_c2 = vec3_dot_prod(cylinder.axis, c1_sub_c2);
 
-	quad_eq.a = 1 - pow(d1_dot_d2, 2);
-	quad_eq.b = 2 * ((vec3_dot_prod(line.direction, c1_sub_c2)) - (d1_dot_d2 * d2_dot_c1_sub_c2));
-	quad_eq.c = vec3_dot_prod(c1_sub_c2, c1_sub_c2) + pow(d2_dot_c1_sub_c2, 2) - (2 * pow(d2_dot_c1_sub_c2, 2)) - pow(cylinder.radius, 2);
-	quad_eq.roots[0] = 0;
-	quad_eq.roots[1] = 0;
-	quad_eq.has_two_real_roots = false;
-	return (solve_quadratic_equation(quad_eq));
+	coefs.a = 1 - pow(d1_dot_d2, 2);
+	coefs.b = 2 * ((vec3_dot_prod(line.direction, c1_sub_c2)) - (d1_dot_d2 * d2_dot_c1_sub_c2));
+	coefs.c = vec3_dot_prod(c1_sub_c2, c1_sub_c2) + pow(d2_dot_c1_sub_c2, 2) - (2 * pow(d2_dot_c1_sub_c2, 2)) - pow(cylinder.radius, 2);
+	return (solve_quadratic_equation(coefs));
 }
 
 int	validate_cylinder_vertical_position(const t_cylinder cylinder, const t_vec3 intersection)

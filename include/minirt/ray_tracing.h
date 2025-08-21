@@ -40,7 +40,7 @@ typedef struct s_ray
 }	t_ray;
 
 // core.c
-t_quad_eq	solve_quadratic_equation(const t_quad_eq coef);
+t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs);
 t_vec3		solve_ray_intersection(const t_line line, const t_quad_eq quad_eq);
 
 // plane.c

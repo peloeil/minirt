@@ -13,23 +13,23 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
-t_quad_eq	solve_quadratic_equation(const t_quad_eq coef)
+t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 {
-	const double	discriminant = pow(coef.b, 2) - 4 * coef.a * coef.c;
+	const double	discriminant = pow(coefs.b, 2) - 4 * coefs.a * coefs.c;
 
 	if (isless(0, discriminant))
 	{
 		return (t_quad_eq){
-			coef.a, coef.b, coef.c,
+			coefs.a, coefs.b, coefs.c,
 			{
-				(-1 * coef.b + sqrt(discriminant)) / (2 * coef.a),
-				(-1 * coef.b - sqrt(discriminant)) / (2 * coef.a)
+				(-1 * coefs.b + sqrt(discriminant)) / (2 * coefs.a),
+				(-1 * coefs.b - sqrt(discriminant)) / (2 * coefs.a)
 			},
 			true
 		};
 	}
 	return (t_quad_eq){
-		coef.a, coef.b, coef.c,
+		coefs.a, coefs.b, coefs.c,
 		{0, 0},
 		false
 	};
