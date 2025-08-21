@@ -165,7 +165,7 @@ re: fclean all
 # その他のルール
 .PHONY: norm test
 norm:
-	norminette $(SRC) $(INC)
+	@norminette $(SRC) $(INC)
 
 test: $(NAME) $(TEST) $(TEST_UTILS)
 	@printf "%-15s: start test\n" $(LIBRARY)

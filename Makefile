@@ -4,6 +4,7 @@ END := $(ESC)[m
 BRIGHT_RED := $(ESC)[91m
 BRIGHT_GREEN := $(ESC)[92m
 BRIGHT_CYAN := $(ESC)[96m
+CLEAR := $(ESC)[K
 
 # ディレクトリ設定
 OUT_DIR := $(CURDIR)
@@ -46,7 +47,7 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		free.c \
 	) \
 )
-SRC := $(SRC_DIR)/main.c $(SRC_TEST)
+SRC := $(SRC_TEST) $(SRC_DIR)/main.c
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPEND := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
@@ -59,6 +60,7 @@ INC := $(addprefix $(INC_DIR)/, \
 	) \
 )
 TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
+NUM_FILES := $(words $(SRC))
 
 # ライブラリ
 LIBFT := $(OUT_DIR)/libft/libft.a
@@ -80,35 +82,51 @@ INCFLAGS := $(addprefix -I, \
 -include $(DEPEND)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
+	@mkdir -p $(@D)
+	@printf \
+		"\r$(CLEAR)%-15s: [%2d/%2d] $(BRIGHT_GREEN)compiling $(BRIGHT_CYAN)%s$(END)" \
+		$(shell basename $(NAME)) \
+		$(shell echo "$(SRC)" | tr " " "\n" | grep -n "$<" | cut -d : -f 1) \
+		$(NUM_FILES) \
+		$(shell echo $< | sed 's|$(SRC_DIR)/||g')
+	@$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(LIB) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLXFLAGS) -o $(NAME)
+	@printf \
+		"\r$(CLEAR)%-15s: $(BRIGHT_GREEN)compilation finished$(END)\n" \
+		$(shell basename $(NAME))
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLXFLAGS) -o $(NAME)
+	@printf "%-15s: create $(NAME)\n" $(shell basename $(NAME))
 
 $(LIBFT):
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR="$(OUT_DIR)/libft" CC="$(CC)" all
+	@$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR="$(OUT_DIR)/libft" CC="$(CC)" all
 
 $(MLX): | $(MLX_DIR)
-	$(MAKE) --directory=$(MLX_DIR) --no-print-directory all
+	@$(MAKE) --directory=$(MLX_DIR) --no-print-directory all >/dev/null
+	@printf "%-15s: create $(MLX)\n" $(shell basename $(NAME))
 
 $(MLX_DIR):
-	git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
+	@git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
 
 # 必須ルール
 .PHONY: all clean fclean re
 all: $(NAME)
 
 clean: | $(MLX_DIR)
-	$(RM) -r $(OBJ_DIR)
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
-	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@$(RM) -r $(OBJ_DIR)
+	@printf "%-15s: remove $(OBJ_DIR)\n" $(shell basename $(NAME))
+	@$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
+	@-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@printf "%-15s: remove $(MLX_DIR)\n" $(shell basename $(NAME))
 
 fclean: | $(MLX_DIR)
-	$(RM) -r $(OBJ_DIR)
-	$(RM) $(NAME)
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
-	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@$(RM) -r $(OBJ_DIR)
+	@printf "%-15s: remove $(OBJ_DIR)\n" $(shell basename $(NAME))
+	@$(RM) $(NAME)
+	@printf "%-15s: remove $(NAME)\n" $(shell basename $(NAME))
+	@$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
+	@-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@printf "%-15s: remove $(MLX_DIR)\n" $(shell basename $(NAME))
 
 re: fclean all
 
@@ -186,26 +204,26 @@ test: $(LIB) $(OBJ_TEST)
 	@$(RM) -rf $(OUT_DIR)/out
 
 format: $(SRC)
-	c_formatter_42 $(SRC)
+	@c_formatter_42 $(SRC)
 
 check: norm lint
 
 norm:
-	-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
-	-norminette $(SRC) $(INC)
+	@-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
+	@-norminette $(SRC) $(INC)
 
 COMPILE_COMMANDS := $(OUT_DIR)/compile_commands.json
 lint:
-	if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
+	@if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
 		$(MAKE) $(COMPILE_COMMANDS); \
 	fi
-	if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
+	@if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
 		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(COMPILE_COMMANDS); \
 	fi
-	-clang-tidy -p $(OUT_DIR) $(SRC)
-	sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
-	sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
+	@-clang-tidy -p $(OUT_DIR) $(SRC)
+	@sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
+	@sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
 
 $(COMPILE_COMMANDS): fclean $(SRC) $(INC)
-	bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
-	compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
+	@bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
+	@compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
