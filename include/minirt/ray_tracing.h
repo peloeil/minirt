@@ -15,6 +15,7 @@
 
 # include <stdbool.h>
 # include <minirt/vec3.h>
+# include <minirt/scene.h>
 
 typedef struct s_quad_coefs
 {
