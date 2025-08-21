@@ -35,7 +35,7 @@ double	solve_plane_quadratic_equation(const t_line line, const t_plane plane)
 	const double	n_dot_c = vec3_dot_prod(plane.normal, plane.position);
 	const double	n_dot_d = vec3_dot_prod(plane.normal, line.direction);
 
-	if (n_dot_d != 0)
+	if (EPSILON < fabs(n_dot_d))
 		return ((n_dot_c - n_dot_a) / n_dot_d);
 	return (0);
 }
