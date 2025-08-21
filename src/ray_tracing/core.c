@@ -54,6 +54,5 @@ t_vec3	find_ray_intersection(const t_line line, const t_quad_eq quad_eq)
 		return (intersections1);
 	else if (quad_eq.root_neg_is_valid)
 		return (intersections2);
-	else
-		exit(1);
+	exit(1);
 }
