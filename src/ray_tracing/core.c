@@ -20,23 +20,20 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 	if (isless(0, discriminant))
 	{
 		return (t_quad_eq){
-			{
-				(-1 * coefs.b + sqrt(discriminant)) / (2 * coefs.a),
-				(-1 * coefs.b - sqrt(discriminant)) / (2 * coefs.a)
-			},
+			(-1 * coefs.b + sqrt(discriminant)) / (2 * coefs.a),
+			(-1 * coefs.b - sqrt(discriminant)) / (2 * coefs.a),
 			true
 		};
 	}
 	return (t_quad_eq){
-		{0, 0},
-		false
+		0, 0, false
 	};
 }
 
 t_vec3	solve_ray_intersection(const t_line line, const t_quad_eq quad_eq)
 {
-	const t_vec3	intersections1 = vec3_add(line.position, vec3_mult(quad_eq.roots[0], line.direction));
-	const t_vec3	intersections2 = vec3_add(line.position, vec3_mult(quad_eq.roots[1], line.direction));
+	const t_vec3	intersections1 = vec3_add(line.position, vec3_mult(quad_eq.root_pos, line.direction));
+	const t_vec3	intersections2 = vec3_add(line.position, vec3_mult(quad_eq.root_neg, line.direction));
 	const double	intersections_abs1 = vec3_abs(vec3_sub(intersections1, line.position));
 	const double	intersections_abs2 = vec3_abs(vec3_sub(intersections2, line.position));
 
