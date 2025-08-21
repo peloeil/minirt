@@ -23,14 +23,14 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 	quad_eq.root_neg = 0;
 	quad_eq.root_pos_is_valid = false;
 	quad_eq.root_neg_is_valid = false;
-	quad_eq.has_two_real_roots = false;
-	if (coefs.a != 0 && isless(0, discriminant))
+	quad_eq.has_real_roots = false;
+	if (fabs(coefs.a) < EPSILON && -EPSILON < discriminant)
 	{
 		quad_eq.root_pos = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
 		quad_eq.root_neg = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
 		quad_eq.root_pos_is_valid = (bool)(0 < quad_eq.root_pos);
 		quad_eq.root_neg_is_valid = (bool)(0 < quad_eq.root_neg);
-		quad_eq.has_two_real_roots = true;
+		quad_eq.has_real_roots = true;
 	}
 	return (quad_eq);
 }

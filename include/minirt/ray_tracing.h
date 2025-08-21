@@ -29,7 +29,7 @@ typedef struct s_quad_eq
 	double	root_neg;
 	bool	root_pos_is_valid;
 	bool	root_neg_is_valid;
-	bool	has_two_real_roots;
+	bool	has_real_roots;
 }	t_quad_eq;
 
 typedef struct s_ray
