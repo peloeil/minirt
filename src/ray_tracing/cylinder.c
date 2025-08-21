@@ -46,10 +46,10 @@ t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cylinder 
 int	validate_cylinder_vertical_position(const t_cylinder cylinder, const t_vec3 intersection)
 {
 	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.bottom_center);
-	const double	c_dot_p = vec3_dot_prod(c_to_p, c_to_p);
-	const double	height = sqrt(c_dot_p - pow(cylinder.radius, 2));
+	const double	projection = vec3_dot_prod(c_to_p, cylinder.axis);
+	const double	half_height = cylinder.height / 2;
 
-	if ((cylinder.height / 2) + EPSILON < height)
+	if (fabs(projection) <= half_height)
 		return (1);
 	return (0);
 }
