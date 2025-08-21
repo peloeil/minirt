@@ -38,7 +38,7 @@ INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		minirt.h \
 		vec3.h \
-		minirt/ray_tracing.h \
+		ray_tracing.h \
 	) \
 )
 TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
