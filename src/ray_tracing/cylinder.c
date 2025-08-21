@@ -13,6 +13,8 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
+static t_quad_eq	solve_cylinder_quadratic_equation(
+	const t_line line, const t_cylinder cylinder);
 static int	validate_cylinder_vertical_position(
 	const t_cylinder cylinder, const t_vec3 intersection);
 
