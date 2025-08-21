@@ -50,16 +50,18 @@ static t_quad_eq	solve_cylinder_quadratic_equation(
 	const double	d1_dot_d2 = vec3_dot_prod(line.direction, cylinder.axis);
 	const t_vec3	c1_sub_c2 = vec3_sub(line.position, cylinder.bottom_center);
 	const double	d2_dot_c1_sub_c2 = vec3_dot_prod(cylinder.axis, c1_sub_c2);
+	const double	d2_dot_c1_sub_c2_sq = pow(d2_dot_c1_sub_c2, 2);
 
 	coefs.a = 1 - pow(d1_dot_d2, 2);
 	coefs.b = \
 		2 * (
 			vec3_dot_prod(line.direction, c1_sub_c2)
-			- (d1_dot_d2 * d2_dot_c1_sub_c2));
+			- (d1_dot_d2 * d2_dot_c1_sub_c2) \
+		);
 	coefs.c = \
 		vec3_dot_prod(c1_sub_c2, c1_sub_c2)
-		+ pow(d2_dot_c1_sub_c2, 2)
-		- (2 * pow(d2_dot_c1_sub_c2, 2))
+		+ d2_dot_c1_sub_c2_sq
+		- (2 * d2_dot_c1_sub_c2_sq)
 		- pow(cylinder.radius, 2);
 	return (solve_quadratic_equation(coefs));
 }
