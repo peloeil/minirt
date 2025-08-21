@@ -14,11 +14,15 @@
 #include <minirt/ray_tracing.h>
 
 static t_quad_eq	solve_cylinder_quadratic_equation(
-	const t_line line, const t_cylinder cylinder);
-static int	validate_cylinder_vertical_position(
-	const t_cylinder cylinder, const t_vec3 intersection);
+						const t_line line,
+						const t_cylinder cylinder);
+static int			validate_cylinder_vertical_position(
+						const t_cylinder cylinder,
+						const t_vec3 intersection);
 
-t_ray	find_cylinder_ray_intersection(const t_line line, const t_cylinder cylinder)
+t_ray	find_cylinder_ray_intersection(
+			const t_line line,
+			const t_cylinder cylinder)
 {
 	t_ray			ray;
 	const t_quad_eq	quad_eq = solve_cylinder_quadratic_equation(line, cylinder);
@@ -26,7 +30,9 @@ t_ray	find_cylinder_ray_intersection(const t_line line, const t_cylinder cylinde
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.exists_intersection = false;
-	if (quad_eq.has_two_real_roots && quad_eq.root_pos_is_valid && quad_eq.root_neg_is_valid)
+	if (quad_eq.has_two_real_roots
+		&& quad_eq.root_pos_is_valid
+		&& quad_eq.root_neg_is_valid)
 	{
 		ray.intersection = find_ray_intersection(line, quad_eq);
 		if (validate_cylinder_vertical_position(cylinder, ray.intersection))
@@ -35,7 +41,9 @@ t_ray	find_cylinder_ray_intersection(const t_line line, const t_cylinder cylinde
 	return (ray);
 }
 
-static t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cylinder cylinder)
+static t_quad_eq	solve_cylinder_quadratic_equation(
+						const t_line line,
+						const t_cylinder cylinder)
 {
 	t_quad_coefs	coefs;
 	const double	d1_dot_d2 = vec3_dot_prod(line.direction, cylinder.axis);
@@ -43,12 +51,21 @@ static t_quad_eq	solve_cylinder_quadratic_equation(const t_line line, const t_cy
 	const double	d2_dot_c1_sub_c2 = vec3_dot_prod(cylinder.axis, c1_sub_c2);
 
 	coefs.a = 1 - pow(d1_dot_d2, 2);
-	coefs.b = 2 * ((vec3_dot_prod(line.direction, c1_sub_c2)) - (d1_dot_d2 * d2_dot_c1_sub_c2));
-	coefs.c = vec3_dot_prod(c1_sub_c2, c1_sub_c2) + pow(d2_dot_c1_sub_c2, 2) - (2 * pow(d2_dot_c1_sub_c2, 2)) - pow(cylinder.radius, 2);
+	coefs.b = \
+		2 * (
+			vec3_dot_prod(line.direction, c1_sub_c2)
+			- (d1_dot_d2 * d2_dot_c1_sub_c2));
+	coefs.c = \
+		vec3_dot_prod(c1_sub_c2, c1_sub_c2)
+		+ pow(d2_dot_c1_sub_c2, 2)
+		- (2 * pow(d2_dot_c1_sub_c2, 2))
+		- pow(cylinder.radius, 2);
 	return (solve_quadratic_equation(coefs));
 }
 
-static int	validate_cylinder_vertical_position(const t_cylinder cylinder, const t_vec3 intersection)
+static int	validate_cylinder_vertical_position(
+				const t_cylinder cylinder,
+				const t_vec3 intersection)
 {
 	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.bottom_center);
 	const double	projection = vec3_dot_prod(c_to_p, cylinder.axis);

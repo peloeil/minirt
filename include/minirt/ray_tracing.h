@@ -13,8 +13,8 @@
 #ifndef RAY_TRACING_H
 # define RAY_TRACING_H
 
-#include <stdbool.h>
-#include <minirt/vec3.h>
+# include <stdbool.h>
+# include <minirt/vec3.h>
 
 typedef struct s_quad_coefs
 {
@@ -44,12 +44,18 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs);
 t_vec3		find_ray_intersection(const t_line line, const t_quad_eq quad_eq);
 
 // plane.c
-t_ray		find_plane_ray_intersection(const t_line line, const t_plane plane);
+t_ray		find_plane_ray_intersection(
+				const t_line line,
+				const t_plane plane);
 
 // sphere.c
-t_ray		find_sphere_ray_intersection(const t_line line, const t_sphere sphere);
+t_ray		find_sphere_ray_intersection(
+				const t_line line,
+				const t_sphere sphere);
 
 // cylinder.c
-t_ray		find_cylinder_ray_intersection(const t_line line, const t_cylinder cylinder);
+t_ray		find_cylinder_ray_intersection(
+				const t_line line,
+				const t_cylinder cylinder);
 
 #endif

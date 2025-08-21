@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
+#include <minirt/scene.h>
 
 static double	solve_plane_quadratic_equation(
-	const t_line line, const t_plane plane);
+					const t_line line,
+					const t_plane plane);
 
 t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 {
@@ -26,13 +27,16 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 	ray.exists_intersection = false;
 	if (EPSILON < t_coef)
 	{
-		ray.intersection = vec3_add(line.position, vec3_mult(t_coef, line.direction));
+		ray.intersection = \
+			vec3_add(line.position, vec3_mult(t_coef, line.direction));
 		ray.exists_intersection = true;
 	}
 	return (ray);
 }
 
-static double	solve_plane_quadratic_equation(const t_line line, const t_plane plane)
+static double	solve_plane_quadratic_equation(
+					const t_line line,
+					const t_plane plane)
 {
 	const double	n_dot_a = vec3_dot_prod(plane.normal, line.position);
 	const double	n_dot_c = vec3_dot_prod(plane.normal, plane.position);
