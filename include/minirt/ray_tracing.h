@@ -16,6 +16,13 @@
 #include <stdbool.h>
 #include <minirt/vec3.h>
 
+typedef struct s_quad_coefs
+{
+	double	a;
+	double	b;
+	double	c;
+}	t_quad_coefs;
+
 typedef struct s_quad_eq
 {
 	double	a;
