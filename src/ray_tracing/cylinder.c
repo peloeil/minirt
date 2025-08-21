@@ -18,7 +18,7 @@ static t_quad_eq	solve_cylinder_quadratic_equation(
 static int	validate_cylinder_vertical_position(
 	const t_cylinder cylinder, const t_vec3 intersection);
 
-t_ray	solve_cylinder_ray_intersection(const t_line line, const t_cylinder cylinder)
+t_ray	find_cylinder_ray_intersection(const t_line line, const t_cylinder cylinder)
 {
 	t_ray			ray;
 	const t_quad_eq	quad_eq = solve_cylinder_quadratic_equation(line, cylinder);

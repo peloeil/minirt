@@ -16,7 +16,7 @@
 static double	solve_plane_quadratic_equation(
 	const t_line line, const t_plane plane);
 
-t_ray	solve_plane_ray_intersection(const t_line line, const t_plane plane)
+t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 {
 	t_ray			ray;
 	const double	t_coef = solve_plane_quadratic_equation(line, plane);

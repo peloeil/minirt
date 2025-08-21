@@ -16,7 +16,7 @@
 static t_quad_eq	solve_sphere_quadratic_equation(
 	const t_line line, const t_sphere sphere);
 
-t_ray	solve_sphere_ray_intersection(const t_line line, const t_sphere sphere)
+t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 {
 	t_ray			ray;
 	const t_quad_eq	quad_eq = solve_sphere_quadratic_equation(line, sphere);
