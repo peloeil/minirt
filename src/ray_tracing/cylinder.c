@@ -60,8 +60,7 @@ static t_quad_eq	solve_cylinder_quadratic_equation(
 		);
 	coefs.c = \
 		vec3_dot_prod(c1_sub_c2, c1_sub_c2)
-		+ d2_dot_c1_sub_c2_sq
-		- (2 * d2_dot_c1_sub_c2_sq)
+		- d2_dot_c1_sub_c2_sq
 		- pow(cylinder.radius, 2);
 	return (solve_quadratic_equation(coefs));
 }
