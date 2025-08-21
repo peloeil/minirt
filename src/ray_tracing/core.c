@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <stdlib.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
@@ -51,6 +52,8 @@ t_vec3	find_ray_intersection(const t_line line, const t_quad_eq quad_eq)
 	}
 	if (quad_eq.root_pos_is_valid)
 		return (intersections1);
-	else
+	else if (quad_eq.root_neg_is_valid)
 		return (intersections2);
+	else
+		exit(1);
 }
