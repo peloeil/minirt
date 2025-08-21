@@ -20,7 +20,6 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 	if (isless(0, discriminant))
 	{
 		return (t_quad_eq){
-			coefs.a, coefs.b, coefs.c,
 			{
 				(-1 * coefs.b + sqrt(discriminant)) / (2 * coefs.a),
 				(-1 * coefs.b - sqrt(discriminant)) / (2 * coefs.a)
@@ -29,7 +28,6 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 		};
 	}
 	return (t_quad_eq){
-		coefs.a, coefs.b, coefs.c,
 		{0, 0},
 		false
 	};

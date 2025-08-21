@@ -25,9 +25,6 @@ typedef struct s_quad_coefs
 
 typedef struct s_quad_eq
 {
-	double	a;
-	double	b;
-	double	c;
 	double	roots[2];
 	bool	has_two_real_roots;
 }	t_quad_eq;
