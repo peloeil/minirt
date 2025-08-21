@@ -34,7 +34,7 @@ t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs)
 	return (quad_eq);
 }
 
-t_vec3	solve_ray_intersection(const t_line line, const t_quad_eq quad_eq)
+t_vec3	find_ray_intersection(const t_line line, const t_quad_eq quad_eq)
 {
 	const t_vec3	intersections1 = vec3_add(line.position, vec3_mult(quad_eq.root_pos, line.direction));
 	const t_vec3	intersections2 = vec3_add(line.position, vec3_mult(quad_eq.root_neg, line.direction));

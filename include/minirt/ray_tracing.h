@@ -36,12 +36,12 @@ typedef struct s_ray
 {
 	t_line	line;
 	t_vec3	intersection;
-	bool	exits_intersection;
+	bool	exists_intersection;
 }	t_ray;
 
 // core.c
 t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs);
-t_vec3		solve_ray_intersection(const t_line line, const t_quad_eq quad_eq);
+t_vec3		find_ray_intersection(const t_line line, const t_quad_eq quad_eq);
 
 // plane.c
 t_ray		solve_plane_ray_intersection(const t_line line, const t_plane plane);

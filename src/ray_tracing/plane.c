@@ -20,11 +20,11 @@ t_ray	solve_plane_ray_intersection(const t_line line, const t_plane plane)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.exits_intersection = false;
+	ray.exists_intersection = false;
 	if (EPSILON < t_coef)
 	{
 		ray.intersection = vec3_add(line.position, vec3_mult(t_coef, line.direction));
-		ray.exits_intersection = true;
+		ray.exists_intersection = true;
 	}
 	return (ray);
 }

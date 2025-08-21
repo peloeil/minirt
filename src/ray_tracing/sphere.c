@@ -20,11 +20,11 @@ t_ray	solve_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.exits_intersection = false;
+	ray.exists_intersection = false;
 	if (quad_eq.has_two_real_roots && quad_eq.root_pos_is_valid && quad_eq.root_neg_is_valid)
 	{
-		ray.intersection = solve_ray_intersection(line, quad_eq);
-		ray.exits_intersection = true;
+		ray.intersection = find_ray_intersection(line, quad_eq);
+		ray.exists_intersection = true;
 	}
 	return (ray);
 }
