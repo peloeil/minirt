@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include <math.h>
-#include <minirt/ray_tracing.h>
+#include <minirt/vec3.h>
 #include <minirt/scene.h>
+#include <minirt/ray_tracing.h>
 
 static double	solve_plane_quadratic_equation(
 					const t_line line,

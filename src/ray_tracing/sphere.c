@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <minirt/vec3.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
