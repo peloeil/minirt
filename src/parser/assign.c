@@ -33,23 +33,23 @@ static t_tag	identify_tag(const char str[static 1])
 	exit(EXIT_FAILURE);
 }
 
-static t_tag	*allocate_node(const t_tag tag)
+static void	*allocate_node(const t_tag tag)
 {
-	t_tag	*res;
+	void	*res;
 
 	res = NULL;
 	if (tag == PLANE)
-		res = (t_tag *)ft_calloc(1, sizeof(t_plane));
+		res = ft_calloc(1, sizeof(t_plane));
 	else if (tag == SPHERE)
-		res = (t_tag *)ft_calloc(1, sizeof(t_sphere));
+		res = ft_calloc(1, sizeof(t_sphere));
 	else if (tag == CYLINDER)
-		res = (t_tag *)ft_calloc(1, sizeof(t_cylinder));
+		res = ft_calloc(1, sizeof(t_cylinder));
 	else if (tag == CAMERA)
-		res = (t_tag *)ft_calloc(1, sizeof(t_camera));
+		res = ft_calloc(1, sizeof(t_camera));
 	else if (tag == AMBIENT_LIGHT)
-		res = (t_tag *)ft_calloc(1, sizeof(t_ambient_light));
+		res = ft_calloc(1, sizeof(t_ambient_light));
 	else if (tag == LIGHT_SOURCE)
-		res = (t_tag *)ft_calloc(1, sizeof(t_light_source));
+		res = ft_calloc(1, sizeof(t_light_source));
 	if (res == NULL)
 		exit(EXIT_FAILURE);
 	return (res);
