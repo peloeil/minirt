@@ -89,7 +89,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		$(shell echo "$(SRC)" | tr " " "\n" | grep -n "$<" | cut -d : -f 1) \
 		$(NUM_FILES) \
 		$(shell echo $< | sed 's|$(SRC_DIR)/||g')
-	@$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
+	@-$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(LIB) $(OBJ)
 	@printf \
@@ -179,11 +179,13 @@ docker-run:
 		--user $(shell id -u):$(shell id -g) \
 		minirt
 
-# その他のルール
-.PHONY: debug test format check norm lint
-
-debug: CFLAGS += -fanalyzer -Og -ggdb3
+# デバッグ関連ルール
+.PHONY: debug fortify sanitize
+debug: CFLAGS += -fanalyzer -ggdb3
 debug: re
+
+# その他のルール
+.PHONY: test format check norm lint
 
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
