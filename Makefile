@@ -187,6 +187,9 @@ debug: re
 fortify: CFLAGS += -O2 -D_FORTIFY_SOURCE=2
 fortify: re
 
+sanitize: CFLAGS += -fsanitize=address,leak,undefined
+sanitize: re
+
 # その他のルール
 .PHONY: test format check norm lint
 
