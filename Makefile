@@ -184,6 +184,9 @@ docker-run:
 debug: CFLAGS += -fanalyzer -ggdb3
 debug: re
 
+fortify: CFLAGS += -O2 -D_FORTIFY_SOURCE=2
+fortify: re
+
 # その他のルール
 .PHONY: test format check norm lint
 
