@@ -71,7 +71,7 @@ LIB := $(LIBFT) $(MLX)
 .DEFAULT_GOAL := all
 CC := gcc
 # CC := cc
-CFLAGS := -Wall -Wextra -Werror -MMD -MP
+CFLAGS := -Wall -Wextra -Werror -MMD -MP -Og -ggdb3
 MLXFLAGS := -lX11 -lXext -lm
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
@@ -181,7 +181,7 @@ docker-run:
 
 # デバッグ関連ルール
 .PHONY: debug fortify sanitize
-debug: CFLAGS += -fanalyzer -ggdb3
+debug: CFLAGS += -fanalyzer
 debug: re
 
 fortify: CFLAGS += -O2 -D_FORTIFY_SOURCE=2
