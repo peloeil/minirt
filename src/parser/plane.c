@@ -12,7 +12,10 @@
 
 #include <minirt/scene.h>
 #include <minirt/parser.h>
+#include <minirt/vec3.h>
+#include <stdlib.h>
 #include <stddef.h>
+#include <math.h>
 
 void	assign_plane_info(
 			t_plane *const node,
@@ -22,7 +25,11 @@ void	assign_plane_info(
 	if (i == 1)
 		node->position = parse_vec3(info);
 	if (i == 2)
+	{
 		node->normal = parse_vec3(info);
+		if (fabs(vec3_abs(node->normal) - 1.0) > EPSILON)
+			exit(EXIT_FAILURE);
+	}
 	if (i == 3)
 		node->color = parse_color(info);
 }

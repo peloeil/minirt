@@ -12,6 +12,7 @@
 
 #include <minirt/scene.h>
 #include <minirt/parser.h>
+#include <stdlib.h>
 #include <stddef.h>
 
 void	assign_ambient_light_info(
@@ -20,7 +21,11 @@ void	assign_ambient_light_info(
 			const size_t i)
 {
 	if (i == 1)
+	{
 		node->brightness = parse_double(info);
+		if (node->brightness < 0.0 || 1.0 < node->brightness)
+			exit(EXIT_FAILURE);
+	}
 	if (i == 2)
 		node->color = parse_color(info);
 }

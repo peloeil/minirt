@@ -12,6 +12,7 @@
 
 #include <minirt/scene.h>
 #include <minirt/parser.h>
+#include <stdlib.h>
 #include <stddef.h>
 
 void	assign_sphere_info(
@@ -22,7 +23,11 @@ void	assign_sphere_info(
 	if (i == 1)
 		node->center = parse_vec3(info);
 	if (i == 2)
+	{
 		node->radius = parse_double(info);
+		if (node->radius < 0.0)
+			exit(EXIT_FAILURE);
+	}
 	if (i == 3)
 		node->color = parse_color(info);
 }
