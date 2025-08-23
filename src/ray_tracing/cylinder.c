@@ -18,7 +18,7 @@
 static t_quad_root	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder);
-static int			is_within_height_range(
+static bool			is_within_height_range(
 						const t_cylinder cylinder,
 						const t_vec3 intersection);
 
@@ -66,7 +66,7 @@ static t_quad_root	solve_cylinder_quadratic_equation(
 	return (solve_quadratic_equation(coefs));
 }
 
-static int	is_within_height_range(
+static bool	is_within_height_range(
 				const t_cylinder cylinder,
 				const t_vec3 intersection)
 {
@@ -75,6 +75,6 @@ static int	is_within_height_range(
 	const double	half_height = cylinder.height / 2;
 
 	if (fabs(projection) <= half_height)
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
