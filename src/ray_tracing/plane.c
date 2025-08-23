@@ -15,14 +15,14 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
-static double	solve_plane_quadratic_equation(
+static double	solve_plane_equation(
 					const t_line line,
 					const t_plane plane);
 
 t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 {
 	t_ray			ray;
-	const double	t_coef = solve_plane_quadratic_equation(line, plane);
+	const double	t_coef = solve_plane_equation(line, plane);
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
@@ -36,7 +36,7 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 	return (ray);
 }
 
-static double	solve_plane_quadratic_equation(
+static double	solve_plane_equation(
 					const t_line line,
 					const t_plane plane)
 {
@@ -46,5 +46,5 @@ static double	solve_plane_quadratic_equation(
 
 	if (EPSILON < fabs(n_dot_d))
 		return ((n_dot_c - n_dot_a) / n_dot_d);
-	return (0);
+	return (-1);
 }
