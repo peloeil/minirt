@@ -24,14 +24,14 @@ typedef struct s_quad_coefs
 	double	c;
 }	t_quad_coefs;
 
-typedef struct s_quad_eq
+typedef struct s_quad_root
 {
 	double	root_pos;
 	double	root_neg;
 	bool	root_pos_is_valid;
 	bool	root_neg_is_valid;
 	bool	has_real_roots;
-}	t_quad_eq;
+}	t_quad_root;
 
 typedef struct s_ray
 {
@@ -41,8 +41,10 @@ typedef struct s_ray
 }	t_ray;
 
 // core.c
-t_quad_eq	solve_quadratic_equation(const t_quad_coefs coefs);
-t_vec3		find_ray_intersection(const t_line line, const t_quad_eq quad_eq);
+t_quad_root	solve_quadratic_equation(const t_quad_coefs coefs);
+t_vec3		find_ray_intersection(
+				const t_line line,
+				const t_quad_root quad_root);
 
 // plane.c
 t_ray		find_plane_ray_intersection(

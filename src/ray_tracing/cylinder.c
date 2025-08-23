@@ -15,7 +15,7 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
-static t_quad_eq	solve_cylinder_quadratic_equation(
+static t_quad_root	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder);
 static int			validate_cylinder_vertical_position(
@@ -26,24 +26,25 @@ t_ray	find_cylinder_ray_intersection(
 			const t_line line,
 			const t_cylinder cylinder)
 {
-	t_ray			ray;
-	const t_quad_eq	quad_eq = solve_cylinder_quadratic_equation(line, cylinder);
+	t_ray				ray;
+	const t_quad_root	quad_root = \
+		solve_cylinder_quadratic_equation(line, cylinder);
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.exists_intersection = false;
-	if (quad_eq.has_real_roots
-		&& quad_eq.root_pos_is_valid
-		&& quad_eq.root_neg_is_valid)
+	if (quad_root.has_real_roots
+		&& quad_root.root_pos_is_valid
+		&& quad_root.root_neg_is_valid)
 	{
-		ray.intersection = find_ray_intersection(line, quad_eq);
+		ray.intersection = find_ray_intersection(line, quad_root);
 		if (validate_cylinder_vertical_position(cylinder, ray.intersection))
 			ray.exists_intersection = true;
 	}
 	return (ray);
 }
 
-static t_quad_eq	solve_cylinder_quadratic_equation(
+static t_quad_root	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder)
 {
