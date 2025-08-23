@@ -26,8 +26,8 @@ typedef struct s_quad_coefs
 
 typedef struct s_quad_root
 {
-	double	root_pos;
-	double	root_neg;
+	double	root_large;
+	double	root_small;
 }	t_quad_root;
 
 typedef struct s_ray

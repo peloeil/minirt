@@ -21,8 +21,8 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 	t_quad_root		quad_root;
 	const double	discriminant = pow(coefs.b, 2) - 4 * coefs.a * coefs.c;
 
-	quad_root.root_pos = 0;
-	quad_root.root_neg = 0;
+	quad_root.root_large = 0;
+	quad_root.root_small = 0;
 	if (coefs.a < 0)
 	{
 		coefs.a = -coefs.a;
@@ -31,8 +31,8 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 	}
 	if (EPSILON < fabs(coefs.a) && - EPSILON < discriminant)
 	{
-		quad_root.root_pos = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
-		quad_root.root_neg = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
+		quad_root.root_large = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
+		quad_root.root_small = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
 	}
 	return (quad_root);
 }
@@ -40,13 +40,13 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 t_vec3	find_ray_intersection(const t_line line, const t_quad_root quad_root)
 {
 	const t_vec3	intersections1 = \
-		vec3_add(line.position, vec3_mult(quad_root.root_neg, line.direction));
+		vec3_add(line.position, vec3_mult(quad_root.root_small, line.direction));
 	const t_vec3	intersections2 = \
-		vec3_add(line.position, vec3_mult(quad_root.root_pos, line.direction));
+		vec3_add(line.position, vec3_mult(quad_root.root_large, line.direction));
 
-	if (0.0 < quad_root.root_neg)
+	if (0.0 < quad_root.root_small)
 		return (intersections1);
-	if (0.0 < quad_root.root_pos)
+	if (0.0 < quad_root.root_large)
 		return (intersections2);
 	exit(EXIT_FAILURE);
 }
