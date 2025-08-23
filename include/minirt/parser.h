@@ -15,7 +15,7 @@
 
 # include <minirt/scene.h>
 
-# define BUF_SIZE (1025)
+# define BUF_SIZE 1025
 
 void	free_2darray(void **array);
 void	assign_info_to_obj(
