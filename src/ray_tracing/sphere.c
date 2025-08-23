@@ -28,10 +28,7 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.exists_intersection = false;
-	if (quad_root.has_real_roots
-		&& quad_root.root_pos_is_valid
-		&& quad_root.root_neg_is_valid
-	)
+	if (quad_root.root_pos_is_valid || quad_root.root_neg_is_valid)
 	{
 		ray.intersection = find_ray_intersection(line, quad_root);
 		ray.exists_intersection = true;
