@@ -24,6 +24,12 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		vec3_util1.c \
 		vec3_util2.c \
 	) \
+	$(addprefix ray_tracing/, \
+		core.c \
+		plane.c \
+		sphere.c \
+		cylinder.c \
+	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
@@ -32,6 +38,7 @@ INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		minirt.h \
 		vec3.h \
+		ray_tracing.h \
 	) \
 )
 TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
