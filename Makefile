@@ -180,9 +180,9 @@ docker-run:
 		minirt
 
 # デバッグ関連ルール
-.PHONY: debug fortify sanitize
-debug: CFLAGS += -fanalyzer
-debug: re
+.PHONY: analyze fortify sanitize
+analyze: CFLAGS += -fanalyzer
+analyze: re
 
 fortify: CFLAGS += -O2 -D_FORTIFY_SOURCE=2
 fortify: re
