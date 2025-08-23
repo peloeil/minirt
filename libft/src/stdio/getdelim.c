@@ -46,7 +46,7 @@ ssize_t	ft_getdelim(char **lineptr, size_t *n, int delim, int fd)
 			return (-1);
 		}
 		if (ft_str_push(&str, ch) == -1)
-			return (-1);
+			return (-2);
 		if (ch == (char)delim)
 			break ;
 	}

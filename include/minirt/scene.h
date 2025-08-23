@@ -16,7 +16,7 @@
 # include <libft/ft_list.h>
 # include <minirt/vec3.h>
 
-typedef	t_list s_scene;
+typedef t_list	t_scene;
 
 typedef enum e_tag
 {

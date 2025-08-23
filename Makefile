@@ -30,14 +30,30 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		sphere.c \
 		cylinder.c \
 	) \
+	$(addprefix parser/, \
+		parser.c \
+		assign.c \
+		ambient_light.c \
+		camera.c \
+		light.c \
+		sphere.c \
+		plane.c \
+		cylinder.c \
+		parse_rt_line.c \
+		parse_double.c \
+		parse_vec3.c \
+		parse_color.c \
+		free.c \
+	) \
 )
 SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
-		minirt.h \
 		vec3.h \
+		scene.h \
+		parser.h \
 		ray_tracing.h \
 	) \
 )

@@ -14,7 +14,6 @@
 # define VEC3_H
 
 # include <stdbool.h>
-# include <math.h>
 # define EPSILON 0.001
 
 typedef struct s_vec3
