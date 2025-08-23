@@ -12,6 +12,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 #include <libft/ft_ctype.h>
 
 static double	parse_integral_part(const char str[static 1])
@@ -22,7 +23,12 @@ static double	parse_integral_part(const char str[static 1])
 	i = 0;
 	res = 0.0;
 	while (ft_isdigit(str[i]))
-		res = 10 * res + str[i++] - '0';
+	{
+		if (res > (DBL_MAX - str[i] + '0') / 10)
+			exit(EXIT_FAILURE);
+		res = 10 * res + str[i] - '0';
+		i++;
+	}
 	return (res);
 }
 
