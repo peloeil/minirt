@@ -18,7 +18,7 @@
 static t_quad_root	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder);
-static int			validate_cylinder_vertical_position(
+static int			is_within_height_range(
 						const t_cylinder cylinder,
 						const t_vec3 intersection);
 
@@ -38,7 +38,7 @@ t_ray	find_cylinder_ray_intersection(
 		&& quad_root.root_neg_is_valid)
 	{
 		ray.intersection = find_ray_intersection(line, quad_root);
-		if (validate_cylinder_vertical_position(cylinder, ray.intersection))
+		if (is_within_height_range(cylinder, ray.intersection))
 			ray.exists_intersection = true;
 	}
 	return (ray);
@@ -66,7 +66,7 @@ static t_quad_root	solve_cylinder_quadratic_equation(
 	return (solve_quadratic_equation(coefs));
 }
 
-static int	validate_cylinder_vertical_position(
+static int	is_within_height_range(
 				const t_cylinder cylinder,
 				const t_vec3 intersection)
 {
