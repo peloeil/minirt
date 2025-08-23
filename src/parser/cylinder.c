@@ -23,7 +23,7 @@ void	assign_cylinder_info(
 			const size_t i)
 {
 	if (i == 1)
-		node->bottom_center = parse_vec3(info); // TODO: center
+		node->center = parse_vec3(info); // TODO: center
 	if (i == 2)
 	{
 		node->axis = parse_vec3(info);
