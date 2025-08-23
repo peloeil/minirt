@@ -72,7 +72,7 @@ t_scene	*parse_rt_line(
 	i = 0;
 	while (info[i] != NULL)
 	{
-		assign_info_to_obj(i, info[i], obj);
+		assign_info_to_obj(obj, info[i], i);
 		i++;
 	}
 	free_2darray((void **)info);

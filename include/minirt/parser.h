@@ -19,9 +19,9 @@
 
 void	free_2darray(void **array);
 void	assign_info_to_obj(
-			const size_t i,
+			t_scene *const obj,
 			const char info[static 1],
-			t_scene *const obj);
+			const size_t i);
 void	assign_ambient_light_info(
 			t_ambient_light *const node,
 			const char info[static 1],

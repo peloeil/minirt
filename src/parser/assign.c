@@ -56,9 +56,9 @@ static void	*allocate_node(const t_tag tag)
 }
 
 void	assign_info_to_obj(
-			const size_t i,
+			t_scene *const obj,
 			const char info[static 1],
-			t_scene *const obj)
+			const size_t i)
 {
 	t_tag	tag;
 	void	*node;
