@@ -48,7 +48,7 @@ static t_quad_root	solve_cylinder_quadratic_equation(
 {
 	t_quad_coefs	coefs;
 	const double	d1_dot_d2 = vec3_dot_prod(line.direction, cylinder.axis);
-	const t_vec3	c1_sub_c2 = vec3_sub(line.position, cylinder.bottom_center);
+	const t_vec3	c1_sub_c2 = vec3_sub(line.position, cylinder.center);
 	const double	d2_dot_c1_sub_c2 = vec3_dot_prod(cylinder.axis, c1_sub_c2);
 
 	coefs.a = 1 - pow(d1_dot_d2, 2);
@@ -68,7 +68,7 @@ static bool	is_within_height_range(
 				const t_cylinder cylinder,
 				const t_vec3 intersection)
 {
-	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.bottom_center);
+	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.center);
 	const double	projection = vec3_dot_prod(c_to_p, cylinder.axis);
 	const double	half_height = cylinder.height / 2;
 

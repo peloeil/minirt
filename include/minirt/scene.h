@@ -55,10 +55,10 @@ typedef struct s_sphere
 typedef struct s_cylinder
 {
 	t_tag	tag;
+	t_vec3	center;
+	t_vec3	axis;
 	double	radius;
 	double	height;
-	t_vec3	bottom_center;
-	t_vec3	axis;
 	int		color;
 }	t_cylinder;
 
