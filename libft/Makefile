@@ -3,9 +3,9 @@ ESC := $(shell printf '\033')
 END := $(ESC)[m
 CLEAR := $(ESC)[K
 
-RED := $(ESC)[31m
-GREEN := $(ESC)[32m
-CYAN := $(ESC)[36m
+BRIGHT_RED := $(ESC)[91m
+BRIGHT_GREEN := $(ESC)[92m
+BRIGHT_CYAN := $(ESC)[96m
 
 # ディレクトリ設定
 OUT_DIR := .
@@ -136,7 +136,7 @@ INCFLAGS := $(addprefix -I, \
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	@mkdir -p $(@D)
 	@printf \
-		"\r$(CLEAR)%-15s: [%2d/%2d] $(GREEN)compiling $(CYAN)%s$(END)" \
+		"\r$(CLEAR)%-15s: [%2d/%2d] $(BRIGHT_GREEN)compiling $(BRIGHT_CYAN)%s$(END)" \
 		$(LIBRARY) \
 		$(shell echo "$(SRC)" | tr " " "\n" | grep -n "$<" | cut -d : -f 1) \
 		$(NUM_FILES) \
@@ -144,7 +144,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@printf "\r$(CLEAR)%-15s: $(GREEN)compilation finished$(END)\n" $(LIBRARY)
+	@printf "\r$(CLEAR)%-15s: $(BRIGHT_GREEN)compilation finished$(END)\n" $(LIBRARY)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@printf "%-15s: create $(NAME)\n" $(LIBRARY)
 
@@ -165,7 +165,7 @@ re: fclean all
 # その他のルール
 .PHONY: norm test
 norm:
-	norminette $(SRC) $(INC)
+	@norminette $(SRC) $(INC)
 
 test: $(NAME) $(TEST) $(TEST_UTILS)
 	@printf "%-15s: start test\n" $(LIBRARY)
@@ -173,11 +173,11 @@ test: $(NAME) $(TEST) $(TEST_UTILS)
 	@for test in $(TEST); do \
 		$(CC) $(CFLAGS) -I $(INC_DIR) -I $(SRC_DIR) "$$test" $(TEST_UTILS) $(NAME) -o "$${test%.c}_"; \
 		test_name=$$(echo "$$test" | sed "s|$(TEST_DIR)/||"); \
-		printf "%-15s: $(CYAN)%-30s$(END) ... " $(LIBRARY) "$$test_name"; \
+		printf "%-15s: $(BRIGHT_CYAN)%-30s$(END) ... " $(LIBRARY) "$$test_name"; \
 		if valgrind --leak-check=full -q ./$${test%.c}_ 1>>result.log 2>&1; then \
-			echo "$(GREEN)OK$(END)"; \
+			echo "$(BRIGHT_GREEN)OK$(END)"; \
 		else \
-			echo "$(RED)KO (status: $$?)$(END)"; \
+			echo "$(BRIGHT_RED)KO (status: $$?)$(END)"; \
 		fi; \
 		$(RM) $${test%.c}_; \
 	done;

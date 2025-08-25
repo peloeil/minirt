@@ -1,11 +1,13 @@
 # 出力の設定
 ESC := $(shell printf "\033")
 END := $(ESC)[m
-RED := $(ESC)[91m
-GREEN := $(ESC)[92m
+BRIGHT_RED := $(ESC)[91m
+BRIGHT_GREEN := $(ESC)[92m
+BRIGHT_CYAN := $(ESC)[96m
+CLEAR := $(ESC)[K
 
 # ディレクトリ設定
-OUT_DIR := $(shell pwd)
+OUT_DIR := $(CURDIR)
 ifneq ($(shell echo -n $$IN_DOCKER),)
 	OUT_DIR := /tmp/miniRT
 endif
@@ -18,8 +20,7 @@ TEST_DIR := ./test
 
 # ファイル
 NAME := $(OUT_DIR)/miniRT
-SRC := $(addprefix $(SRC_DIR)/, \
-	main.c \
+SRC_TEST := $(addprefix $(SRC_DIR)/, \
 	$(addprefix vec3/, \
 		vec3_util1.c \
 		vec3_util2.c \
@@ -46,9 +47,10 @@ SRC := $(addprefix $(SRC_DIR)/, \
 		free.c \
 	) \
 )
-SRC_TEST := $(filter-out $(SRC_DIR)/main.c, $(SRC))
-OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+SRC := $(SRC_TEST) $(SRC_DIR)/main.c
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
+OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+DEPEND := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 INC := $(addprefix $(INC_DIR)/, \
 	$(addprefix minirt/, \
 		vec3.h \
@@ -58,6 +60,7 @@ INC := $(addprefix $(INC_DIR)/, \
 	) \
 )
 TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
+NUM_FILES := $(words $(SRC))
 
 # ライブラリ
 LIBFT := $(OUT_DIR)/libft/libft.a
@@ -68,7 +71,7 @@ LIB := $(LIBFT) $(MLX)
 .DEFAULT_GOAL := all
 CC := gcc
 # CC := cc
-CFLAGS := -Wall -Wextra -Werror -ggdb3
+CFLAGS := -Wall -Wextra -Werror -MMD -MP -Og -ggdb3
 MLXFLAGS := -lX11 -lXext -lm
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
@@ -76,36 +79,54 @@ INCFLAGS := $(addprefix -I, \
 	$(MLX_DIR) \
 )
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
+-include $(DEPEND)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@printf \
+		"\r$(CLEAR)%-15s: [%2d/%2d] $(BRIGHT_GREEN)compiling $(BRIGHT_CYAN)%s$(END)" \
+		$(shell basename $(NAME)) \
+		$(shell echo "$(SRC)" | tr " " "\n" | grep -n "$<" | cut -d : -f 1) \
+		$(NUM_FILES) \
+		$(shell echo $< | sed 's|$(SRC_DIR)/||g')
+	@-$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(LIB) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLXFLAGS) -o $(NAME)
+	@printf \
+		"\r$(CLEAR)%-15s: $(BRIGHT_GREEN)compilation finished$(END)\n" \
+		$(shell basename $(NAME))
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLXFLAGS) -o $(NAME)
+	@printf "%-15s: create $(NAME)\n" $(shell basename $(NAME))
 
 $(LIBFT):
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft all
+	@$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR="$(OUT_DIR)/libft" CC="$(CC)" all
 
 $(MLX): | $(MLX_DIR)
-	$(MAKE) --directory=$(MLX_DIR) --no-print-directory all
+	@$(MAKE) --directory=$(MLX_DIR) --no-print-directory all >/dev/null
+	@printf "%-15s: create $(MLX)\n" $(shell basename $(NAME))
 
 $(MLX_DIR):
-	git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
+	@git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
 
 # 必須ルール
 .PHONY: all clean fclean re
 all: $(NAME)
 
 clean: | $(MLX_DIR)
-	$(RM) -r $(OBJ_DIR)
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
-	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@$(RM) -r $(OBJ_DIR)
+	@printf "%-15s: remove $(OBJ_DIR)\n" $(shell basename $(NAME))
+	@$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft clean
+	@-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@printf "%-15s: remove $(MLX_DIR)\n" $(shell basename $(NAME))
 
 fclean: | $(MLX_DIR)
-	$(RM) -r $(OBJ_DIR)
-	$(RM) $(NAME)
-	$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
-	-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@$(RM) -r $(OBJ_DIR)
+	@printf "%-15s: remove $(OBJ_DIR)\n" $(shell basename $(NAME))
+	@$(RM) $(NAME)
+	@printf "%-15s: remove $(NAME)\n" $(shell basename $(NAME))
+	@$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory OUT_DIR=$(OUT_DIR)/libft fclean
+	@-$(MAKE) --directory=$(MLX_DIR) --no-print-directory clean
+	@printf "%-15s: remove $(MLX_DIR)\n" $(shell basename $(NAME))
 
 re: fclean all
 
@@ -158,8 +179,20 @@ docker-run:
 		--user $(shell id -u):$(shell id -g) \
 		minirt
 
+# デバッグ関連ルール
+.PHONY: analyze fortify sanitize
+analyze: CFLAGS += -fanalyzer
+analyze: re
+
+fortify: CFLAGS += -O2 -D_FORTIFY_SOURCE=2
+fortify: re
+
+sanitize: CFLAGS += -fsanitize=address,leak,undefined
+sanitize: re
+
 # その他のルール
 .PHONY: test format check norm lint
+
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
@@ -170,35 +203,35 @@ test: $(LIB) $(OBJ_TEST)
 			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$out_file; \
 			printf "%-30s: " "$$test"; \
 			if $$out_file >> $(OUT_DIR)/result.log 2>&1; then \
-				printf "$(GREEN)SUCCESS$(END)\n"; \
+				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
 			else \
-				printf "$(RED)FAILED$(END)\n"; \
+				printf "$(BRIGHT_RED)FAILED$(END)\n"; \
 			fi; \
 		fi; \
 	done;
-	@$(RM) -rf $(OUT_DIR)/out \
+	@$(RM) -rf $(OUT_DIR)/out
 
 format: $(SRC)
-	c_formatter_42 $(SRC)
+	@c_formatter_42 $(SRC)
 
 check: norm lint
 
 norm:
-	-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
-	-norminette $(SRC) $(INC)
+	@-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
+	@-norminette $(SRC) $(INC)
 
 COMPILE_COMMANDS := $(OUT_DIR)/compile_commands.json
 lint:
-	if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
+	@if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
 		$(MAKE) $(COMPILE_COMMANDS); \
 	fi
-	if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
+	@if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
 		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(COMPILE_COMMANDS); \
 	fi
-	-clang-tidy -p $(OUT_DIR) $(SRC)
-	sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
-	sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
+	@-clang-tidy -p $(OUT_DIR) $(SRC)
+	@sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
+	@sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
 
 $(COMPILE_COMMANDS): fclean $(SRC) $(INC)
-	bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
-	compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
+	@bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
+	@compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
