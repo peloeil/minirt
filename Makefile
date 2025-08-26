@@ -199,10 +199,14 @@ test: $(LIB) $(OBJ_TEST)
 	@mkdir -p $(OUT_DIR)/out
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
-			out_file=$(OUT_DIR)/out/$$(basename $$test .c).out; \
-			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$out_file; \
+			test_name=$$(basename $$test .c); \
+			exec_file=$(OUT_DIR)/out/$${test_name}.out; \
+			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$exec_file; \
 			printf "%-30s: " "$$test"; \
-			if $$out_file >> $(OUT_DIR)/result.log 2>&1; then \
+			if [ $$test_name = "parser" ]; then \
+				exec_file="./test/parser/parser.sh $$exec_file"; \
+			fi; \
+			if $$exec_file >> $(OUT_DIR)/result.log 2>&1; then \
 				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
 			else \
 				printf "$(BRIGHT_RED)FAILED$(END)\n"; \
