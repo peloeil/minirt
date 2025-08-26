@@ -197,6 +197,7 @@ test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
 	@mkdir -p $(OUT_DIR)/exec
+	@$(RM) -rf $(OUT_DIR)/log
 	@mkdir -p $(OUT_DIR)/log
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
@@ -205,7 +206,7 @@ test: $(LIB) $(OBJ_TEST)
 			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$exec_file; \
 			printf "%-30s: " "$$test"; \
 			if [ $$test_name = "parser" ]; then \
-				exec_file="./test/parser/parser.sh $$exec_file"; \
+				exec_file="./test/parser/parser.sh $$exec_file $(OUT_DIR)/log"; \
 			fi; \
 			if $$exec_file > $(OUT_DIR)/log/$${test_name}.log 2>&1; then \
 				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
