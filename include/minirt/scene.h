@@ -73,8 +73,8 @@ typedef struct s_camera
 typedef struct s_ambient_light
 {
 	t_tag	tag;
-	int		color;
 	double	brightness;
+	int		color;
 }	t_ambient_light;
 
 typedef struct s_light_source

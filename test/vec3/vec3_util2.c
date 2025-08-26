@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <minirt/vec3.h>
 
 void	assert_result(char *name, bool result, bool expected)

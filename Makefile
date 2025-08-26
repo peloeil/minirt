@@ -196,20 +196,27 @@ sanitize: re
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
-	@mkdir -p $(OUT_DIR)/out
+	@mkdir -p $(OUT_DIR)/exec
+	@$(RM) -rf $(OUT_DIR)/log
+	@mkdir -p $(OUT_DIR)/log
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
-			out_file=$(OUT_DIR)/out/$$(basename $$test .c).out; \
-			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$out_file; \
+			test_name=$$(basename $$test .c); \
+			exec_file=$(OUT_DIR)/exec/$${test_name}.exec; \
+			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$exec_file; \
 			printf "%-30s: " "$$test"; \
-			if $$out_file >> $(OUT_DIR)/result.log 2>&1; then \
+			case "$$test" in \
+				./test/parser/parser.c ) \
+					exec_file="./test/parser/parser.sh $$exec_file $(OUT_DIR)/log"; \
+			esac; \
+			if $$exec_file > $(OUT_DIR)/log/$${test_name}.log 2>&1; then \
 				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
 			else \
 				printf "$(BRIGHT_RED)FAILED$(END)\n"; \
 			fi; \
 		fi; \
 	done;
-	@$(RM) -rf $(OUT_DIR)/out
+	@$(RM) -rf $(OUT_DIR)/exec
 
 format: $(SRC)
 	@c_formatter_42 $(SRC)
