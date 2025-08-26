@@ -24,6 +24,7 @@ run_parse_test () {
             printf "%-30s: %s\n" "$RT_FILE" "${BRIGHT_GREEN}SUCCESS${END}"
         else
             printf "%-30s: %s\n" "$RT_FILE" "${BRIGHT_RED}FAILED${END}"
+            exit 1
         fi
         NUM=$((NUM + 1))
     done
