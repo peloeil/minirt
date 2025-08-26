@@ -197,6 +197,7 @@ test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
 	@$(RM) $(OUT_DIR)/result.log
 	@mkdir -p $(OUT_DIR)/out
+	@mkdir -p $(OUT_DIR)/log
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
 			test_name=$$(basename $$test .c); \
@@ -206,7 +207,7 @@ test: $(LIB) $(OBJ_TEST)
 			if [ $$test_name = "parser" ]; then \
 				exec_file="./test/parser/parser.sh $$exec_file"; \
 			fi; \
-			if $$exec_file >> $(OUT_DIR)/result.log 2>&1; then \
+			if $$exec_file > $(OUT_DIR)/log/$${test_name}.log 2>&1; then \
 				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
 			else \
 				printf "$(BRIGHT_RED)FAILED$(END)\n"; \
