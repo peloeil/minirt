@@ -84,7 +84,6 @@ static void print_scene_list(const t_scene *scene)
 {
     t_tag tag;
     const t_scene *current;
-    const t_scene *head = scene;
 
     current = scene;
     while (true)
@@ -103,7 +102,7 @@ static void print_scene_list(const t_scene *scene)
         if (tag == CYLINDER)
             print_cylinder_info(*(t_cylinder *)scene->content);
         current = current->next;
-        if (head == current)
+        if (scene == current)
             break ;
     }
 }
