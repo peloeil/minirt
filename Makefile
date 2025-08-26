@@ -205,9 +205,10 @@ test: $(LIB) $(OBJ_TEST)
 			exec_file=$(OUT_DIR)/exec/$${test_name}.exec; \
 			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$exec_file; \
 			printf "%-30s: " "$$test"; \
-			if [ $$test_name = "parser" ]; then \
-				exec_file="./test/parser/parser.sh $$exec_file $(OUT_DIR)/log"; \
-			fi; \
+			case "$$test" in \
+				./test/parser/parser.c ) \
+					exec_file="./test/parser/parser.sh $$exec_file $(OUT_DIR)/log"; \
+			esac; \
 			if $$exec_file > $(OUT_DIR)/log/$${test_name}.log 2>&1; then \
 				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
 			else \
