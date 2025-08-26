@@ -90,17 +90,17 @@ static void print_scene_list(const t_scene *scene)
     {
         tag = *(t_tag *)current->content;
         if (tag == AMBIENT_LIGHT)
-            print_ambient_light_info(*(t_ambient_light *)scene->content);
+            print_ambient_light_info(*(t_ambient_light *)current->content);
         if (tag == CAMERA)
-            print_camera_info(*(t_camera *)scene->content);
+            print_camera_info(*(t_camera *)current->content);
         if (tag == LIGHT_SOURCE)
-            print_light_source_info(*(t_light_source *)scene->content);
+            print_light_source_info(*(t_light_source *)current->content);
         if (tag == SPHERE)
-            print_sphere_info(*(t_sphere *)scene->content);
+            print_sphere_info(*(t_sphere *)current->content);
         if (tag == PLANE)
-            print_plane_info(*(t_plane *)scene->content);
+            print_plane_info(*(t_plane *)current->content);
         if (tag == CYLINDER)
-            print_cylinder_info(*(t_cylinder *)scene->content);
+            print_cylinder_info(*(t_cylinder *)current->content);
         current = current->next;
         if (scene == current)
             break ;
