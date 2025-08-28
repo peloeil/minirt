@@ -13,6 +13,7 @@
 #ifndef SCENE_H
 # define SCENE_H
 
+# include <stdint.h>
 # include <libft/ft_list.h>
 # include <minirt/vec3.h>
 
@@ -29,6 +30,13 @@ typedef enum e_tag
 	LIGHT_SOURCE
 }	t_tag;
 
+typedef struct s_color
+{
+	uint8_t	R;
+	uint8_t	G;
+	uint8_t	B;
+}	t_color;
+
 typedef struct s_line
 {
 	t_tag	tag;
@@ -41,7 +49,7 @@ typedef struct s_plane
 	t_tag	tag;
 	t_vec3	position;
 	t_vec3	normal;
-	int		color;
+	t_color	color;
 }	t_plane;
 
 typedef struct s_sphere
@@ -49,7 +57,7 @@ typedef struct s_sphere
 	t_tag	tag;
 	double	radius;
 	t_vec3	center;
-	int		color;
+	t_color	color;
 }	t_sphere;
 
 typedef struct s_cylinder
@@ -59,7 +67,7 @@ typedef struct s_cylinder
 	t_vec3	axis;
 	double	radius;
 	double	height;
-	int		color;
+	t_color	color;
 }	t_cylinder;
 
 typedef struct s_camera
@@ -74,7 +82,7 @@ typedef struct s_ambient_light
 {
 	t_tag	tag;
 	double	brightness;
-	int		color;
+	t_color	color;
 }	t_ambient_light;
 
 typedef struct s_light_source
@@ -82,7 +90,7 @@ typedef struct s_light_source
 	t_tag	tag;
 	t_vec3	position;
 	double	brightness;
-	int		color;
+	t_color	color;
 }	t_light_source;
 
 #endif

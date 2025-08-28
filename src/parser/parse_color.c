@@ -35,19 +35,23 @@ static uint8_t	parse_8bit_value(const char str[static 1])
 	return ((uint8_t)res);
 }
 
-int	parse_color(const char str[static 1])
+t_color	parse_color(const char str[static 1])
 {
 	const char *const *const	rgb = (const char **)ft_split(str, ',');
 	size_t						i;
-	int							color;
+	t_color						color;
 
 	if (rgb == NULL)
 		exit(EXIT_FAILURE);
 	i = 0;
-	color = 0x00000000;
 	while (rgb[i] != NULL)
 	{
-		color = (color << 8) + parse_8bit_value(rgb[i]);
+		if (i == 0)
+			color.R = parse_8bit_value(rgb[i]);
+		if (i == 1)
+			color.G = parse_8bit_value(rgb[i]);
+		if (i == 2)
+			color.B = parse_8bit_value(rgb[i]);
 		i++;
 	}
 	if (i != 3)

@@ -46,7 +46,7 @@ void	assign_cylinder_info(
 			t_cylinder *const node,
 			const char info[static 1],
 			const size_t i);
-int		parse_color(const char str[static 1]);
+t_color	parse_color(const char str[static 1]);
 t_vec3	parse_vec3(const char str[static 1]);
 double	parse_double(const char str[static 1]);
 t_scene	*parse_rt_line(
