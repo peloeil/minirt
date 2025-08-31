@@ -34,7 +34,7 @@ typedef struct s_ray
 {
 	t_line	line;
 	t_vec3	intersection;
-	bool	exists_intersection;
+	bool	exists;
 }	t_ray;
 
 // core.c

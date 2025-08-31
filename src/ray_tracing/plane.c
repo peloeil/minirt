@@ -26,12 +26,12 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.exists_intersection = false;
+	ray.exists = false;
 	if (EPSILON < t_coef)
 	{
 		ray.intersection = \
 			vec3_add(line.position, vec3_mult(t_coef, line.direction));
-		ray.exists_intersection = true;
+		ray.exists = true;
 	}
 	return (ray);
 }
