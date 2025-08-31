@@ -32,6 +32,7 @@ t_ray	find_cylinder_ray_intersection(
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
+	ray.target_object = NULL;
 	ray.exists = false;
 	if (0 < quad_root.root_large)
 	{

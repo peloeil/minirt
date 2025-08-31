@@ -26,6 +26,7 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
+	ray.target_object = NULL;
 	ray.exists = false;
 	if (EPSILON < t_coef)
 	{

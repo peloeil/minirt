@@ -34,6 +34,7 @@ typedef struct s_ray
 {
 	t_line	line;
 	t_vec3	intersection;
+	t_scene	*target_object;
 	bool	exists;
 }	t_ray;
 

@@ -27,6 +27,7 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
+	ray.target_object = NULL;
 	ray.exists = false;
 	if (0 < quad_root.root_large)
 	{
