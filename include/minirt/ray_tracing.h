@@ -60,4 +60,10 @@ t_ray		find_cylinder_ray_intersection(
 				const t_line line,
 				const t_cylinder cylinder);
 
+// phong_reflection.c
+t_color		calculate_phong_reflection(
+				const t_ray ray,
+				const t_ambient_light amb_light,
+				const t_light_source light_source);
+
 #endif
