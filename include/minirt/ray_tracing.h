@@ -35,7 +35,7 @@ typedef struct s_ray
 	t_line	line;
 	t_vec3	intersection;
 	t_vec3	normal;
-	t_color	object_color;
+	t_color	obj_color;
 	bool	exists;
 }	t_ray;
 
