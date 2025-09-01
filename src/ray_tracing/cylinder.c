@@ -22,7 +22,7 @@ static bool			is_within_height_range(
 						const t_cylinder cylinder,
 						const t_vec3 intersection);
 static t_vec3		solve_cylinder_normal_vector(
-						const t_cylinder cylinder, 
+						const t_cylinder cylinder,
 						const t_vec3 intersection);
 
 t_ray	find_cylinder_ray_intersection(
@@ -42,7 +42,7 @@ t_ray	find_cylinder_ray_intersection(
 	{
 		ray.intersection = find_ray_intersection(line, quad_root);
 		if (!is_within_height_range(cylinder, ray.intersection))
-			return (ray);    // [TODO] ここに上面または底面との交差点算出を実装する
+			return (ray);
 		ray.normal = solve_cylinder_normal_vector(cylinder, ray.intersection);
 		ray.object_color = cylinder.color;
 		ray.exists = true;
@@ -86,15 +86,17 @@ static bool	is_within_height_range(
 }
 
 static t_vec3	solve_cylinder_normal_vector(
-					const t_cylinder cylinder, 
+					const t_cylinder cylinder,
 					const t_vec3 intersection)
 {
 	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.center);
 
-	return (vec3_norm(
-		vec3_sub(
-			c_to_p,
-			vec3_mult(vec3_dot_prod(c_to_p, cylinder.axis), cylinder.axis)
+	return (
+		vec3_norm(
+			vec3_sub(
+				c_to_p,
+				vec3_mult(vec3_dot_prod(c_to_p, cylinder.axis), cylinder.axis)
+			)
 		)
-	));
+	);
 }
