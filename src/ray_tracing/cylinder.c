@@ -36,7 +36,7 @@ t_ray	find_cylinder_ray_intersection(
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.normal = vec3_init(0, 0, 0);
-	ray.target_object = NULL;
+	ray.object_color = (t_color){0, 0, 0};
 	ray.exists = false;
 	if (0 < quad_root.root_large)
 	{
@@ -44,6 +44,7 @@ t_ray	find_cylinder_ray_intersection(
 		if (!is_within_height_range(cylinder, ray.intersection))
 			return (ray);    // [TODO] ここに上面または底面との交差点算出を実装する
 		ray.normal = solve_cylinder_normal_vector(cylinder, ray.intersection);
+		ray.object_color = cylinder.color;
 		ray.exists = true;
 	}
 	return (ray);
