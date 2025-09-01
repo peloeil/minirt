@@ -27,7 +27,7 @@ static void print_vector_obj(const char str[static 1], const t_vec3 vec)
 
 static void print_color_obj(const char str[static 1], const t_color color)
 {
-    printf("%-24s: RGB = (%d, %d, %d)\n\n", str, color.R, color.G, color.B);
+    printf("%-24s: RGB = (%d, %d, %d)\n\n", str, color.red, color.green, color.blue);
 }
 
 static void print_ambient_light_info(const t_ambient_light ambient_light)

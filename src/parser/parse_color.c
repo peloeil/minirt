@@ -47,11 +47,11 @@ t_color	parse_color(const char str[static 1])
 	while (rgb[i] != NULL)
 	{
 		if (i == 0)
-			color.R = parse_8bit_value(rgb[i]);
+			color.red = parse_8bit_value(rgb[i]);
 		if (i == 1)
-			color.G = parse_8bit_value(rgb[i]);
+			color.green = parse_8bit_value(rgb[i]);
 		if (i == 2)
-			color.B = parse_8bit_value(rgb[i]);
+			color.blue = parse_8bit_value(rgb[i]);
 		i++;
 	}
 	if (i != 3)
