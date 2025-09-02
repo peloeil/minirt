@@ -20,9 +20,11 @@ static t_color	calculate_ambient_reflection(
 					const t_ambient_light amb_light);
 static t_color	calculate_diffuse_reflection(
 					const t_ray ray,
+					const t_vec3 to_light,
 					const t_light_source light_source);
 static t_color	calculate_specular_reflection(
 					const t_ray ray,
+					const t_vec3 to_light,
 					const t_light_source light_source,
 					const double smoothness);
 
@@ -31,12 +33,14 @@ t_color	calculate_phong_reflection(
 			const t_ambient_light amb_light,
 			const t_light_source light_source)
 {
+	const t_vec3	to_light = \
+		vec3_norm(vec3_sub(light_source.position, ray.intersection));
 	const t_color	i_ambient = \
 		calculate_ambient_reflection(ray.obj_color, amb_light);
 	const t_color	i_diffuse = \
-		calculate_diffuse_reflection(ray, light_source);
+		calculate_diffuse_reflection(ray, to_light, light_source);
 	const t_color	i_specular = \
-		calculate_specular_reflection(ray, light_source, 1);
+		calculate_specular_reflection(ray, to_light, light_source, 1);
 
 	return ((t_color){
 		(int)fmin(i_ambient.red + i_diffuse.red + i_specular.red, 255),
@@ -64,6 +68,7 @@ static t_color	calculate_ambient_reflection(
 
 static t_color	calculate_diffuse_reflection(
 					const t_ray ray,
+					const t_vec3 to_light,
 					const t_light_source light_source)
 {
 	const t_color	intensity = (t_color){
@@ -71,8 +76,6 @@ static t_color	calculate_diffuse_reflection(
 		(int)fmin(light_source.color.green * light_source.brightness, 255),
 		(int)fmin(light_source.color.blue * light_source.brightness, 255) \
 	};
-	const t_vec3	to_light = \
-		vec3_norm(vec3_sub(light_source.position, ray.intersection));
 	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.normal, to_light));
 
 	return ((t_color){
@@ -84,6 +87,7 @@ static t_color	calculate_diffuse_reflection(
 
 static t_color	calculate_specular_reflection(
 					const t_ray ray,
+					const t_vec3 to_light,
 					const t_light_source light_source,
 					const double smoothness)
 {
@@ -92,8 +96,6 @@ static t_color	calculate_specular_reflection(
 		(int)fmin(light_source.color.green * light_source.brightness, 255),
 		(int)fmin(light_source.color.blue * light_source.brightness, 255) \
 	};
-	const t_vec3	to_light = \
-		vec3_norm(vec3_sub(light_source.position, ray.intersection));
 	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.normal, to_light));
 	const t_vec3	reflection = \
 		vec3_norm(vec3_sub(vec3_mult(2 * n_dot_l, ray.normal), to_light));
