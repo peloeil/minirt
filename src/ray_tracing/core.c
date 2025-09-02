@@ -39,10 +39,12 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 
 t_vec3	find_ray_intersection(const t_line line, const t_quad_root quad_root)
 {
-	const t_vec3	intersections1 = \
-		vec3_add(line.position, vec3_mult(quad_root.root_small, line.direction));
-	const t_vec3	intersections2 = \
-		vec3_add(line.position, vec3_mult(quad_root.root_large, line.direction));
+	const t_vec3	intersections1 = vec3_add(\
+		line.position, vec3_mult(quad_root.root_small, line.direction) \
+	);
+	const t_vec3	intersections2 = vec3_add(\
+		line.position, vec3_mult(quad_root.root_large, line.direction) \
+	);
 
 	if (0.0 < quad_root.root_small)
 		return (intersections1);
