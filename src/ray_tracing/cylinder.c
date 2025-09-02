@@ -35,7 +35,7 @@ t_ray	find_cylinder_ray_intersection(
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.normal = vec3_init(0, 0, 0);
+	ray.obj_normal = vec3_init(0, 0, 0);
 	ray.obj_color = (t_color){0, 0, 0};
 	ray.exists = false;
 	if (0 < quad_root.root_large)
@@ -43,7 +43,7 @@ t_ray	find_cylinder_ray_intersection(
 		ray.intersection = find_ray_intersection(line, quad_root);
 		if (!is_within_height_range(cylinder, ray.intersection))
 			return (ray);
-		ray.normal = \
+		ray.obj_normal = \
 			calculate_cylinder_normal_vector(cylinder, ray.intersection);
 		ray.obj_color = cylinder.color;
 		ray.exists = true;

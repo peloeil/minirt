@@ -73,7 +73,7 @@ static t_color	calculate_diffuse_reflection(
 {
 	const t_color	intensity = \
 		calculate_intensity(light_source.color, light_source.brightness);
-	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.normal, to_light));
+	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.obj_normal, to_light));
 
 	return ((t_color){
 		(int)(ray.obj_color.red * (intensity.red * n_dot_l)),
@@ -90,9 +90,9 @@ static t_color	calculate_specular_reflection(
 {
 	const t_color	intensity = \
 		calculate_intensity(light_source.color, light_source.brightness);
-	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.normal, to_light));
+	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.obj_normal, to_light));
 	const t_vec3	reflection = \
-		vec3_sub(vec3_mult(2 * n_dot_l, ray.normal), to_light);
+		vec3_sub(vec3_mult(2 * n_dot_l, ray.obj_normal), to_light);
 	const double	r_dot_v = \
 		fmax(0, vec3_dot_prod(reflection, vec3_mult(-1, ray.line.direction)));
 	const double	powed_r_dot_v = pow(r_dot_v, smoothness);
