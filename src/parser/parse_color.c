@@ -45,16 +45,12 @@ t_color	parse_color(const char str[static 1])
 	if (rgb == NULL)
 		exit(EXIT_FAILURE);
 	i = 0;
-	while (rgb[i] != NULL)
-	{
-		if (i == 0)
-			color.red = parse_8bit_value(rgb[i]);
-		else if (i == 1)
-			color.green = parse_8bit_value(rgb[i]);
-		else if (i == 2)
-			color.blue = parse_8bit_value(rgb[i]);
-		i++;
-	}
+	if (rgb[i] != NULL)
+		color.red = parse_8bit_value(rgb[i++]);
+	if (rgb[i] != NULL)
+		color.green = parse_8bit_value(rgb[i++]);
+	if (rgb[i] != NULL)
+		color.blue = parse_8bit_value(rgb[i++]);
 	if (i != 3)
 		exit(EXIT_FAILURE);
 	free_2darray((void **)rgb);
