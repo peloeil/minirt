@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include <libft/ft_ctype.h>
 #include <libft/ft_string.h>
+#include <minirt/scene.h>
 
 static uint8_t	parse_8bit_value(const char str[static 1])
 {
