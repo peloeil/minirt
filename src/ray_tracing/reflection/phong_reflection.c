@@ -79,9 +79,9 @@ static t_color	calculate_diffuse_reflection(
 	const double	n_dot_l = fmax(0, vec3_dot_prod(ray.normal, to_light));
 
 	return ((t_color){
-		ray.obj_color.red * (intensity.red * n_dot_l) / 255,
-		ray.obj_color.green * (intensity.green * n_dot_l) / 255,
-		ray.obj_color.blue * (intensity.blue * n_dot_l) / 255
+		(int)(ray.obj_color.red * (intensity.red * n_dot_l) / 255),
+		(int)(ray.obj_color.green * (intensity.green * n_dot_l) / 255),
+		(int)(ray.obj_color.blue * (intensity.blue * n_dot_l) / 255)
 	});
 }
 
@@ -101,10 +101,11 @@ static t_color	calculate_specular_reflection(
 		vec3_norm(vec3_sub(vec3_mult(2 * n_dot_l, ray.normal), to_light));
 	const double	r_dot_v = \
 		fmax(0, vec3_dot_prod(reflection, vec3_mult(-1, ray.line.direction)));
+	const double	powed_r_dot_v = pow(r_dot_v, smoothness);
 
 	return ((t_color){
-		ray.obj_color.red * intensity.red * pow(r_dot_v, smoothness) / 255,
-		ray.obj_color.green * intensity.green * pow(r_dot_v, smoothness) / 255,
-		ray.obj_color.blue * intensity.blue * pow(r_dot_v, smoothness) / 255
+		(int)(ray.obj_color.red * intensity.red * powed_r_dot_v / 255),
+		(int)(ray.obj_color.green * intensity.green * powed_r_dot_v / 255),
+		(int)(ray.obj_color.blue * intensity.blue * powed_r_dot_v / 255)
 	});
 }
