@@ -21,7 +21,7 @@ static t_quad_root	solve_cylinder_quadratic_equation(
 static bool			is_within_height_range(
 						const t_cylinder cylinder,
 						const t_vec3 intersection);
-static t_vec3		solve_cylinder_normal_vector(
+static t_vec3		calculate_cylinder_normal_vector(
 						const t_cylinder cylinder,
 						const t_vec3 intersection);
 
@@ -43,7 +43,8 @@ t_ray	find_cylinder_ray_intersection(
 		ray.intersection = find_ray_intersection(line, quad_root);
 		if (!is_within_height_range(cylinder, ray.intersection))
 			return (ray);
-		ray.normal = solve_cylinder_normal_vector(cylinder, ray.intersection);
+		ray.normal = \
+			calculate_cylinder_normal_vector(cylinder, ray.intersection);
 		ray.obj_color = cylinder.color;
 		ray.exists = true;
 	}
@@ -85,7 +86,7 @@ static bool	is_within_height_range(
 	return (false);
 }
 
-static t_vec3	solve_cylinder_normal_vector(
+static t_vec3	calculate_cylinder_normal_vector(
 					const t_cylinder cylinder,
 					const t_vec3 intersection)
 {
