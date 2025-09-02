@@ -50,9 +50,9 @@ static t_color	calculate_ambient_reflection(
 					const t_ambient_light amb_light)
 {
 	const t_color	intensity = (t_color){
-		amb_light.color.red * amb_light.brightness,
-		amb_light.color.green * amb_light.brightness,
-		amb_light.color.blue * amb_light.brightness \
+		(int)fmin(amb_light.color.red * amb_light.brightness, 255),
+		(int)fmin(amb_light.color.green * amb_light.brightness, 255),
+		(int)fmin(amb_light.color.blue * amb_light.brightness, 255) \
 	};
 
 	return ((t_color){
@@ -67,9 +67,9 @@ static t_color	calculate_diffuse_reflection(
 					const t_light_source light_source)
 {
 	const t_color	intensity = (t_color){
-		light_source.color.red * light_source.brightness,
-		light_source.color.green * light_source.brightness,
-		light_source.color.blue * light_source.brightness \
+		(int)fmin(light_source.color.red * light_source.brightness, 255),
+		(int)fmin(light_source.color.green * light_source.brightness, 255),
+		(int)fmin(light_source.color.blue * light_source.brightness, 255) \
 	};
 	const t_vec3	to_light = \
 		vec3_norm(vec3_sub(light_source.position, ray.intersection));
@@ -88,9 +88,9 @@ static t_color	calculate_specular_reflection(
 					const double smoothness)
 {
 	const t_color	intensity = (t_color){
-		light_source.color.red * light_source.brightness,
-		light_source.color.green * light_source.brightness,
-		light_source.color.blue * light_source.brightness \
+		(int)fmin(light_source.color.red * light_source.brightness, 255),
+		(int)fmin(light_source.color.green * light_source.brightness, 255),
+		(int)fmin(light_source.color.blue * light_source.brightness, 255) \
 	};
 	const t_vec3	to_light = \
 		vec3_norm(vec3_sub(light_source.position, ray.intersection));
