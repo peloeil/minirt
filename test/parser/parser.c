@@ -88,28 +88,27 @@ static void print_cylinder_info(const t_cylinder cylinder)
 static void print_scene_list(const t_scene *scene)
 {
     t_tag tag;
-    const t_scene *current;
+    const t_scene *node = scene;
 
-    current = scene;
     while (true)
     {
-        tag = *(t_tag *)current->content;
-        if (tag == AMBIENT_LIGHT)
-            print_ambient_light_info(*(t_ambient_light *)current->content);
-        if (tag == CAMERA)
-            print_camera_info(*(t_camera *)current->content);
-        if (tag == LIGHT_SOURCE)
-            print_light_source_info(*(t_light_source *)current->content);
-        if (tag == SPHERE)
-            print_sphere_info(*(t_sphere *)current->content);
-        if (tag == PLANE)
-            print_plane_info(*(t_plane *)current->content);
-        if (tag == CYLINDER)
-            print_cylinder_info(*(t_cylinder *)current->content);
-        current = current->next;
-        if (!current)
+        if (!node)
             exit(EXIT_FAILURE);
-        if (scene == current)
+        tag = *(t_tag *)node->content;
+        if (tag == AMBIENT_LIGHT)
+            print_ambient_light_info(*(t_ambient_light *)node->content);
+        if (tag == CAMERA)
+            print_camera_info(*(t_camera *)node->content);
+        if (tag == LIGHT_SOURCE)
+            print_light_source_info(*(t_light_source *)node->content);
+        if (tag == SPHERE)
+            print_sphere_info(*(t_sphere *)node->content);
+        if (tag == PLANE)
+            print_plane_info(*(t_plane *)node->content);
+        if (tag == CYLINDER)
+            print_cylinder_info(*(t_cylinder *)node->content);
+        node = node->next;
+        if (scene == node)
             break ;
     }
 }
