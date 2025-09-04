@@ -32,9 +32,9 @@ typedef enum e_tag
 
 typedef struct s_color
 {
-	uint8_t	red;
-	uint8_t	green;
-	uint8_t	blue;
+	double	red;
+	double	green;
+	double	blue;
 }	t_color;
 
 typedef struct s_line
