@@ -41,46 +41,36 @@ typedef struct s_ray
 }	t_ray;
 
 // core.c
-t_quad_root	solve_quadratic_equation(
-				const t_quad_coefs coefs
-			);
-double		select_nearest_line_t_coef(
-				const t_quad_root quad_root
-			);
+t_quad_root	solve_quadratic_equation(const t_quad_coefs coefs);
+double		select_nearest_line_t_coef(const t_quad_root quad_root);
 t_vec3		calculate_ray_intersection(
 				const t_line line,
-				const double line_t_coef
-			);
+				const double line_t_coef);
 
 // plane.c
 t_ray		find_plane_ray_intersection(
 				const t_line line,
-				const t_plane plane
-			);
+				const t_plane plane);
 
 // sphere.c
 t_ray		find_sphere_ray_intersection(
 				const t_line line,
-				const t_sphere sphere
-			);
+				const t_sphere sphere);
 
 // cylinder.c
 t_ray		find_cylinder_ray_intersection(
 				const t_line line,
-				const t_cylinder cylinder
-			);
+				const t_cylinder cylinder);
 
 // ray_tracing.c
 t_ray		find_nearest_ray_intersection(
 				const t_line line,
-				const t_scene *scene
-			);
+				const t_scene *scene);
 
 // phong_reflection.c
 t_color		calculate_phong_reflection(
 				const t_ray ray,
 				const t_ambient_light amb_light,
-				const t_light_source light_source
-			);
+				const t_light_source light_source);
 
 #endif
