@@ -14,6 +14,15 @@ This guide provides essential information for working with the miniRT project, a
 - **Core Components**:
   - MinilibX (mlx): Graphics library for window management and rendering
   - libft: Custom utility functions for memory, strings, lists
+  - Ray Tracing Engine: Core rendering system with geometric intersection algorithms
+  - Vector Math Library (vec3): 3D vector operations for spatial calculations
+
+- **Ray Tracing Implementation**:
+  - **Geometric Objects**: Support for spheres, planes, and cylinders with intersection detection
+  - **Ray-Object Intersection**: Quadratic equation solving for sphere/cylinder intersections
+  - **Scene Management**: Camera positioning, ambient lighting, and point light sources
+  - **Phong Reflection Model**: Ambient, diffuse, and specular lighting calculations
+  - **Nearest Hit Detection**: Efficient algorithm to find closest object intersection per ray
 
 ## Development Workflow
 
