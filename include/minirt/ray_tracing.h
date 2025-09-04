@@ -34,7 +34,9 @@ typedef struct s_ray
 {
 	t_line	line;
 	t_vec3	intersection;
-	bool	exists_intersection;
+	t_vec3	hit_normal;
+	t_color	color;
+	bool	exists;
 }	t_ray;
 
 // core.c
@@ -57,5 +59,11 @@ t_ray		find_sphere_ray_intersection(
 t_ray		find_cylinder_ray_intersection(
 				const t_line line,
 				const t_cylinder cylinder);
+
+// phong_reflection.c
+t_color		calculate_phong_reflection(
+				const t_ray ray,
+				const t_ambient_light amb_light,
+				const t_light_source light_source);
 
 #endif

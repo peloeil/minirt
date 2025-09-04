@@ -25,12 +25,17 @@ static void print_vector_obj(const char str[static 1], const t_vec3 vec)
     printf("%-24s: {%f, %f, %f}\n", str, vec.x, vec.y, vec.z);
 }
 
+static void print_color_obj(const char str[static 1], const t_color color)
+{
+    printf("%-24s: RGB = (%.1f, %.1f, %.1f)\n\n", str, color.red, color.green, color.blue);
+}
+
 static void print_ambient_light_info(const t_ambient_light ambient_light)
 {
     printf("[t_ambient_light]\n");
     printf("%-24s: %s\n", "ambient_light.tag", tag_str[ambient_light.tag]);
     printf("%-24s: %f\n", "ambient_light.brightness", ambient_light.brightness);
-    printf("%-24s: %x\n\n", "ambient_light.color", ambient_light.color);
+    print_color_obj("ambient_light.color", ambient_light.color);
 }
 
 static void print_camera_info(const t_camera camera)
@@ -48,7 +53,7 @@ static void print_light_source_info(const t_light_source light_source)
     printf("%-24s: %s\n", "light_source.tag", tag_str[light_source.tag]);
     print_vector_obj("light_source.position", light_source.position);
     printf("%-24s: %f\n", "light_source.brightness", light_source.brightness);
-    printf("%-24s: %x\n\n", "light_source.color", light_source.color);
+    print_color_obj("light_source.color", light_source.color);
 }
 
 static void print_sphere_info(const t_sphere sphere)
@@ -57,7 +62,7 @@ static void print_sphere_info(const t_sphere sphere)
     printf("%-24s: %s\n", "sphere.tag", tag_str[sphere.tag]);
     printf("%-24s: %f\n", "sphere.radius", sphere.radius);
     print_vector_obj("sphere.center", sphere.center);
-    printf("%-24s: %x\n\n", "sphere.color", sphere.color);
+    print_color_obj("sphere.color", sphere.color);
 }
 
 static void print_plane_info(const t_plane plane)
@@ -66,7 +71,7 @@ static void print_plane_info(const t_plane plane)
     printf("%-24s: %s\n", "plane.tag", tag_str[plane.tag]);
     print_vector_obj("plane.position", plane.position);
     print_vector_obj("plane.normal", plane.normal);
-    printf("%-24s: %x\n\n", "plane.color", plane.color);
+    print_color_obj("plane.color", plane.color);
 }
 
 static void print_cylinder_info(const t_cylinder cylinder)
@@ -77,7 +82,7 @@ static void print_cylinder_info(const t_cylinder cylinder)
     print_vector_obj("cylinder.axis", cylinder.axis);
     printf("%-24s: %f\n", "cylinder.radius", cylinder.radius);
     printf("%-24s: %f\n", "cylinder.height", cylinder.height);
-    printf("%-24s: %x\n\n", "cylinder.color", cylinder.color);
+    print_color_obj("cylinder.color", cylinder.color);
 }
 
 static void print_scene_list(const t_scene *scene)

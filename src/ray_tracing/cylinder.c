@@ -21,6 +21,9 @@ static t_quad_root	solve_cylinder_quadratic_equation(
 static bool			is_within_height_range(
 						const t_cylinder cylinder,
 						const t_vec3 intersection);
+static t_vec3		calculate_cylinder_normal_vector(
+						const t_cylinder cylinder,
+						const t_vec3 intersection);
 
 t_ray	find_cylinder_ray_intersection(
 			const t_line line,
@@ -32,12 +35,18 @@ t_ray	find_cylinder_ray_intersection(
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.exists_intersection = false;
+	ray.hit_normal = vec3_init(0, 0, 0);
+	ray.color = (t_color){0, 0, 0};
+	ray.exists = false;
 	if (0 < quad_root.root_large)
 	{
 		ray.intersection = find_ray_intersection(line, quad_root);
-		if (is_within_height_range(cylinder, ray.intersection))
-			ray.exists_intersection = true;
+		if (!is_within_height_range(cylinder, ray.intersection))
+			return (ray);
+		ray.hit_normal = \
+			calculate_cylinder_normal_vector(cylinder, ray.intersection);
+		ray.color = cylinder.color;
+		ray.exists = true;
 	}
 	return (ray);
 }
@@ -75,4 +84,20 @@ static bool	is_within_height_range(
 	if (fabs(projection) <= half_height)
 		return (true);
 	return (false);
+}
+
+static t_vec3	calculate_cylinder_normal_vector(
+					const t_cylinder cylinder,
+					const t_vec3 intersection)
+{
+	const t_vec3	c_to_p = vec3_sub(intersection, cylinder.center);
+
+	return (
+		vec3_norm(
+			vec3_sub(
+				c_to_p,
+				vec3_mult(vec3_dot_prod(c_to_p, cylinder.axis), cylinder.axis)
+			)
+		)
+	);
 }

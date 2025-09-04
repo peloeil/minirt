@@ -30,6 +30,9 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		plane.c \
 		sphere.c \
 		cylinder.c \
+		$(addprefix reflection/, \
+			phong_reflection.c \
+		) \
 	) \
 	$(addprefix parser/, \
 		parser.c \

@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include <libft/ft_ctype.h>
 #include <libft/ft_string.h>
+#include <minirt/scene.h>
 
 static uint8_t	parse_8bit_value(const char str[static 1])
 {
@@ -35,21 +36,21 @@ static uint8_t	parse_8bit_value(const char str[static 1])
 	return ((uint8_t)res);
 }
 
-int	parse_color(const char str[static 1])
+t_color	parse_color(const char str[static 1])
 {
 	const char *const *const	rgb = (const char **)ft_split(str, ',');
 	size_t						i;
-	int							color;
+	t_color						color;
 
 	if (rgb == NULL)
 		exit(EXIT_FAILURE);
 	i = 0;
-	color = 0x00000000;
-	while (rgb[i] != NULL)
-	{
-		color = (color << 8) + parse_8bit_value(rgb[i]);
-		i++;
-	}
+	if (rgb[i] != NULL)
+		color.red = parse_8bit_value(rgb[i++]);
+	if (rgb[i] != NULL)
+		color.green = parse_8bit_value(rgb[i++]);
+	if (rgb[i] != NULL)
+		color.blue = parse_8bit_value(rgb[i++]);
 	if (i != 3)
 		exit(EXIT_FAILURE);
 	free_2darray((void **)rgb);
