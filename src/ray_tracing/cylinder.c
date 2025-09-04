@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <libft/ft_string.h>
 #include <minirt/vec3.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
@@ -33,12 +34,9 @@ t_ray	find_cylinder_ray_intersection(
 	const t_quad_root	quad_root = \
 		solve_cylinder_quadratic_equation(line, cylinder);
 
+	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
 	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
-	ray.intersection = vec3_init(0, 0, 0);
-	ray.hit_normal = vec3_init(0, 0, 0);
-	ray.color = (t_color){0, 0, 0};
-	ray.exists = false;
 	if (0 < ray.line_t_coef)
 	{
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
