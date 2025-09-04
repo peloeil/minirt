@@ -16,7 +16,7 @@
 #include <minirt/ray_tracing.h>
 
 static t_color	calculate_ambient_reflection(
-					const t_color object_color,
+					const t_color obj_color,
 					const t_ambient_light amb_light);
 static t_color	calculate_diffuse_reflection(
 					const t_ray ray,
@@ -53,16 +53,16 @@ t_color	calculate_phong_reflection(
 }
 
 static t_color	calculate_ambient_reflection(
-					const t_color object_color,
+					const t_color obj_color,
 					const t_ambient_light amb_light)
 {
 	const t_color	intensity = \
 		calculate_intensity(amb_light.color, amb_light.brightness);
 
 	return ((t_color){
-		object_color.red * intensity.red,
-		object_color.green * intensity.green,
-		object_color.blue * intensity.blue
+		obj_color.red * intensity.red,
+		obj_color.green * intensity.green,
+		obj_color.blue * intensity.blue
 	});
 }
 
