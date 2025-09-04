@@ -33,6 +33,7 @@ typedef struct s_quad_root
 typedef struct s_ray
 {
 	t_line	line;
+	double	line_t_coef;
 	t_vec3	intersection;
 	t_vec3	hit_normal;
 	t_color	color;
