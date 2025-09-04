@@ -21,13 +21,11 @@ static t_ray	generate_ray_to_object(
 					const void *const content);
 static t_ray	select_nearest_ray_intersection(
 					const t_ray nearest_ray,
-					const t_ray new_ray,
-					const t_vec3 camera_pos);
+					const t_ray new_ray);
 
 t_ray	find_nearest_ray_intersection(
 			const t_line line,
-			const t_scene *scene,
-			const t_vec3 camera_pos)
+			const t_scene *scene)
 {
 	t_ray			new_ray;
 	t_ray			nearest_ray;
@@ -40,8 +38,7 @@ t_ray	find_nearest_ray_intersection(
 			exit(EXIT_FAILURE);
 		ft_bzero(&new_ray, sizeof(t_ray));
 		new_ray = generate_ray_to_object(line, node->content);
-		nearest_ray = \
-			select_nearest_ray_intersection(nearest_ray, new_ray, camera_pos);
+		nearest_ray = select_nearest_ray_intersection(nearest_ray, new_ray);
 		node = node->next;
 		if (scene == node)
 			break ;
@@ -71,8 +68,7 @@ static t_ray	generate_ray_to_object(
 
 static t_ray	select_nearest_ray_intersection(
 					const t_ray nearest_ray,
-					const t_ray new_ray,
-					const t_vec3 camera_pos)
+					const t_ray new_ray)
 {
 	if (new_ray.exists && !nearest_ray.exists)
 		return (new_ray);
