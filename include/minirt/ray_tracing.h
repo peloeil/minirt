@@ -63,7 +63,8 @@ t_ray		find_cylinder_ray_intersection(
 // ray_tracing.c
 t_ray		find_nearest_ray_intersection(
 				const t_line line,
-				const t_scene *scene);
+				const t_scene *scene,
+				const t_vec3 camera_pos);
 
 // phong_reflection.c
 t_color		calculate_phong_reflection(
