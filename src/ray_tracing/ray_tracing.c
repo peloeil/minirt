@@ -54,9 +54,9 @@ static t_ray	generate_ray_to_object(
 	ft_bzero(&ray, sizeof(ray));
 	if (tag == SPHERE)
 		ray = find_sphere_ray_intersection(line, *(const t_sphere*)content);
-	if (tag == PLANE)
+	else if (tag == PLANE)
 		ray = find_plane_ray_intersection(line, *(const t_plane*)content);
-	if (tag == CYLINDER)
+	else if (tag == CYLINDER)
 		ray = find_cylinder_ray_intersection(line, *(const t_cylinder*)content);
 	return (ray);
 }
