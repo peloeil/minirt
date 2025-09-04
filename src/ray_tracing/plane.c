@@ -26,14 +26,14 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.obj_normal = vec3_init(0, 0, 0);
+	ray.hit_normal = vec3_init(0, 0, 0);
 	ray.color = (t_color){0, 0, 0};
 	ray.exists = false;
 	if (EPSILON < t_coef)
 	{
 		ray.intersection = \
 			vec3_add(line.position, vec3_mult(t_coef, line.direction));
-		ray.obj_normal = plane.normal;
+		ray.hit_normal = plane.normal;
 		ray.color = plane.color;
 		ray.exists = true;
 	}

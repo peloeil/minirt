@@ -27,13 +27,13 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 
 	ray.line = line;
 	ray.intersection = vec3_init(0, 0, 0);
-	ray.obj_normal = vec3_init(0, 0, 0);
+	ray.hit_normal = vec3_init(0, 0, 0);
 	ray.color = (t_color){0, 0, 0};
 	ray.exists = false;
 	if (0 < quad_root.root_large)
 	{
 		ray.intersection = find_ray_intersection(line, quad_root);
-		ray.obj_normal = vec3_norm(vec3_sub(ray.intersection, sphere.center));
+		ray.hit_normal = vec3_norm(vec3_sub(ray.intersection, sphere.center));
 		ray.color = sphere.color;
 		ray.exists = true;
 	}
