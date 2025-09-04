@@ -47,6 +47,11 @@ t_vec3		calculate_ray_intersection(
 				const t_line line,
 				const double line_t_coef);
 
+// ray_tracing.c
+t_ray		find_nearest_ray_intersection(
+				const t_line line,
+				const t_scene *scene);
+
 // plane.c
 t_ray		find_plane_ray_intersection(
 				const t_line line,
@@ -61,11 +66,6 @@ t_ray		find_sphere_ray_intersection(
 t_ray		find_cylinder_ray_intersection(
 				const t_line line,
 				const t_cylinder cylinder);
-
-// ray_tracing.c
-t_ray		find_nearest_ray_intersection(
-				const t_line line,
-				const t_scene *scene);
 
 // phong_reflection.c
 t_color		calculate_phong_reflection(
