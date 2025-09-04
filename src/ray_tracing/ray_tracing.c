@@ -78,8 +78,7 @@ static t_ray	select_nearest_ray_intersection(
 		return (new_ray);
 	if (new_ray.exists && nearest_ray.exists)
 	{
-		if (vec3_abs(vec3_sub(new_ray.intersection, camera_pos))
-			< vec3_abs(vec3_sub(nearest_ray.intersection, camera_pos)))
+		if (new_ray.line_t_coef < nearest_ray.line_t_coef)
 			return (new_ray);
 	}
 	return (nearest_ray);
