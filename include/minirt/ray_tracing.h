@@ -42,9 +42,13 @@ typedef struct s_ray
 
 // core.c
 t_quad_root	solve_quadratic_equation(const t_quad_coefs coefs);
-t_vec3		find_ray_intersection(
+double		select_nearest_line_t_coef(
+				const t_quad_root quad_root
+			);
+t_vec3		calculate_ray_intersection(
 				const t_line line,
-				const t_quad_root quad_root);
+				const double line_t_coef
+			);
 
 // plane.c
 t_ray		find_plane_ray_intersection(

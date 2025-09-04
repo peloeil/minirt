@@ -34,13 +34,14 @@ t_ray	find_cylinder_ray_intersection(
 		solve_cylinder_quadratic_equation(line, cylinder);
 
 	ray.line = line;
+	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.hit_normal = vec3_init(0, 0, 0);
 	ray.color = (t_color){0, 0, 0};
 	ray.exists = false;
-	if (0 < quad_root.root_large)
+	if (0 < ray.line_t_coef)
 	{
-		ray.intersection = find_ray_intersection(line, quad_root);
+		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		if (!is_within_height_range(cylinder, ray.intersection))
 			return (ray);
 		ray.hit_normal = \

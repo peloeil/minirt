@@ -26,13 +26,14 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 		solve_sphere_quadratic_equation(line, sphere);
 
 	ray.line = line;
+	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.hit_normal = vec3_init(0, 0, 0);
 	ray.color = (t_color){0, 0, 0};
 	ray.exists = false;
-	if (0 < quad_root.root_large)
+	if (0 < ray.line_t_coef)
 	{
-		ray.intersection = find_ray_intersection(line, quad_root);
+		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		ray.hit_normal = vec3_norm(vec3_sub(ray.intersection, sphere.center));
 		ray.color = sphere.color;
 		ray.exists = true;

@@ -22,17 +22,16 @@ static double	solve_plane_equation(
 t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 {
 	t_ray			ray;
-	const double	t_coef = solve_plane_equation(line, plane);
 
 	ray.line = line;
+	ray.line_t_coef = solve_plane_equation(line, plane);
 	ray.intersection = vec3_init(0, 0, 0);
 	ray.hit_normal = vec3_init(0, 0, 0);
 	ray.color = (t_color){0, 0, 0};
 	ray.exists = false;
-	if (EPSILON < t_coef)
+	if (EPSILON < ray.line_t_coef)
 	{
-		ray.intersection = \
-			vec3_add(line.position, vec3_mult(t_coef, line.direction));
+		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		ray.hit_normal = plane.normal;
 		ray.color = plane.color;
 		ray.exists = true;
