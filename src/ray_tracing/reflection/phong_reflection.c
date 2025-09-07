@@ -37,21 +37,23 @@ t_color	calculate_phong_reflection(
 			const t_ambient_light amb_light,
 			const t_light_source light_source)
 {
-	const t_ray		to_light = \
-		find_nearest_ray_intersection(
-			(t_line){\
-				LINE, \
-				ray.intersection, \
-				vec3_norm(vec3_sub(light_source.position, ray.intersection)) \
-			},
-			scene \
-		);
-	const t_color	i_ambient = \
-		calculate_ambient_reflection(ray.color, amb_light);
-	const t_color	i_diffuse = \
-		calculate_diffuse_reflection(ray, to_light, light_source);
-	const t_color	i_specular = \
-		calculate_specular_reflection(ray, to_light, light_source, 1);
+	const t_ray		to_light = find_nearest_ray_intersection(\
+		(t_line){\
+			LINE, \
+			ray.intersection, \
+			vec3_norm(vec3_sub(light_source.position, ray.intersection)) \
+		}, \
+		scene \
+	);
+	const t_color	i_ambient = calculate_ambient_reflection(\
+		ray.color, amb_light \
+	);
+	const t_color	i_diffuse = calculate_diffuse_reflection(\
+		ray, to_light, light_source \
+	);
+	const t_color	i_specular = calculate_specular_reflection(\
+		ray, to_light, light_source, 1 \
+	);
 
 	return ((t_color){
 		fmin(i_ambient.red + i_diffuse.red + i_specular.red, 255),
@@ -64,8 +66,9 @@ static t_color	calculate_ambient_reflection(
 					const t_color ray_color,
 					const t_ambient_light amb_light)
 {
-	const t_color	intensity = \
-		calculate_intensity(amb_light.color, amb_light.brightness);
+	const t_color	intensity = calculate_intensity(\
+		amb_light.color, amb_light.brightness \
+	);
 
 	return ((t_color){
 		ray_color.red * intensity.red,
@@ -79,10 +82,12 @@ static t_color	calculate_diffuse_reflection(
 					const t_ray to_light,
 					const t_light_source light_source)
 {
-	const t_color	intensity = \
-		calculate_intensity(light_source.color, light_source.brightness);
-	const double	n_dot_l = \
-		fmax(0, vec3_dot_prod(ray.hit_normal, to_light.line.direction));
+	const t_color	intensity = calculate_intensity(\
+		light_source.color, light_source.brightness \
+	);
+	const double	n_dot_l = fmax(\
+		0, vec3_dot_prod(ray.hit_normal, to_light.line.direction) \
+	);
 
 	if (to_light.exists)
 		return ((t_color){0, 0, 0});
@@ -99,14 +104,18 @@ static t_color	calculate_specular_reflection(
 					const t_light_source light_source,
 					const double smoothness)
 {
-	const t_color	intensity = \
-		calculate_intensity(light_source.color, light_source.brightness);
-	const double	n_dot_l = \
-		fmax(0, vec3_dot_prod(ray.hit_normal, to_light.line.direction));
-	const t_vec3	reflection = \
-		vec3_sub(vec3_mult(2 * n_dot_l, ray.hit_normal), to_light.line.direction);
-	const double	r_dot_v = \
-		fmax(0, vec3_dot_prod(reflection, vec3_mult(-1, ray.line.direction)));
+	const t_color	intensity = calculate_intensity(\
+		light_source.color, light_source.brightness \
+	);
+	const double	n_dot_l = fmax(\
+		0, vec3_dot_prod(ray.hit_normal, to_light.line.direction) \
+	);
+	const t_vec3	reflection = vec3_sub(\
+		vec3_mult(2 * n_dot_l, ray.hit_normal), to_light.line.direction \
+	);
+	const double	r_dot_v = fmax(\
+		0, vec3_dot_prod(reflection, vec3_mult(-1, ray.line.direction)) \
+	);
 	const double	powed_r_dot_v = pow(r_dot_v, smoothness);
 
 	if (to_light.exists)
