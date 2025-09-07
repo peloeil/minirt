@@ -23,8 +23,9 @@ static t_quad_root	solve_sphere_quadratic_equation(
 t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 {
 	t_ray				ray;
-	const t_quad_root	quad_root = \
-		solve_sphere_quadratic_equation(line, sphere);
+	const t_quad_root	quad_root = solve_sphere_quadratic_equation(\
+		line, sphere \
+	);
 
 	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
@@ -48,7 +49,8 @@ static t_quad_root	solve_sphere_quadratic_equation(
 
 	coefs.a = vec3_dot_prod(line.direction, line.direction);
 	coefs.b = vec3_dot_prod(line_sphere_sub, line.direction) * 2;
-	coefs.c = \
-		vec3_dot_prod(line_sphere_sub, line_sphere_sub) - pow(sphere.radius, 2);
+	coefs.c = vec3_dot_prod(\
+		line_sphere_sub, line_sphere_sub) - pow(sphere.radius, 2 \
+	);
 	return (solve_quadratic_equation(coefs));
 }
