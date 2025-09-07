@@ -68,9 +68,9 @@ static t_ray	select_nearest_ray_intersection(
 					const t_ray nearest_ray,
 					const t_ray new_ray)
 {
-	if (new_ray.exists && !nearest_ray.exists)
+	if (new_ray.hit_exists && !nearest_ray.hit_exists)
 		return (new_ray);
-	if (new_ray.exists && nearest_ray.exists)
+	if (new_ray.hit_exists && nearest_ray.hit_exists)
 	{
 		if (new_ray.line_t_coef < nearest_ray.line_t_coef)
 			return (new_ray);

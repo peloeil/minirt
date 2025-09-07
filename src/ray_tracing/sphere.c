@@ -35,7 +35,7 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		ray.hit_normal = vec3_norm(vec3_sub(ray.intersection, sphere.center));
 		ray.color = sphere.color;
-		ray.exists = true;
+		ray.hit_exists = true;
 	}
 	return (ray);
 }

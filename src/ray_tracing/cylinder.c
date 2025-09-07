@@ -47,7 +47,7 @@ t_ray	find_cylinder_ray_intersection(
 			cylinder, ray.intersection \
 		);
 		ray.color = cylinder.color;
-		ray.exists = true;
+		ray.hit_exists = true;
 	}
 	return (ray);
 }
