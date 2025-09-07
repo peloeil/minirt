@@ -43,7 +43,7 @@ double	select_nearest_line_t_coef(const t_quad_root quad_root)
 		return (quad_root.root_small);
 	if (0.0 < quad_root.root_large)
 		return (quad_root.root_large);
-	exit (EXIT_FAILURE);
+	return (-1);
 }
 
 t_vec3	calculate_ray_intersection(const t_line line, const double line_t_coef)
