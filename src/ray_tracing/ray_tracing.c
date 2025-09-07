@@ -34,7 +34,7 @@ t_ray	find_nearest_ray_intersection(
 	while (true)
 	{
 		if (!node)
-			exit(EXIT_FAILURE);
+			return (nearest_ray);
 		ft_bzero(&new_ray, sizeof(t_ray));
 		new_ray = generate_ray_to_object(line, node->content);
 		nearest_ray = select_nearest_ray_intersection(nearest_ray, new_ray);
