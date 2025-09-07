@@ -37,16 +37,16 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 	return (quad_root);
 }
 
-t_vec3	find_ray_intersection(const t_line line, const t_quad_root quad_root)
+double	select_nearest_line_t_coef(const t_quad_root quad_root)
 {
-	const t_vec3	intersections1 = \
-		vec3_add(line.position, vec3_mult(quad_root.root_small, line.direction));
-	const t_vec3	intersections2 = \
-		vec3_add(line.position, vec3_mult(quad_root.root_large, line.direction));
-
 	if (0.0 < quad_root.root_small)
-		return (intersections1);
+		return (quad_root.root_small);
 	if (0.0 < quad_root.root_large)
-		return (intersections2);
-	exit(EXIT_FAILURE);
+		return (quad_root.root_large);
+	return (-1);
+}
+
+t_vec3	calculate_ray_intersection(const t_line line, const double line_t_coef)
+{
+	return (vec3_add(line.position, vec3_mult(line_t_coef, line.direction)));
 }

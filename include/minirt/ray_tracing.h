@@ -33,6 +33,7 @@ typedef struct s_quad_root
 typedef struct s_ray
 {
 	t_line	line;
+	double	line_t_coef;
 	t_vec3	intersection;
 	t_vec3	hit_normal;
 	t_color	color;
@@ -41,9 +42,15 @@ typedef struct s_ray
 
 // core.c
 t_quad_root	solve_quadratic_equation(const t_quad_coefs coefs);
-t_vec3		find_ray_intersection(
+double		select_nearest_line_t_coef(const t_quad_root quad_root);
+t_vec3		calculate_ray_intersection(
 				const t_line line,
-				const t_quad_root quad_root);
+				const double line_t_coef);
+
+// ray_tracing.c
+t_ray		find_nearest_ray_intersection(
+				const t_line line,
+				const t_scene *const scene);
 
 // plane.c
 t_ray		find_plane_ray_intersection(

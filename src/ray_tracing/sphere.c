@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <libft/ft_string.h>
 #include <minirt/vec3.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
@@ -25,14 +26,12 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 	const t_quad_root	quad_root = \
 		solve_sphere_quadratic_equation(line, sphere);
 
+	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
-	ray.intersection = vec3_init(0, 0, 0);
-	ray.hit_normal = vec3_init(0, 0, 0);
-	ray.color = (t_color){0, 0, 0};
-	ray.exists = false;
-	if (0 < quad_root.root_large)
+	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
+	if (0 < ray.line_t_coef)
 	{
-		ray.intersection = find_ray_intersection(line, quad_root);
+		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		ray.hit_normal = vec3_norm(vec3_sub(ray.intersection, sphere.center));
 		ray.color = sphere.color;
 		ray.exists = true;
