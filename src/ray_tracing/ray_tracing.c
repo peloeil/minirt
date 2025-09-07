@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <libft/ft_string.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
