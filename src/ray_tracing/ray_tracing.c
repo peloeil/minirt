@@ -24,7 +24,7 @@ static t_ray	select_nearest_ray_intersection(
 
 t_ray	find_nearest_ray_intersection(
 			const t_line line,
-			const t_scene *scene)
+			const t_scene *const scene)
 {
 	t_ray			new_ray;
 	t_ray			nearest_ray;
