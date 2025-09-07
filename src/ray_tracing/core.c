@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <stdlib.h>
 #include <minirt/vec3.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
@@ -42,7 +43,7 @@ double	select_nearest_line_t_coef(const t_quad_root quad_root)
 		return (quad_root.root_small);
 	if (0.0 < quad_root.root_large)
 		return (quad_root.root_large);
-	return (0);
+	exit (EXIT_FAILURE);
 }
 
 t_vec3	calculate_ray_intersection(const t_line line, const double line_t_coef)
