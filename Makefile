@@ -50,6 +50,9 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		parse_color.c \
 		free.c \
 	) \
+	$(addprefix mlx_api/, \
+		lifecycle.c \
+	) \
 )
 SRC := $(SRC_TEST) $(SRC_DIR)/main.c
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))

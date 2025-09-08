@@ -34,4 +34,8 @@ typedef struct s_display
 	int		y_len;
 }	t_display;
 
+// lifecycle.c
+t_display	create_minirt_display(void);
+void		destroy_minirt_display(const t_display display);
+
 #endif
