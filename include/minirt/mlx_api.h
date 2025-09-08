@@ -1,0 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_api.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rogiso <rogiso@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/08 17:11:51 by rogiso            #+#    #+#             */
+/*   Updated: 2025/09/08 17:11:51 by rogiso           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MLX_API_H
+# define MLX_API_H
+
+# include <stdint.h>
+# define WINDOW_SCALE 0.8
+
+typedef struct s_image
+{
+	void	*img_ptr;
+	uint8_t	*pixel_head;
+	int		bits_per_pixel;
+	int		bytes_per_line;
+	int		endian;
+}	t_image;
+
+typedef struct s_display
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_image	image;
+	int		x_len;
+	int		y_len;
+}	t_display;
+
+#endif

@@ -61,6 +61,7 @@ INC := $(addprefix $(INC_DIR)/, \
 		scene.h \
 		parser.h \
 		ray_tracing.h \
+		mlx_api.h \
 	) \
 )
 TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
