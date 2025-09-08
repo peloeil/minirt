@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <mlx.h>
 #include <libft/ft_string.h>
 #include <libft/ft_list.h>
 
@@ -42,6 +43,8 @@ int	main(const int argc, const char *const argv[static argc])
 	validate_rt_file_path(argv[1]);
 	scene = parse_rt_file(argv[1]);
 	display = create_minirt_display();
+	enable_event_handler(&display);
+	mlx_loop(display.mlx_ptr);
 	destroy_minirt_display(display);
 	ft_list_clear(&scene, free);
 	return (EXIT_SUCCESS);

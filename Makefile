@@ -52,6 +52,7 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 	) \
 	$(addprefix mlx_api/, \
 		lifecycle.c \
+		event.c \
 	) \
 )
 SRC := $(SRC_TEST) $(SRC_DIR)/main.c
