@@ -37,6 +37,7 @@ t_display	create_minirt_display(void)
 		&display.image.bytes_per_line, \
 		&display.image.endian \
 	);
+	display.image.bytes_per_pixel = display.image.bits_per_pixel / 8;
 	return (display);
 }
 

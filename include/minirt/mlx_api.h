@@ -22,6 +22,7 @@ typedef struct s_image
 	void	*img_ptr;
 	uint8_t	*pixel_head;
 	int		bits_per_pixel;
+	int		bytes_per_pixel;
 	int		bytes_per_line;
 	int		endian;
 }	t_image;
