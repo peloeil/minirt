@@ -53,6 +53,7 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 	$(addprefix mlx_api/, \
 		lifecycle.c \
 		event.c \
+		img_pixel.c \
 	) \
 )
 SRC := $(SRC_TEST) $(SRC_DIR)/main.c
