@@ -93,4 +93,7 @@ typedef struct s_light_source
 	t_color	color;
 }	t_light_source;
 
+t_camera		*find_camera_in_scene(const t_scene *const scene);
+t_light_source	*find_light_source_in_scene(const t_scene *const scene);
+
 #endif

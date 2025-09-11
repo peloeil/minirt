@@ -25,6 +25,9 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		vec3_util1.c \
 		vec3_util2.c \
 	) \
+	$(addprefix scene/, \
+		scene.c \
+	) \
 	$(addprefix ray_tracing/, \
 		ray_tracing.c \
 		core.c \
