@@ -43,7 +43,7 @@ static void print_camera_info(const t_camera camera)
     printf("[t_camera]\n");
     printf("%-24s: %s\n", "camera.tag", tag_str[camera.tag]);
     print_vector_obj("camera.position", camera.position);
-    print_vector_obj("camera.direction", camera.direction);
+    print_vector_obj("camera.forward", camera.forward);
     printf("%-24s: %f\n\n", "camera.radian", camera.radian);
 }
 

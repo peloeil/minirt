@@ -26,8 +26,8 @@ void	assign_camera_info(
 		node->position = parse_vec3(info);
 	if (i == 2)
 	{
-		node->direction = parse_vec3(info);
-		if (fabs(vec3_abs(node->direction) - 1.0) > EPSILON)
+		node->forward = parse_vec3(info);
+		if (fabs(vec3_abs(node->forward) - 1.0) > EPSILON)
 			exit(EXIT_FAILURE);
 	}
 	if (i == 3)

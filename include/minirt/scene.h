@@ -74,7 +74,7 @@ typedef struct s_camera
 {
 	t_tag	tag;
 	t_vec3	position;
-	t_vec3	direction;
+	t_vec3	forward;
 	double	radian;
 }	t_camera;
 
