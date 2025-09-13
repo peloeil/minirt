@@ -14,6 +14,7 @@
 # define MLX_API_H
 
 # include <stdint.h>
+# include <minirt/scene.h>
 # define WINDOW_SCALE 0.8
 # define ESC_KEY 65307
 
