@@ -14,7 +14,6 @@
 # define MLX_API_H
 
 # include <stdint.h>
-# include <minirt/renderer.h>
 # define WINDOW_SCALE 0.8
 # define ESC_KEY 65307
 
@@ -37,6 +36,13 @@ typedef struct s_display
 	t_image	image;
 	t_vec3	to_virtual_display;
 }	t_display;
+
+typedef struct s_pixel
+{
+	int		x;
+	int		y;
+	t_color	color;
+}	t_pixel;
 
 // lifecycle.c
 t_display	create_minirt_display(const t_camera *const camera);
