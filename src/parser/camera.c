@@ -44,10 +44,15 @@ void	assign_camera_info(
 
 static t_vec3	calculate_camera_up(const t_vec3 forward)
 {
+	double			f_dot_z;
+	double			a;
+	double			b;
 	const t_vec3	z_axis = (t_vec3){0, 0, 1};
-	const double	f_dot_z = vec3_dot_prod(forward, z_axis);
-	const double	a = -f_dot_z / fabs(sqrt(1 - pow(f_dot_z, 2)));
-	const double	b = 1 / fabs(sqrt(1 - pow(f_dot_z, 2)));
 
+	if (vec3_eq(forward, z_axis))
+		return ((t_vec3){0, -1, 0});
+	f_dot_z = vec3_dot_prod(forward, z_axis);
+	a = -f_dot_z / fabs(sqrt(1 - pow(f_dot_z, 2)));
+	b = 1 / fabs(sqrt(1 - pow(f_dot_z, 2)));
 	return (vec3_add(vec3_mult(a, forward), vec3_mult(b, z_axis)));
 }
