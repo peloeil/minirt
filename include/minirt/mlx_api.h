@@ -30,11 +30,12 @@ typedef struct s_image
 
 typedef struct s_display
 {
+	int		x_len;
+	int		y_len;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_image	image;
-	int		x_len;
-	int		y_len;
+	t_vec3	to_virtual_display;
 }	t_display;
 
 // lifecycle.c
