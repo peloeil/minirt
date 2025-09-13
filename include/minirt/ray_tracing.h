@@ -37,7 +37,7 @@ typedef struct s_ray
 	t_vec3	intersection;
 	t_vec3	hit_normal;
 	t_color	color;
-	bool	exists;
+	bool	hit_exists;
 }	t_ray;
 
 // core.c
@@ -70,6 +70,7 @@ t_ray		find_cylinder_ray_intersection(
 // phong_reflection.c
 t_color		calculate_phong_reflection(
 				const t_ray ray,
+				const t_scene *const scene,
 				const t_ambient_light amb_light,
 				const t_light_source light_source);
 

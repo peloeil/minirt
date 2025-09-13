@@ -31,8 +31,9 @@ t_ray	find_cylinder_ray_intersection(
 			const t_cylinder cylinder)
 {
 	t_ray				ray;
-	const t_quad_root	quad_root = \
-		solve_cylinder_quadratic_equation(line, cylinder);
+	const t_quad_root	quad_root = solve_cylinder_quadratic_equation(\
+		line, cylinder \
+	);
 
 	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
@@ -42,10 +43,11 @@ t_ray	find_cylinder_ray_intersection(
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		if (!is_within_height_range(cylinder, ray.intersection))
 			return (ray);
-		ray.hit_normal = \
-			calculate_cylinder_normal_vector(cylinder, ray.intersection);
+		ray.hit_normal = calculate_cylinder_normal_vector(\
+			cylinder, ray.intersection \
+		);
 		ray.color = cylinder.color;
-		ray.exists = true;
+		ray.hit_exists = true;
 	}
 	return (ray);
 }
@@ -60,13 +62,11 @@ static t_quad_root	solve_cylinder_quadratic_equation(
 	const double	d2_dot_c1_sub_c2 = vec3_dot_prod(cylinder.axis, c1_sub_c2);
 
 	coefs.a = 1 - pow(d1_dot_d2, 2);
-	coefs.b = \
-		2 * (
+	coefs.b = 2 * (
 			vec3_dot_prod(line.direction, c1_sub_c2)
 			- (d1_dot_d2 * d2_dot_c1_sub_c2) \
 		);
-	coefs.c = \
-		vec3_dot_prod(c1_sub_c2, c1_sub_c2)
+	coefs.c = vec3_dot_prod(c1_sub_c2, c1_sub_c2)
 		- pow(d2_dot_c1_sub_c2, 2)
 		- pow(cylinder.radius, 2);
 	return (solve_quadratic_equation(coefs));

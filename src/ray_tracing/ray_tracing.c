@@ -50,14 +50,17 @@ static t_ray	generate_ray_to_object(
 
 	ft_bzero(&ray, sizeof(ray));
 	if (tag == SPHERE)
-		ray = \
-			find_sphere_ray_intersection(line, *(const t_sphere *)content);
+		ray = find_sphere_ray_intersection(\
+			line, *(const t_sphere *)content \
+		);
 	else if (tag == PLANE)
-		ray = \
-			find_plane_ray_intersection(line, *(const t_plane *)content);
+		ray = find_plane_ray_intersection(\
+			line, *(const t_plane *)content \
+		);
 	else if (tag == CYLINDER)
-		ray = \
-			find_cylinder_ray_intersection(line, *(const t_cylinder *)content);
+		ray = find_cylinder_ray_intersection(\
+			line, *(const t_cylinder *)content \
+		);
 	return (ray);
 }
 
@@ -65,9 +68,9 @@ static t_ray	select_nearest_ray_intersection(
 					const t_ray nearest_ray,
 					const t_ray new_ray)
 {
-	if (new_ray.exists && !nearest_ray.exists)
+	if (new_ray.hit_exists && !nearest_ray.hit_exists)
 		return (new_ray);
-	if (new_ray.exists && nearest_ray.exists)
+	if (new_ray.hit_exists && nearest_ray.hit_exists)
 	{
 		if (new_ray.line_t_coef < nearest_ray.line_t_coef)
 			return (new_ray);
