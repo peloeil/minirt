@@ -14,6 +14,10 @@
 # define RENDERER_H
 
 # include <minirt/scene.h>
+# include <minirt/mlx_api.h>
 
+void	render_scene(
+			const t_scene *const scene,
+			const t_display *const display);
 
 #endif

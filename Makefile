@@ -58,6 +58,9 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		event.c \
 		img_pixel.c \
 	) \
+	$(addprefix renderer/, \
+		renderer.c \
+	) \
 )
 SRC := $(SRC_TEST) $(SRC_DIR)/main.c
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))

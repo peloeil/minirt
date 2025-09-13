@@ -13,6 +13,7 @@
 #include <minirt/parser.h>
 #include <minirt/scene.h>
 #include <minirt/mlx_api.h>
+#include <minirt/renderer.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -44,6 +45,7 @@ int	main(const int argc, const char *const argv[static argc])
 	scene = parse_rt_file(argv[1]);
 	display = create_minirt_display(find_camera_in_scene(scene));
 	enable_event_handler(&display);
+	render_scene(scene, &display);
 	mlx_loop(display.mlx_ptr);
 	destroy_minirt_display(display);
 	ft_list_clear(&scene, free);

@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include <mlx.h>
-# include <X11/X.h>
+#include <X11/X.h>
 #include <minirt/mlx_api.h>
 
 void	enable_event_handler(const t_display *const display)
