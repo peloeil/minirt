@@ -39,7 +39,7 @@ typedef struct s_display
 }	t_display;
 
 // lifecycle.c
-t_display	create_minirt_display(void);
+t_display	create_minirt_display(const t_camera *const camera);
 void		destroy_minirt_display(const t_display display);
 
 // event.c
