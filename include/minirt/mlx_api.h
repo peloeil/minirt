@@ -14,7 +14,7 @@
 # define MLX_API_H
 
 # include <stdint.h>
-# include <minirt/scene.h>
+# include <minirt/renderer.h>
 # define WINDOW_SCALE 0.8
 # define ESC_KEY 65307
 
@@ -36,13 +36,6 @@ typedef struct s_display
 	int		x_len;
 	int		y_len;
 }	t_display;
-
-typedef struct s_pixel
-{
-	int		x;
-	int		y;
-	t_color	color;
-}	t_pixel;
 
 // lifecycle.c
 t_display	create_minirt_display(void);

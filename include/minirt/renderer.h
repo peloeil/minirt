@@ -13,7 +13,13 @@
 #ifndef RENDERER_H
 # define RENDERER_H
 
-# include <stddef.h>
 # include <minirt/scene.h>
+
+typedef struct s_pixel
+{
+	int		x;
+	int		y;
+	t_color	color;
+}	t_pixel;
 
 #endif
