@@ -45,3 +45,20 @@ t_light_source	*find_light_source_in_scene(const t_scene *const scene)
 	}
 	return (NULL);
 }
+
+t_ambient_light	*find_ambient_light_in_scene(const t_scene *const scene)
+{
+	t_tag			tag;
+	const t_scene	*node = scene;
+
+	while (true)
+	{
+		tag = *(t_tag *)node->content;
+		if (tag == AMBIENT_LIGHT)
+			return ((t_ambient_light *)node->content);
+		node = node->next;
+		if (scene == node)
+			break ;
+	}
+	return (NULL);
+}

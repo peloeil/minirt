@@ -97,5 +97,6 @@ typedef struct s_light_source
 
 t_camera		*find_camera_in_scene(const t_scene *const scene);
 t_light_source	*find_light_source_in_scene(const t_scene *const scene);
+t_ambient_light	*find_ambient_light_in_scene(const t_scene *const scene);
 
 #endif
