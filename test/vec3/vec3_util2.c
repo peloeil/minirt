@@ -16,9 +16,9 @@ void	assert_result(char *name, bool result, bool expected)
 
 void	test_vec3_abs(void)
 {
-	const t_vec3 v1 = vec3_init(2.0, 3.0, 6.0);
-	const t_vec3 v2 = vec3_init(4.0, 6.0, 12.0);
-	const t_vec3 v3 = vec3_init(5.0, 3.0, 8.0);
+	const t_vec3 v1 = (t_vec3){2.0, 3.0, 6.0};
+	const t_vec3 v2 = (t_vec3){4.0, 6.0, 12.0};
+	const t_vec3 v3 = (t_vec3){5.0, 3.0, 8.0};
 
 	const double abs1_1 = vec3_abs(v1);
 	const double abs1_2 = 7;
@@ -34,8 +34,8 @@ void	test_vec3_abs(void)
 
 void	test_vec3_dot_prod(void)
 {
-	const t_vec3 v1 = vec3_init(2.0, 3.0, 6.0);
-	const t_vec3 v2 = vec3_init(4.0, 6.0, 12.0);
+	const t_vec3 v1 = (t_vec3){2.0, 3.0, 6.0};
+	const t_vec3 v2 = (t_vec3){4.0, 6.0, 12.0};
 
 	const double dot_prod1_1 = vec3_dot_prod(v1, v1);
 	const double dot_prod1_2 = 49;
@@ -51,9 +51,9 @@ void	test_vec3_dot_prod(void)
 
 void	test_vec3_cross_prod(void)
 {
-	const t_vec3 v1 = vec3_init(2.0, 3.0, 6.0);
-	const t_vec3 v2 = vec3_init(4.0, 6.0, 12.0);
-	const t_vec3 v3 = vec3_init(12.5, 8.8, 18.0);
+	const t_vec3 v1 = (t_vec3){2.0, 3.0, 6.0};
+	const t_vec3 v2 = (t_vec3){4.0, 6.0, 12.0};
+	const t_vec3 v3 = (t_vec3){12.5, 8.8, 18.0};
 
 	const t_vec3 cross_prod1 = vec3_cross_prod(v1, v2);
 	const t_vec3 cross_prod2 = vec3_cross_prod(v1, v3);
@@ -76,9 +76,9 @@ void	test_vec3_cross_prod(void)
 
 void	test_vec3_norm(void)
 {
-	const t_vec3 v1 = vec3_init(2.0, 3.0, 6.0);
-	const t_vec3 v2 = vec3_init(4.0, 6.0, 12.0);
-	const t_vec3 v3 = vec3_init(12.5, 8.8, 18.0);
+	const t_vec3 v1 = (t_vec3){2.0, 3.0, 6.0};
+	const t_vec3 v2 = (t_vec3){4.0, 6.0, 12.0};
+	const t_vec3 v3 = (t_vec3){12.5, 8.8, 18.0};
 
 	const t_vec3 norm1 = vec3_norm(v1);
 	const t_vec3 norm2 = vec3_norm(v2);
@@ -95,9 +95,9 @@ void	test_vec3_norm(void)
 
 void	test_vec3_rad(void)
 {
-	const t_vec3 v1 = vec3_init(2.0, 3.0, 6.0);
-	const t_vec3 v2 = vec3_init(32.1, 59.9, 1.13);
-	const t_vec3 v3 = vec3_init(12.5, 8.8, 18.0);
+	const t_vec3 v1 = (t_vec3){2.0, 3.0, 6.0};
+	const t_vec3 v2 = (t_vec3){32.1, 59.9, 1.13};
+	const t_vec3 v3 = (t_vec3){12.5, 8.8, 18.0};
 
 	const t_vec3 cross_prod1 = vec3_cross_prod(v1, v2);
 	const t_vec3 cross_prod2 = vec3_cross_prod(v1, v3);
