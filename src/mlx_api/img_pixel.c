@@ -35,9 +35,9 @@ static uint32_t	convert_color_object(const t_color color)
 {
 	return ((uint32_t)
 		(
-			(uint32_t)color.red << 16
-			|| (uint32_t)color.green << 8
-			|| (uint32_t)color.blue
+			((uint32_t)color.red << 16)
+			| ((uint32_t)color.green << 8)
+			| ((uint32_t)color.blue)
 		)
 	);
 }
