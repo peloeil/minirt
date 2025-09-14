@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <libft/ft_stdlib.h>
 #include <mlx.h>
 #include <minirt/scene.h>
@@ -45,8 +44,6 @@ void	render_scene(
 		while (pixel.x < display->x_len)
 		{
 			ray = create_ray(pixel, scene, camera, display);
-			if (ray.hit_exists)
-				printf("ray hit object\n");
 			pixel.color = calculate_phong_reflection(ray, scene, *amb_light, *light);
 			put_color_to_image_pixel(display, pixel);
 			pixel.x++;
