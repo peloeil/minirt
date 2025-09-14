@@ -35,3 +35,8 @@ t_vec3	vec3_mult(const double scalar, const t_vec3 v)
 {
 	return ((t_vec3){scalar * v.x, scalar * v.y, scalar * v.z});
 }
+
+double	vec3_length(const t_vec3 start, const t_vec3 end)
+{
+	return (vec3_abs(vec3_sub(end, start)));
+}
