@@ -38,7 +38,7 @@ typedef struct s_ray
 	t_vec3	intersection;
 	t_vec3	hit_normal;
 	t_color	color;
-	bool	hit_exists;
+	t_tag	hit_object;
 }	t_ray;
 
 // core.c
