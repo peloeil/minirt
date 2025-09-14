@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <libft/ft_stdlib.h>
+#include <mlx.h>
 #include <minirt/scene.h>
 #include <minirt/mlx_api.h>
 #include <minirt/ray_tracing.h>
@@ -52,6 +53,7 @@ void	render_scene(
 		}
 		pixel.y++;
 	}
+	mlx_put_image_to_window(display->mlx_ptr, display->win_ptr, display->image.img_ptr, 0, 0);
 }
 
 static t_ray	create_ray(
