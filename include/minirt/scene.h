@@ -56,8 +56,8 @@ typedef struct s_plane
 typedef struct s_sphere
 {
 	t_tag	tag;
-	double	radius;
 	t_vec3	center;
+	double	radius;
 	t_color	color;
 }	t_sphere;
 
@@ -90,10 +90,11 @@ typedef struct s_ambient_light
 
 typedef struct s_light_source
 {
-	t_tag	tag;
-	t_vec3	position;
-	double	brightness;
-	t_color	color;
+	t_tag		tag;
+	t_sphere	sphere;
+	t_vec3		position;
+	double		brightness;
+	t_color		color;
 }	t_light_source;
 
 t_camera		*find_camera_in_scene(const t_scene *const scene);

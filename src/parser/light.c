@@ -29,5 +29,10 @@ void	assign_light_source_info(
 			exit(EXIT_FAILURE);
 	}
 	if (i == 3)
+	{
 		node->color = parse_color(info);
+		node->sphere.center = node->position;
+		node->sphere.radius = 0.5 * node->brightness;
+		node->sphere.color = node->color;
+	}
 }
