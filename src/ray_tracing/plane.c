@@ -45,7 +45,7 @@ static double	solve_plane_equation(
 	const double	n_dot_c = vec3_dot_prod(plane.normal, plane.position);
 	const double	n_dot_d = vec3_dot_prod(plane.normal, line.direction);
 
-	if (EPSILON < fabs(n_dot_d))
+	if (0 < fabs(n_dot_d))
 		return ((n_dot_c - n_dot_a) / n_dot_d);
 	return (-1);
 }

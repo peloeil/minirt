@@ -28,7 +28,7 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 		coefs.b = -coefs.b;
 		coefs.c = -coefs.c;
 	}
-	if (EPSILON < fabs(coefs.a) && - EPSILON < discriminant)
+	if (0 < fabs(coefs.a) && - EPSILON < discriminant)
 	{
 		quad_root.root_large = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
 		quad_root.root_small = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
