@@ -61,6 +61,14 @@ static t_ray	generate_ray_to_object(
 		ray = find_cylinder_ray_intersection(\
 			line, *(const t_cylinder *)content \
 		);
+	else if (tag == LIGHT_SOURCE)
+	{
+		ray = find_sphere_ray_intersection(\
+			line, (*(const t_light_source *)content).sphere \
+		);
+		if (ray.hit_object == SPHERE)
+			ray.hit_object = LIGHT_SOURCE;
+	}
 	return (ray);
 }
 
