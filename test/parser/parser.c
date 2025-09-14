@@ -11,6 +11,7 @@
 #include <minirt/parser.h>
 
 static const char *const tag_str[] = {
+    "NONE",
     "LINE",
     "PLANE",
     "SPHERE",

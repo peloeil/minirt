@@ -21,6 +21,7 @@ typedef t_list	t_scene;
 
 typedef enum e_tag
 {
+	NONE,
 	LINE,
 	PLANE,
 	SPHERE,
