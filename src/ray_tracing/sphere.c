@@ -49,8 +49,8 @@ static t_quad_root	solve_sphere_quadratic_equation(
 
 	coefs.a = vec3_dot_prod(line.direction, line.direction);
 	coefs.b = vec3_dot_prod(line_sphere_sub, line.direction) * 2;
-	coefs.c = vec3_dot_prod(\
-		line_sphere_sub, line_sphere_sub) - pow(sphere.radius, 2 \
-	);
+	coefs.c = \
+		vec3_dot_prod(line_sphere_sub, line_sphere_sub)
+		- pow(sphere.radius, 2);
 	return (solve_quadratic_equation(coefs));
 }
