@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include <minirt/vec3.h>
 # include <minirt/scene.h>
+# define SMOOTHNESS 10
 
 typedef struct s_quad_coefs
 {

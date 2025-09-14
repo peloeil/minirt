@@ -52,7 +52,7 @@ t_color	calculate_phong_reflection(
 		ray, to_light, light_source \
 	);
 	const t_color	i_specular = calculate_specular_reflection(\
-		ray, to_light, light_source, 1 \
+		ray, to_light, light_source, SMOOTHNESS \
 	);
 
 	return ((t_color){
