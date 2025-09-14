@@ -13,11 +13,6 @@
 #include <minirt/vec3.h>
 #include <math.h>
 
-t_vec3	vec3_init(const double x, const double y, const double z)
-{
-	return ((t_vec3){x, y, z});
-}
-
 bool	vec3_eq(const t_vec3 v1, const t_vec3 v2)
 {
 	return (
