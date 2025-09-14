@@ -38,7 +38,7 @@ t_ray	find_cylinder_ray_intersection(
 	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
 	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
-	if (0 < ray.line_t_coef)
+	if (EPSILON < ray.line_t_coef)
 	{
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		if (!is_within_height_range(cylinder, ray.intersection))

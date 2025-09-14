@@ -27,7 +27,7 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
 	ray.line_t_coef = solve_plane_equation(line, plane);
-	if (0 < ray.line_t_coef)
+	if (EPSILON < ray.line_t_coef)
 	{
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		ray.hit_normal = plane.normal;

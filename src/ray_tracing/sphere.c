@@ -30,7 +30,7 @@ t_ray	find_sphere_ray_intersection(const t_line line, const t_sphere sphere)
 	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
 	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
-	if (0 < ray.line_t_coef)
+	if (EPSILON < ray.line_t_coef)
 	{
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		ray.hit_normal = vec3_norm(vec3_sub(ray.intersection, sphere.center));
