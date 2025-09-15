@@ -38,11 +38,9 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 
 double	select_nearest_line_t_coef(const t_quad_root quad_root)
 {
-	if (0.0 < quad_root.root1)
+	if (0.0 < quad_root.root1 && quad_root.root1 < quad_root.root2)
 		return (quad_root.root1);
-	if (0.0 < quad_root.root2)
-		return (quad_root.root2);
-	return (-1);
+	return (quad_root.root2);
 }
 
 t_vec3	calculate_ray_intersection(const t_line line, const double line_t_coef)
