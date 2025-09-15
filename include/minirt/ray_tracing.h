@@ -25,11 +25,11 @@ typedef struct s_quad_coefs
 	double	c;
 }	t_quad_coefs;
 
-typedef struct s_quad_root
+typedef struct s_eq_roots
 {
 	double	root1;
 	double	root2;
-}	t_quad_root;
+}	t_eq_roots;
 
 typedef struct s_ray
 {
@@ -42,8 +42,8 @@ typedef struct s_ray
 }	t_ray;
 
 // core.c
-t_quad_root	solve_quadratic_equation(const t_quad_coefs coefs);
-double		select_nearest_line_t_coef(const t_quad_root quad_root);
+t_eq_roots	solve_quadratic_equation(const t_quad_coefs coefs);
+double		select_nearest_line_t_coef(const t_eq_roots eq_roots);
 t_vec3		calculate_ray_intersection(
 				const t_line line,
 				const double line_t_coef);
