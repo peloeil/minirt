@@ -16,10 +16,6 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
-static double	solve_plane_equation(
-					const t_line line,
-					const t_plane plane);
-
 t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 {
 	t_ray			ray;
@@ -37,9 +33,7 @@ t_ray	find_plane_ray_intersection(const t_line line, const t_plane plane)
 	return (ray);
 }
 
-static double	solve_plane_equation(
-					const t_line line,
-					const t_plane plane)
+double	solve_plane_equation(const t_line line, const t_plane plane)
 {
 	const double	n_dot_a = vec3_dot_prod(plane.normal, line.position);
 	const double	n_dot_c = vec3_dot_prod(plane.normal, plane.position);

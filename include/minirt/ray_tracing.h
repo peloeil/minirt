@@ -57,6 +57,9 @@ t_ray		find_nearest_ray_intersection(
 t_ray		find_plane_ray_intersection(
 				const t_line line,
 				const t_plane plane);
+double		solve_plane_equation(
+				const t_line line,
+				const t_plane plane);
 
 // sphere.c
 t_ray		find_sphere_ray_intersection(
