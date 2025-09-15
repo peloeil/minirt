@@ -16,28 +16,30 @@
 #include <libft/ft_string.h>
 #include <libft/ft_list.h>
 
-static void	validate_duplicate_tag(
+static void	validate_unique_tag(
 				const t_scene *const scene,
 				const t_scene *const obj)
 {
-	const t_scene	*cur;
-	t_tag			obj_tag;
+	const t_scene	*cur = scene;
+	t_tag			tag;
+	int				count;
 
-	if (scene == NULL)
+	tag = *(t_tag *)obj->content;
+	if (scene == NULL
+		|| (tag != CAMERA && tag != AMBIENT_LIGHT && tag != LIGHT_SOURCE))
 		return ;
-	cur = scene;
+	count = 0;
 	while (true)
 	{
-		obj_tag = *(t_tag *)obj->content;
-		if ((obj_tag == CAMERA
-				|| obj_tag == AMBIENT_LIGHT
-				|| obj_tag == LIGHT_SOURCE)
-			&& obj_tag == *(t_tag *)cur->content)
-			exit(EXIT_FAILURE);
+		if (tag == *(t_tag *)cur->content)
+			count++;
 		cur = cur->next;
-		if (cur == scene)
+		if (count == 2 || cur == scene)
 			break ;
 	}
+	if (count != 1)
+		exit_with_message("camera, ambient light and light source"
+			" must be unique in a scene");
 }
 
 static void	validate_object_filled(const t_scene *const obj, const size_t i)
@@ -76,7 +78,7 @@ t_scene	*parse_rt_line(
 		i++;
 	}
 	free_2darray((void **)info);
+	validate_unique_tag(scene, obj);
 	validate_object_filled(obj, i);
-	validate_duplicate_tag(scene, obj);
 	return (obj);
 }
