@@ -20,8 +20,8 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 	t_quad_root		quad_root;
 	const double	discriminant = pow(coefs.b, 2) - 4 * coefs.a * coefs.c;
 
-	quad_root.root_large = 0;
-	quad_root.root_small = 0;
+	quad_root.root1 = 0;
+	quad_root.root2 = 0;
 	if (coefs.a < 0)
 	{
 		coefs.a = -coefs.a;
@@ -30,18 +30,18 @@ t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
 	}
 	if (0 < fabs(coefs.a) && - EPSILON < discriminant)
 	{
-		quad_root.root_large = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
-		quad_root.root_small = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
+		quad_root.root1 = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
+		quad_root.root2 = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
 	}
 	return (quad_root);
 }
 
 double	select_nearest_line_t_coef(const t_quad_root quad_root)
 {
-	if (0.0 < quad_root.root_small)
-		return (quad_root.root_small);
-	if (0.0 < quad_root.root_large)
-		return (quad_root.root_large);
+	if (0.0 < quad_root.root1)
+		return (quad_root.root1);
+	if (0.0 < quad_root.root2)
+		return (quad_root.root2);
 	return (-1);
 }
 
