@@ -31,6 +31,7 @@ void	assign_light_source_info(
 	if (i == 3)
 	{
 		node->color = parse_color(info);
+		node->sphere.tag = SPHERE;
 		node->sphere.center = node->position;
 		node->sphere.radius = 0.5 * node->brightness;
 		node->sphere.color = node->color;
