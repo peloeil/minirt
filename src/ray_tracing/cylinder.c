@@ -16,6 +16,10 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
+static t_ray		find_cylinder_caps_ray_intersection(
+						t_ray ray,
+						const t_line line,
+						const t_cylinder cylinder);
 static t_eq_roots	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder);
@@ -30,13 +34,15 @@ t_ray	find_cylinder_ray_intersection(
 			const t_line line,
 			const t_cylinder cylinder)
 {
-	t_ray				ray;
-	const t_eq_roots	eq_roots = solve_cylinder_quadratic_equation(\
-		line, cylinder \
-	);
+	t_ray		ray;
+	t_eq_roots	eq_roots;
 
 	ft_bzero(&ray, sizeof(ray));
 	ray.line = line;
+	ray = find_cylinder_caps_ray_intersection(ray, line, cylinder);
+	if (ray.hit_object == CYLINDER)
+		return (ray);
+	eq_roots = solve_cylinder_quadratic_equation(line, cylinder);
 	ray.line_t_coef = select_nearest_line_t_coef(eq_roots);
 	if (EPSILON < ray.line_t_coef)
 	{
@@ -49,6 +55,35 @@ t_ray	find_cylinder_ray_intersection(
 		ray.color = cylinder.color;
 		ray.hit_object = CYLINDER;
 	}
+	return (ray);
+}
+
+static t_ray	find_cylinder_caps_ray_intersection(
+					t_ray ray,
+					const t_line line,
+					const t_cylinder cylinder)
+{
+	t_cylinder_cap_type	type;
+	const t_eq_roots	eq_roots = (t_eq_roots){
+		solve_plane_equation(line, cylinder.caps[TOP]),
+		solve_plane_equation(line, cylinder.caps[BOTTOM])
+	};
+
+	ray.line_t_coef = select_nearest_line_t_coef(eq_roots);
+	if (!(EPSILON < ray.line_t_coef))
+		return (ray);
+	ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
+	type = TOP;
+	if (ray.line_t_coef == eq_roots.root2)
+		type = BOTTOM;
+	if (cylinder.radius
+		< vec3_length(ray.intersection, cylinder.caps[type].position))
+		return (ray);
+	if (vec3_dot_prod(line.direction, cylinder.caps[!type].normal) < EPSILON)
+		return (ray);
+	ray.hit_normal = cylinder.caps[type].normal;
+	ray.color = cylinder.color;
+	ray.hit_object = CYLINDER;
 	return (ray);
 }
 
