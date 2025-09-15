@@ -57,13 +57,13 @@ static void	create_cylinder_caps_plane(
 				t_cylinder *const node,
 				t_plane caps[static 2])
 {
-	caps[0] = (t_plane){
+	caps[TOP] = (t_plane){
 		PLANE,
 		vec3_add(node->center, vec3_mult(node->height / 2, node->axis)),
 		node->axis,
 		node->color
 	};
-	caps[1] = (t_plane){
+	caps[BOTTOM] = (t_plane){
 		PLANE,
 		vec3_sub(node->center, vec3_mult(node->height / 2, node->axis)),
 		vec3_mult(-1, node->axis),
