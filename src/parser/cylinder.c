@@ -66,7 +66,7 @@ static void	create_cylinder_caps_plane(
 	caps[1] = (t_plane){
 		PLANE,
 		vec3_sub(node->center, vec3_mult(node->height / 2, node->axis)),
-		node->axis,
+		vec3_mult(-1, node->axis),
 		node->color
 	};
 }
