@@ -53,8 +53,8 @@ t_color	parse_color(const char str[static 1])
 		color.green = parse_8bit_value(rgb[i++]);
 	if (rgb[i] != NULL)
 		color.blue = parse_8bit_value(rgb[i++]);
-	if (i != 3)
-		exit(EXIT_FAILURE);
+	if (i != 3 || rgb[i] != NULL)
+		exit_with_message("invalid number of fields in a color string");
 	free_2darray((void **)rgb);
 	return (color);
 }
