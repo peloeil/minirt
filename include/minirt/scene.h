@@ -31,6 +31,12 @@ typedef enum e_tag
 	LIGHT_SOURCE
 }	t_tag;
 
+typedef enum e_cylinder_cap_type
+{
+	TOP,
+	BOTTOM
+}	t_cylinder_cap_type;
+
 typedef struct s_color
 {
 	double	red;
