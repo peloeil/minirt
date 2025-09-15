@@ -17,6 +17,10 @@
 #include <stddef.h>
 #include <math.h>
 
+static void	create_cylinder_caps_plane(
+				t_cylinder *const node,
+				t_plane caps[static 2]);
+
 void	assign_cylinder_info(
 			t_cylinder *const node,
 			const char info[static 1],
@@ -43,5 +47,26 @@ void	assign_cylinder_info(
 			exit(EXIT_FAILURE);
 	}
 	if (i == 5)
+	{
 		node->color = parse_color(info);
+		create_cylinder_caps_plane(node, node->caps);
+	}
+}
+
+static void	create_cylinder_caps_plane(
+				t_cylinder *const node,
+				t_plane caps[static 2])
+{
+	caps[0] = (t_plane){
+		PLANE,
+		vec3_add(node->center, vec3_mult(node->height / 2, node->axis)),
+		node->axis,
+		node->color
+	};
+	caps[1] = (t_plane){
+		PLANE,
+		vec3_sub(node->center, vec3_mult(node->height / 2, node->axis)),
+		node->axis,
+		node->color
+	};
 }
