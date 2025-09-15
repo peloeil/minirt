@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:40:58 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:41:03 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:13:01 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_tag	identify_tag(const char str[static 1])
 		return (PLANE);
 	if (ft_strcmp(str, "cy") == 0)
 		return (CYLINDER);
-	exit(EXIT_FAILURE);
+	exit_with_message("unknown tag");
 }
 
 static void	*allocate_node(const t_tag tag)
@@ -51,7 +51,7 @@ static void	*allocate_node(const t_tag tag)
 	else if (tag == LIGHT_SOURCE)
 		res = ft_calloc(1, sizeof(t_light_source));
 	if (res == NULL)
-		exit(EXIT_FAILURE);
+		exit_with_message("malloc() failed");
 	return (res);
 }
 
@@ -84,5 +84,5 @@ void	assign_info_to_obj(
 	else if (tag == CYLINDER)
 		assign_cylinder_info((t_cylinder *)node, info, i);
 	else
-		exit(EXIT_FAILURE);
+		exit_with_message("unreachable: this message must not be displayed");
 }

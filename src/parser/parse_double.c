@@ -6,10 +6,11 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:55 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:42:22 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:21:41 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <minirt/parser.h>
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
@@ -25,7 +26,7 @@ static double	parse_integral_part(const char str[static 1])
 	while (ft_isdigit(str[i]))
 	{
 		if (res > (DBL_MAX - str[i] + '0') / 10)
-			exit(EXIT_FAILURE);
+			exit_with_message("double overflow");
 		res = 10 * res + str[i] - '0';
 		i++;
 	}
@@ -44,7 +45,7 @@ static double	parse_fractional_part(const char str[static 1])
 	if (str[i] == '\0')
 		return (0);
 	if (str[i++] != '.')
-		exit(EXIT_FAILURE);
+		exit_with_message("invalid character in a double string");
 	point_idx = i - 1;
 	res = 0.0;
 	while (ft_isdigit(str[i]))
@@ -53,7 +54,7 @@ static double	parse_fractional_part(const char str[static 1])
 		i++;
 	}
 	if (str[i] != '\0')
-		exit(EXIT_FAILURE);
+		exit_with_message("invalid character in a double string");
 	return (res);
 }
 

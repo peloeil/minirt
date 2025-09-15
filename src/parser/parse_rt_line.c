@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:43 by sota              #+#    #+#             */
-/*   Updated: 2025/08/20 01:19:03 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:47:54 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	validate_object_filled(const t_scene *const obj, const size_t i)
 		return ;
 	if (tag == LIGHT_SOURCE && i == 4)
 		return ;
-	exit(EXIT_FAILURE);
+	exit_with_message("invalid number of fields in a line");
 }
 
 t_scene	*parse_rt_line(
@@ -68,7 +68,7 @@ t_scene	*parse_rt_line(
 	size_t						i;
 
 	if (obj == NULL || info == NULL)
-		exit(EXIT_FAILURE);
+		exit_with_message("malloc() failed");
 	i = 0;
 	while (info[i] != NULL)
 	{

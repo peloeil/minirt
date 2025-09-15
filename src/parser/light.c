@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:38 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:42:22 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:19:15 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	assign_light_source_info(
 	{
 		node->brightness = parse_double(info);
 		if (node->brightness < 0.0 || 1.0 < node->brightness)
-			exit(EXIT_FAILURE);
+			exit_with_message("light: brightness must be in [0, 1]");
 	}
 	if (i == 3)
 	{

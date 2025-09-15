@@ -6,7 +6,7 @@
 /*   By: rogiso <rogiso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 19:21:53 by rogiso            #+#    #+#             */
-/*   Updated: 2025/08/04 19:21:55 by rogiso           ###   ########.fr       */
+/*   Updated: 2025/09/15 22:54:06 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static t_string	read_rt_file(const char file_path[static 1])
 	t_string	res;
 
 	if (ft_str_new(&res) == -1)
-		exit(EXIT_FAILURE);
+		exit_with_message("malloc() failed");
 	while (true)
 	{
 		nbyte = read(fd, buf, BUF_SIZE - 1);
 		if (nbyte == -1)
-			exit(EXIT_FAILURE);
+			exit_with_message("read() failed");
 		if (nbyte == 0)
 			break ;
 		buf[nbyte] = '\0';
 		if (ft_str_push_str(&res, buf) == -1)
-			exit(EXIT_FAILURE);
+			exit_with_message("malloc() failed");
 	}
 	close(fd);
 	return (res);
@@ -49,8 +49,10 @@ static char	**read_rt_lines(const char file_path[static 1])
 	const t_string				file = read_rt_file(file_path);
 	const char *const *const	lines = (const char **)ft_split(file.str, '\n');
 
-	if (lines == NULL || lines[0] == NULL)
-		exit(EXIT_FAILURE);
+	if (lines == NULL)
+		exit_with_message("malloc() failed");
+	if (lines[0] == NULL)
+		exit_with_message("rt file only contains newline characters");
 	free(file.str);
 	return ((char **)lines);
 }

@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:42:00 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:42:22 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 20:24:31 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vec3	parse_vec3(const char str[static 1])
 	t_vec3						res;
 
 	if (xyz == NULL)
-		exit(EXIT_FAILURE);
+		exit_with_message("malloc() failed");
 	i = 0;
 	if (xyz[i] != NULL)
 		res.x = parse_double(xyz[i++]);

@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:43:04 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:43:05 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:30:13 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	assign_plane_info(
 	{
 		node->normal = parse_vec3(info);
 		if (fabs(vec3_abs(node->normal) - 1.0) > EPSILON)
-			exit(EXIT_FAILURE);
+			exit_with_message("plane: normal vector must be normalized");
 	}
 	if (i == 3)
 		node->color = parse_color(info);
