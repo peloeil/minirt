@@ -71,6 +71,8 @@ t_scene	*parse_rt_line(
 
 	if (obj == NULL || info == NULL)
 		exit_with_message("malloc() failed");
+	if (info[0] == NULL)
+		exit_with_message("a line only contains spaces");
 	i = 0;
 	while (info[i] != NULL)
 	{
