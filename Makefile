@@ -212,9 +212,7 @@ sanitize: re
 
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
-	@$(RM) $(OUT_DIR)/result.log
 	@mkdir -p $(OUT_DIR)/exec
-	@$(RM) -rf $(OUT_DIR)/log
 	@mkdir -p $(OUT_DIR)/log
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \
