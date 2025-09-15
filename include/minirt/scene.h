@@ -68,6 +68,7 @@ typedef struct s_cylinder
 	t_vec3	axis;
 	double	radius;
 	double	height;
+	t_plane	caps[2];
 	t_color	color;
 }	t_cylinder;
 
