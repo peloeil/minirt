@@ -33,9 +33,9 @@ void	render_scene(
 {
 	t_ray							ray;
 	t_pixel							pixel;
-	const t_camera *const			camera = find_camera_in_scene(scene);
-	const t_light_source *const		light = find_light_source_in_scene(scene);
-	const t_ambient_light *const	amb_light = find_ambient_light_in_scene(scene);
+	const t_camera *const			camera = find_camera(scene);
+	const t_light_source *const		light = find_light_source(scene);
+	const t_ambient_light *const	amb_light = find_ambient_light(scene);
 
 	pixel.y = 0;
 	while (pixel.y < display->y_len)

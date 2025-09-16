@@ -35,7 +35,7 @@ int	main(void)
 	const char *path = "/home/ryoogiso/workSpace/42cursus/minirt/scene_file/valid/example1.rt";
 
 	scene = parse_rt_file(path);
-	display = create_minirt_display(find_camera_in_scene(scene));
+	display = create_minirt_display(find_camera(scene));
 	enable_event_handler(&display);
 	test_put_color_to_image_pixel(&display);
 	mlx_loop(display.mlx_ptr);

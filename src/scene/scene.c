@@ -12,7 +12,7 @@
 
 #include <minirt/scene.h>
 
-t_camera	*find_camera_in_scene(const t_scene *const scene)
+t_camera	*find_camera(const t_scene *const scene)
 {
 	t_tag			tag;
 	const t_scene	*node = scene;
@@ -29,7 +29,7 @@ t_camera	*find_camera_in_scene(const t_scene *const scene)
 	return (NULL);
 }
 
-t_light_source	*find_light_source_in_scene(const t_scene *const scene)
+t_light_source	*find_light_source(const t_scene *const scene)
 {
 	t_tag			tag;
 	const t_scene	*node = scene;
@@ -46,7 +46,7 @@ t_light_source	*find_light_source_in_scene(const t_scene *const scene)
 	return (NULL);
 }
 
-t_ambient_light	*find_ambient_light_in_scene(const t_scene *const scene)
+t_ambient_light	*find_ambient_light(const t_scene *const scene)
 {
 	t_tag			tag;
 	const t_scene	*node = scene;
