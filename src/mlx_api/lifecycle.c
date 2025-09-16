@@ -53,8 +53,8 @@ static t_vec3	calculate_camera_to_virtual_display(
 					const int x_len,
 					const t_camera *const camera)
 {
-	const double	distance_to_vir_display = (
-		(x_len / 2) / tan(camera->radian / 2)
+	const double	distance_to_vir_display = (\
+		(x_len / 2) / tan(camera->radian / 2) \
 	);
 
 	return (vec3_mult(distance_to_vir_display, camera->forward));

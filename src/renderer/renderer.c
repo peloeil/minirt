@@ -44,13 +44,17 @@ void	render_scene(
 		while (pixel.x < display->x_len)
 		{
 			ray = create_ray(pixel, scene, camera, display);
-			pixel.color = calculate_phong_reflection(ray, scene, *amb_light, *light);
+			pixel.color = calculate_phong_reflection(\
+				ray, scene, *amb_light, *light \
+			);
 			put_color_to_image_pixel(display, pixel);
 			pixel.x++;
 		}
 		pixel.y++;
 	}
-	mlx_put_image_to_window(display->mlx_ptr, display->win_ptr, display->image.img_ptr, 0, 0);
+	mlx_put_image_to_window(\
+		display->mlx_ptr, display->win_ptr, display->image.img_ptr, 0, 0 \
+	);
 }
 
 static t_ray	create_ray(
@@ -60,7 +64,7 @@ static t_ray	create_ray(
 					const t_display *const display)
 {
 	const t_line	ray_line = create_ray_line(pixel, camera, display);
-	
+
 	return (find_nearest_ray_intersection(ray_line, scene));
 }
 
