@@ -51,8 +51,8 @@ void		destroy_minirt_display(const t_display display);
 
 // event.c
 void		enable_event_handler(const t_display *const display);
-int			key_event_handler(const int key_code, const void *param);
-int			close_button_handler(const void *param);
+int			key_event_handler(const int key_code, const void *const param);
+int			close_button_handler(const void *const param);
 
 // img_pixel.c
 void		put_color_to_image_pixel(
