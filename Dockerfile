@@ -50,7 +50,8 @@ WORKDIR /minirt-src
 RUN --mount=type=cache,target=/var/cache/pacman,sharing=locked \
     pacman -Syu --noconfirm --needed \
     clang \
-    python-pipx
+    python-pipx \
+    libx11
 ARG PIPX_HOME=/opt/pipx
 ARG PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install norminette==3.3.55
