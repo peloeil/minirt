@@ -18,6 +18,7 @@
 
 void	render_scene(
 			const t_scene *const scene,
+			const t_camera *const camera,
 			const t_display *const display);
 
 #endif

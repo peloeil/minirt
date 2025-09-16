@@ -37,15 +37,17 @@ static void	validate_rt_file_path(const char file_path[static 1])
 int	main(const int argc, const char *const argv[static argc])
 {
 	t_scene		*scene;
+	t_camera	*camera;
 	t_display	display;
 
 	if (argc != 2)
 		return (EXIT_FAILURE);
 	validate_rt_file_path(argv[1]);
 	scene = parse_rt_file(argv[1]);
-	display = create_minirt_display(find_camera(scene));
+	camera = find_camera(scene);
+	display = create_minirt_display(camera);
 	enable_event_handler(&display);
-	render_scene(scene, &display);
+	render_scene(scene, camera, &display);
 	mlx_loop(display.mlx_ptr);
 	destroy_minirt_display(display);
 	ft_list_clear(&scene, free);

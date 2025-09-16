@@ -29,11 +29,11 @@ static t_line	create_ray_line(
 
 void	render_scene(
 			const t_scene *const scene,
+			const t_camera *const camera,
 			const t_display *const display)
 {
 	t_ray							ray;
 	t_pixel							pixel;
-	const t_camera *const			camera = find_camera(scene);
 	const t_light_source *const		light = find_light_source(scene);
 	const t_ambient_light *const	amb_light = find_ambient_light(scene);
 
