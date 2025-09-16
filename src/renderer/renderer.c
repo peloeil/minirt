@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft/ft_stdlib.h>
 #include <mlx.h>
+#include <minirt/vec3.h>
 #include <minirt/scene.h>
 #include <minirt/mlx_api.h>
 #include <minirt/ray_tracing.h>
@@ -74,10 +74,10 @@ static t_line	create_ray_line(
 					const t_display *const display)
 {
 	const t_vec3	to_right = vec3_mult(\
-		pixel.x - (display->x_len / 2), camera->right \
+		(double)pixel.x - (double)(display->x_len / 2.0), camera->right \
 	);
 	const t_vec3	to_up = vec3_mult(\
-		pixel.y - (display->y_len / 2), camera->up \
+		(double)pixel.y - (double)(display->y_len / 2.0), camera->up \
 	);
 	const t_vec3	target = vec3_add(\
 		vec3_add(to_right, to_up), \

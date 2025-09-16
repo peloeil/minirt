@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <mlx.h>
+#include <minirt/vec3.h>
+#include <minirt/scene.h>
 #include <minirt/mlx_api.h>
 
 static t_vec3	calculate_camera_to_virtual_display(
@@ -54,7 +56,7 @@ static t_vec3	calculate_camera_to_virtual_display(
 					const t_camera *const camera)
 {
 	const double	distance_to_vir_display = (\
-		(x_len / 2) / tan(camera->radian / 2) \
+		(double)(x_len / 2.0) / tan(camera->radian / 2) \
 	);
 
 	return (vec3_mult(distance_to_vir_display, camera->forward));
