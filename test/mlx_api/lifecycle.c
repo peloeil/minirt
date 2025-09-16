@@ -32,7 +32,7 @@ int	main(void)
 {
 	t_scene		*scene;
 	t_display	display;
-	const char *path = "/home/ryoogiso/workSpace/42cursus/minirt/scene_file/valid/example1.rt";
+	const char *path = "./scene_file/valid/example1.rt";
 
 	scene = parse_rt_file(path);
 	display = create_minirt_display(find_camera(scene));
