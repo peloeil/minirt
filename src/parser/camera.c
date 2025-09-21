@@ -47,12 +47,15 @@ static t_vec3	calculate_camera_up(const t_vec3 forward)
 	double			a;
 	double			b;
 	double			f_dot_z;
-	const t_vec3	z_axis = (t_vec3){0, 0, 1};
+	const t_vec3	z_axis_pos = (t_vec3){0, 0, 1};
+	const t_vec3	z_axis_neg = (t_vec3){0, 0, -1};
 
-	if (vec3_eq(forward, z_axis))
+	if (vec3_eq(forward, z_axis_pos))
 		return ((t_vec3){0, -1, 0});
-	f_dot_z = vec3_dot_prod(forward, z_axis);
+	if (vec3_eq(forward, z_axis_neg))
+		return ((t_vec3){0, 1, 0});
+	f_dot_z = vec3_dot_prod(forward, z_axis_pos);
 	b = 1 / fabs(sqrt(1 - pow(f_dot_z, 2)));
 	a = -f_dot_z * b;
-	return (vec3_add(vec3_mult(a, forward), vec3_mult(b, z_axis)));
+	return (vec3_add(vec3_mult(a, forward), vec3_mult(b, z_axis_pos)));
 }
