@@ -18,6 +18,10 @@
 #include <minirt/scene.h>
 #include <minirt/mlx_api.h>
 
+static t_image	create_minirt_image(
+					void *const mlx_ptr,
+					const int x_len,
+					const int y_len);
 static t_vec3	calculate_camera_to_virtual_display(
 					const int x_len,
 					const t_camera *const camera);
@@ -35,20 +39,33 @@ t_display	create_minirt_display(const t_camera *const camera)
 	display.win_ptr = mlx_new_window(\
 		display.mlx_ptr, display.x_len, display.y_len, "miniRT" \
 	);
-	display.image.img_ptr = mlx_new_image(\
+	display.image = create_minirt_image(\
 		display.mlx_ptr, display.x_len, display.y_len \
 	);
-	display.image.pixel_head = (uint8_t *)mlx_get_data_addr(\
-		display.image.img_ptr, \
-		&display.image.bits_per_pixel, \
-		&display.image.bytes_per_line, \
-		&display.image.endian \
-	);
-	display.image.bytes_per_pixel = display.image.bits_per_pixel / 8;
 	display.to_virtual_display = calculate_camera_to_virtual_display(\
 		display.x_len, camera \
 	);
 	return (display);
+}
+
+static t_image	create_minirt_image(
+					void *const mlx_ptr,
+					const int x_len,
+					const int y_len)
+{
+	t_image	image;
+
+	image.img_ptr = mlx_new_image(\
+		mlx_ptr, x_len, y_len \
+	);
+	image.pixel_head = (uint8_t *)mlx_get_data_addr(\
+		image.img_ptr, \
+		&image.bits_per_pixel, \
+		&image.bytes_per_line, \
+		&image.endian \
+	);
+	image.bytes_per_pixel = image.bits_per_pixel / 8;
+	return (image);
 }
 
 static t_vec3	calculate_camera_to_virtual_display(
