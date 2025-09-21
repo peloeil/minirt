@@ -57,6 +57,6 @@ int			close_button_handler(const void *const param);
 // img_pixel.c
 void		put_color_to_image_pixel(
 				const t_display *const display,
-				t_pixel pixel);
+				const t_pixel pixel);
 
 #endif

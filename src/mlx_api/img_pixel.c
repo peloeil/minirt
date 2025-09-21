@@ -17,7 +17,9 @@
 
 static uint32_t	convert_color_object(const t_color color);
 
-void	put_color_to_image_pixel(const t_display *const display, t_pixel pixel)
+void	put_color_to_image_pixel(
+			const t_display *const display,
+			const t_pixel pixel)
 {
 	const int		col = pixel.x;
 	const int		row = display->y_len - pixel.y - 1;
