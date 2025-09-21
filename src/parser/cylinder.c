@@ -17,9 +17,7 @@
 #include <stddef.h>
 #include <math.h>
 
-static void	create_cylinder_caps_plane(
-				t_cylinder *const node,
-				t_plane caps[static 2]);
+static void	create_cylinder_caps_plane(t_cylinder *const cylinder);
 
 void	assign_cylinder_info(
 			t_cylinder *const node,
@@ -49,24 +47,22 @@ void	assign_cylinder_info(
 	if (i == 5)
 	{
 		node->color = parse_color(info);
-		create_cylinder_caps_plane(node, node->caps);
+		create_cylinder_caps_plane(node);
 	}
 }
 
-static void	create_cylinder_caps_plane(
-				t_cylinder *const node,
-				t_plane caps[static 2])
+static void	create_cylinder_caps_plane(t_cylinder *const cylinder)
 {
-	caps[TOP] = (t_plane){
+	cylinder->caps[TOP] = (t_plane){
 		PLANE,
-		vec3_add(node->center, vec3_mult(node->height / 2, node->axis)),
-		node->axis,
-		node->color
+		vec3_add(cylinder->center, vec3_mult(cylinder->height / 2, cylinder->axis)),
+		cylinder->axis,
+		cylinder->color
 	};
-	caps[BOTTOM] = (t_plane){
+	cylinder->caps[BOTTOM] = (t_plane){
 		PLANE,
-		vec3_sub(node->center, vec3_mult(node->height / 2, node->axis)),
-		vec3_mult(-1, node->axis),
-		node->color
+		vec3_sub(cylinder->center, vec3_mult(cylinder->height / 2, cylinder->axis)),
+		vec3_mult(-1, cylinder->axis),
+		cylinder->color
 	};
 }
