@@ -42,6 +42,11 @@ t_display	create_minirt_display(const t_camera *const camera)
 	display.image = create_minirt_image(\
 		display.mlx_ptr, display.x_len, display.y_len \
 	);
+	if (!display.win_ptr || !display.image.img_ptr)
+	{
+		destroy_minirt_display(display);
+		exit(EXIT_FAILURE);
+	}
 	display.to_virtual_display = calculate_camera_to_virtual_display(\
 		display.x_len, camera \
 	);
@@ -81,8 +86,10 @@ static t_vec3	calculate_camera_to_virtual_display(
 
 void	destroy_minirt_display(const t_display display)
 {
-	mlx_destroy_image(display.mlx_ptr, display.image.img_ptr);
-	mlx_destroy_window(display.mlx_ptr, display.win_ptr);
+	if (display.image.img_ptr)
+		mlx_destroy_image(display.mlx_ptr, display.image.img_ptr);
+	if (display.win_ptr)
+		mlx_destroy_window(display.mlx_ptr, display.win_ptr);
 	mlx_destroy_display(display.mlx_ptr);
 	free(display.mlx_ptr);
 }
