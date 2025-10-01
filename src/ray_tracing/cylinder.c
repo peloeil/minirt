@@ -38,7 +38,6 @@ t_ray	find_cylinder_ray_intersection(
 	t_eq_roots	eq_roots;
 
 	ft_bzero(&ray, sizeof(ray));
-	ray.line = line;
 	ray = find_cylinder_caps_ray_intersection(ray, line, cylinder);
 	if (ray.hit_object == CYLINDER)
 		return (ray);
@@ -69,6 +68,7 @@ static t_ray	find_cylinder_caps_ray_intersection(
 		solve_plane_equation(line, cylinder.caps[BOTTOM])
 	};
 
+	ray.line = line;
 	ray.line_t_coef = select_nearest_line_t_coef(eq_roots);
 	if (!(EPSILON < ray.line_t_coef))
 		return (ray);
