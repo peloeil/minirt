@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include <minirt/vec3.h>
 # include <minirt/scene.h>
+# define SMOOTHNESS 10
 
 typedef struct s_quad_coefs
 {
@@ -24,11 +25,11 @@ typedef struct s_quad_coefs
 	double	c;
 }	t_quad_coefs;
 
-typedef struct s_quad_root
+typedef struct s_eq_roots
 {
-	double	root_large;
-	double	root_small;
-}	t_quad_root;
+	double	root1;
+	double	root2;
+}	t_eq_roots;
 
 typedef struct s_ray
 {
@@ -37,12 +38,12 @@ typedef struct s_ray
 	t_vec3	intersection;
 	t_vec3	hit_normal;
 	t_color	color;
-	bool	hit_exists;
+	t_tag	hit_object;
 }	t_ray;
 
 // core.c
-t_quad_root	solve_quadratic_equation(const t_quad_coefs coefs);
-double		select_nearest_line_t_coef(const t_quad_root quad_root);
+t_eq_roots	solve_quadratic_equation(const t_quad_coefs coefs);
+double		select_nearest_line_t_coef(const t_eq_roots eq_roots);
 t_vec3		calculate_ray_intersection(
 				const t_line line,
 				const double line_t_coef);
@@ -54,6 +55,9 @@ t_ray		find_nearest_ray_intersection(
 
 // plane.c
 t_ray		find_plane_ray_intersection(
+				const t_line line,
+				const t_plane plane);
+double		solve_plane_equation(
 				const t_line line,
 				const t_plane plane);
 

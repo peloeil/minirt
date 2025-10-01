@@ -24,11 +24,11 @@ typedef struct s_vec3
 }	t_vec3;
 
 // vec3_util1.c
-t_vec3	vec3_init(const double x, const double y, const double z);
 bool	vec3_eq(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2);
 t_vec3	vec3_mult(const double scalar, const t_vec3 v);
+double	vec3_length(const t_vec3 start, const t_vec3 end);
 
 // vec3_util2.c
 double	vec3_abs(const t_vec3 v);

@@ -21,6 +21,7 @@ typedef t_list	t_scene;
 
 typedef enum e_tag
 {
+	NONE,
 	LINE,
 	PLANE,
 	SPHERE,
@@ -29,6 +30,12 @@ typedef enum e_tag
 	AMBIENT_LIGHT,
 	LIGHT_SOURCE
 }	t_tag;
+
+typedef enum e_cylinder_cap_type
+{
+	TOP,
+	BOTTOM
+}	t_cylinder_cap_type;
 
 typedef struct s_color
 {
@@ -55,8 +62,8 @@ typedef struct s_plane
 typedef struct s_sphere
 {
 	t_tag	tag;
-	double	radius;
 	t_vec3	center;
+	double	radius;
 	t_color	color;
 }	t_sphere;
 
@@ -67,6 +74,7 @@ typedef struct s_cylinder
 	t_vec3	axis;
 	double	radius;
 	double	height;
+	t_plane	caps[2];
 	t_color	color;
 }	t_cylinder;
 
@@ -74,7 +82,9 @@ typedef struct s_camera
 {
 	t_tag	tag;
 	t_vec3	position;
-	t_vec3	direction;
+	t_vec3	forward;
+	t_vec3	up;
+	t_vec3	right;
 	double	radian;
 }	t_camera;
 
@@ -87,10 +97,15 @@ typedef struct s_ambient_light
 
 typedef struct s_light_source
 {
-	t_tag	tag;
-	t_vec3	position;
-	double	brightness;
-	t_color	color;
+	t_tag		tag;
+	t_sphere	sphere;
+	t_vec3		position;
+	double		brightness;
+	t_color		color;
 }	t_light_source;
+
+t_camera		*find_camera(const t_scene *const scene);
+t_light_source	*find_light_source(const t_scene *const scene);
+t_ambient_light	*find_ambient_light(const t_scene *const scene);
 
 #endif

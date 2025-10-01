@@ -15,34 +15,32 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
-t_quad_root	solve_quadratic_equation(t_quad_coefs coefs)
+t_eq_roots	solve_quadratic_equation(t_quad_coefs coefs)
 {
-	t_quad_root		quad_root;
+	t_eq_roots		eq_roots;
 	const double	discriminant = pow(coefs.b, 2) - 4 * coefs.a * coefs.c;
 
-	quad_root.root_large = 0;
-	quad_root.root_small = 0;
+	eq_roots.root1 = 0;
+	eq_roots.root2 = 0;
 	if (coefs.a < 0)
 	{
 		coefs.a = -coefs.a;
 		coefs.b = -coefs.b;
 		coefs.c = -coefs.c;
 	}
-	if (EPSILON < fabs(coefs.a) && - EPSILON < discriminant)
+	if (0 < fabs(coefs.a) && - EPSILON < discriminant)
 	{
-		quad_root.root_large = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
-		quad_root.root_small = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
+		eq_roots.root1 = (-coefs.b - sqrt(discriminant)) / (2 * coefs.a);
+		eq_roots.root2 = (-coefs.b + sqrt(discriminant)) / (2 * coefs.a);
 	}
-	return (quad_root);
+	return (eq_roots);
 }
 
-double	select_nearest_line_t_coef(const t_quad_root quad_root)
+double	select_nearest_line_t_coef(const t_eq_roots eq_roots)
 {
-	if (0.0 < quad_root.root_small)
-		return (quad_root.root_small);
-	if (0.0 < quad_root.root_large)
-		return (quad_root.root_large);
-	return (-1);
+	if (0.0 < eq_roots.root1 && eq_roots.root1 < eq_roots.root2)
+		return (eq_roots.root1);
+	return (eq_roots.root2);
 }
 
 t_vec3	calculate_ray_intersection(const t_line line, const double line_t_coef)

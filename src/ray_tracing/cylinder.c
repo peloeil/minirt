@@ -16,7 +16,11 @@
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
-static t_quad_root	solve_cylinder_quadratic_equation(
+static t_ray		find_cylinder_caps_ray_intersection(
+						t_ray ray,
+						const t_line line,
+						const t_cylinder cylinder);
+static t_eq_roots	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder);
 static bool			is_within_height_range(
@@ -30,15 +34,16 @@ t_ray	find_cylinder_ray_intersection(
 			const t_line line,
 			const t_cylinder cylinder)
 {
-	t_ray				ray;
-	const t_quad_root	quad_root = solve_cylinder_quadratic_equation(\
-		line, cylinder \
-	);
+	t_ray		ray;
+	t_eq_roots	eq_roots;
 
 	ft_bzero(&ray, sizeof(ray));
-	ray.line = line;
-	ray.line_t_coef = select_nearest_line_t_coef(quad_root);
-	if (0 < ray.line_t_coef)
+	ray = find_cylinder_caps_ray_intersection(ray, line, cylinder);
+	if (ray.hit_object == CYLINDER)
+		return (ray);
+	eq_roots = solve_cylinder_quadratic_equation(line, cylinder);
+	ray.line_t_coef = select_nearest_line_t_coef(eq_roots);
+	if (EPSILON < ray.line_t_coef)
 	{
 		ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
 		if (!is_within_height_range(cylinder, ray.intersection))
@@ -47,12 +52,40 @@ t_ray	find_cylinder_ray_intersection(
 			cylinder, ray.intersection \
 		);
 		ray.color = cylinder.color;
-		ray.hit_exists = true;
+		ray.hit_object = CYLINDER;
 	}
 	return (ray);
 }
 
-static t_quad_root	solve_cylinder_quadratic_equation(
+static t_ray	find_cylinder_caps_ray_intersection(
+					t_ray ray,
+					const t_line line,
+					const t_cylinder cylinder)
+{
+	t_cylinder_cap_type	type;
+	const t_eq_roots	eq_roots = (t_eq_roots){
+		solve_plane_equation(line, cylinder.caps[TOP]),
+		solve_plane_equation(line, cylinder.caps[BOTTOM])
+	};
+
+	ray.line = line;
+	ray.line_t_coef = select_nearest_line_t_coef(eq_roots);
+	if (!(EPSILON < ray.line_t_coef))
+		return (ray);
+	ray.intersection = calculate_ray_intersection(line, ray.line_t_coef);
+	type = TOP;
+	if (ray.line_t_coef == eq_roots.root2)
+		type = BOTTOM;
+	if (cylinder.radius
+		< vec3_length(ray.intersection, cylinder.caps[type].position))
+		return (ray);
+	ray.hit_normal = cylinder.caps[type].normal;
+	ray.color = cylinder.color;
+	ray.hit_object = CYLINDER;
+	return (ray);
+}
+
+static t_eq_roots	solve_cylinder_quadratic_equation(
 						const t_line line,
 						const t_cylinder cylinder)
 {

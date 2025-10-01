@@ -25,6 +25,9 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		vec3_util1.c \
 		vec3_util2.c \
 	) \
+	$(addprefix scene/, \
+		scene.c \
+	) \
 	$(addprefix ray_tracing/, \
 		ray_tracing.c \
 		core.c \
@@ -50,6 +53,14 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		parse_color.c \
 		free.c \
 	) \
+	$(addprefix mlx_api/, \
+		lifecycle.c \
+		event.c \
+		img_pixel.c \
+	) \
+	$(addprefix renderer/, \
+		renderer.c \
+	) \
 )
 SRC := $(SRC_TEST) $(SRC_DIR)/main.c
 OBJ_TEST := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_TEST))
@@ -61,6 +72,8 @@ INC := $(addprefix $(INC_DIR)/, \
 		scene.h \
 		parser.h \
 		ray_tracing.h \
+		mlx_api.h \
+		renderer.h \
 	) \
 )
 TEST := $(patsubst $(SRC_DIR)/%, $(TEST_DIR)/%, $(SRC_TEST))
@@ -199,9 +212,7 @@ sanitize: re
 
 test: $(LIB) $(OBJ_TEST)
 	@echo "------------ test ------------"
-	@$(RM) $(OUT_DIR)/result.log
 	@mkdir -p $(OUT_DIR)/exec
-	@$(RM) -rf $(OUT_DIR)/log
 	@mkdir -p $(OUT_DIR)/log
 	@for test in $(TEST); do \
 		if [ -f $$test ]; then \

@@ -24,7 +24,7 @@ void	assign_sphere_info(
 		node->center = parse_vec3(info);
 	if (i == 2)
 	{
-		node->radius = parse_double(info);
+		node->radius = parse_double(info) / 2;
 		if (node->radius < 0.0)
 			exit(EXIT_FAILURE);
 	}

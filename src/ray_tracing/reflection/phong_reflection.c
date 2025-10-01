@@ -52,7 +52,7 @@ t_color	calculate_phong_reflection(
 		ray, to_light, light_source \
 	);
 	const t_color	i_specular = calculate_specular_reflection(\
-		ray, to_light, light_source, 1 \
+		ray, to_light, light_source, SMOOTHNESS \
 	);
 
 	return ((t_color){
@@ -89,7 +89,7 @@ static t_color	calculate_diffuse_reflection(
 		0, vec3_dot_prod(ray.hit_normal, to_light.line.direction) \
 	);
 
-	if (to_light.hit_exists)
+	if (ray.hit_object == LIGHT_SOURCE || to_light.hit_object != LIGHT_SOURCE)
 		return ((t_color){0, 0, 0});
 	return ((t_color){
 		ray.color.red * intensity.red * n_dot_l,
@@ -118,7 +118,9 @@ static t_color	calculate_specular_reflection(
 	);
 	const double	powed_r_dot_v = pow(r_dot_v, smoothness);
 
-	if (to_light.hit_exists)
+	if (ray.hit_object == LIGHT_SOURCE)
+		return (ray.color);
+	if (to_light.hit_object != LIGHT_SOURCE)
 		return ((t_color){0, 0, 0});
 	return ((t_color){
 		ray.color.red * intensity.red * powed_r_dot_v,
