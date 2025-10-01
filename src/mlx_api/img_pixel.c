@@ -26,8 +26,8 @@ void	put_color_to_image_pixel(
 	const uint32_t	color = convert_color_object(pixel.color);
 	const uint8_t	*pixel_addr = (uint8_t *)(\
 		display->image.pixel_head \
-		+ (ptrdiff_t)col * (display->image.bits_per_pixel / 8) \
-		+ (ptrdiff_t)row * display->image.bytes_per_line \
+		+ (const ptrdiff_t)col * (display->image.bits_per_pixel / 8) \
+		+ (const ptrdiff_t)row * display->image.bytes_per_line \
 	);
 
 	*(uint32_t *)pixel_addr = color;
