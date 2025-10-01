@@ -55,13 +55,17 @@ static void	create_cylinder_caps_plane(t_cylinder *const cylinder)
 {
 	cylinder->caps[TOP] = (t_plane){
 		PLANE,
-		vec3_add(cylinder->center, vec3_mult(cylinder->height / 2, cylinder->axis)),
+		vec3_add(\
+			cylinder->center, vec3_mult(cylinder->height / 2, cylinder->axis) \
+		),
 		cylinder->axis,
 		cylinder->color
 	};
 	cylinder->caps[BOTTOM] = (t_plane){
 		PLANE,
-		vec3_sub(cylinder->center, vec3_mult(cylinder->height / 2, cylinder->axis)),
+		vec3_sub(\
+			cylinder->center, vec3_mult(cylinder->height / 2, cylinder->axis) \
+		),
 		vec3_mult(-1, cylinder->axis),
 		cylinder->color
 	};
