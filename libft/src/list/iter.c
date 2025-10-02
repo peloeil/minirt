@@ -21,10 +21,9 @@ void	ft_list_iter(t_list *head, void (*f)(void *))
 	cur = head;
 	while (1)
 	{
-		f(head->content);
+		f(cur->content);
 		cur = cur->next;
 		if (cur == head)
 			break ;
 	}
-	return ;
 }
