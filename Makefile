@@ -52,6 +52,7 @@ SRC_TEST := $(addprefix $(SRC_DIR)/, \
 		parse_vec3.c \
 		parse_color.c \
 		free.c \
+		exit.c \
 	) \
 	$(addprefix mlx_api/, \
 		lifecycle.c \

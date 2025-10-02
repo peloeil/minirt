@@ -6,7 +6,7 @@
 /*   By: rogiso <rogiso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 20:56:50 by rogiso            #+#    #+#             */
-/*   Updated: 2025/08/14 20:56:50 by rogiso           ###   ########.fr       */
+/*   Updated: 2025/09/15 22:12:40 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	assign_cylinder_info(
 t_color	parse_color(const char str[static 1]);
 t_vec3	parse_vec3(const char str[static 1]);
 double	parse_double(const char str[static 1]);
-t_scene	*parse_rt_line(
-			const t_scene *const scene,
-			const char line[static 1]);
+t_scene	*parse_rt_line(const char line[static 1]);
 t_scene	*parse_rt_file(const char file_path[static 1]);
+void	exit_with_message(const char msg[static 1])
+		__attribute__((noreturn));
 
 #endif

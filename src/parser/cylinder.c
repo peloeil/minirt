@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:32 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:41:34 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:49:53 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ void	assign_cylinder_info(
 	{
 		node->axis = parse_vec3(info);
 		if (fabs(vec3_abs(node->axis) - 1.0) > EPSILON)
-			exit(EXIT_FAILURE);
+			exit_with_message("cylinder: axis vector must be normalized");
 	}
 	if (i == 3)
 	{
 		node->radius = parse_double(info) / 2;
-		if (node->radius < 0.0)
-			exit(EXIT_FAILURE);
+		if (node->radius <= 0.0)
+			exit_with_message("cylinder: diameter must be positive");
 	}
 	if (i == 4)
 	{
 		node->height = parse_double(info);
-		if (node->height < 0.0)
-			exit(EXIT_FAILURE);
+		if (node->height <= 0.0)
+			exit_with_message("cylinder: height must be positive");
 	}
 	if (i == 5)
 	{

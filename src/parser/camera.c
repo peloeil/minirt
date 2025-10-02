@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:41:26 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:41:27 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:18:24 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	assign_camera_info(
 	{
 		node->forward = parse_vec3(info);
 		if (fabs(vec3_abs(node->forward) - 1.0) > EPSILON)
-			exit(EXIT_FAILURE);
+			exit_with_message("camera: direction vector must be normalized");
 		node->up = calculate_camera_up(node->forward);
 		node->right = vec3_cross_prod(node->forward, node->up);
 	}
@@ -38,7 +38,7 @@ void	assign_camera_info(
 	{
 		node->radian = parse_double(info) * M_PI / 180.0;
 		if (node->radian < 0.0 || M_PI < node->radian)
-			exit(EXIT_FAILURE);
+			exit_with_message("camera: FOV must be in [0, 180]");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: sota <sota@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:43:16 by sota              #+#    #+#             */
-/*   Updated: 2025/08/19 22:43:17 by sota             ###   ########.fr       */
+/*   Updated: 2025/09/15 22:54:56 by sota             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	assign_sphere_info(
 	if (i == 2)
 	{
 		node->radius = parse_double(info) / 2;
-		if (node->radius < 0.0)
-			exit(EXIT_FAILURE);
+		if (node->radius <= 0.0)
+			exit_with_message("sphere: diameter must be positive");
 	}
 	if (i == 3)
 		node->color = parse_color(info);
