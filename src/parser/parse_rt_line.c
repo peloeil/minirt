@@ -16,32 +16,6 @@
 #include <libft/ft_string.h>
 #include <libft/ft_list.h>
 
-static void	validate_unique_tag(
-				const t_scene *const scene,
-				const t_scene *const obj)
-{
-	const t_scene	*cur = scene;
-	t_tag			tag;
-	int				count;
-
-	tag = *(t_tag *)obj->content;
-	if (scene == NULL
-		|| (tag != CAMERA && tag != AMBIENT_LIGHT && tag != LIGHT_SOURCE))
-		return ;
-	count = 0;
-	while (true)
-	{
-		if (tag == *(t_tag *)cur->content)
-			count++;
-		cur = cur->next;
-		if (count == 2 || cur == scene)
-			break ;
-	}
-	if (count != 1)
-		exit_with_message("camera, ambient light and light source"
-			" must be unique in a scene");
-}
-
 static void	validate_object_filled(const t_scene *const obj, const size_t i)
 {
 	const t_tag	tag = *(t_tag *)obj->content;
@@ -61,9 +35,7 @@ static void	validate_object_filled(const t_scene *const obj, const size_t i)
 	exit_with_message("invalid number of fields in a line");
 }
 
-t_scene	*parse_rt_line(
-			const t_scene *const scene,
-			const char line[static 1])
+t_scene	*parse_rt_line(const char line[static 1])
 {
 	t_scene *const				obj = ft_list_new(NULL);
 	const char *const *const	info = (const char **)ft_split(line, ' ');
@@ -80,7 +52,6 @@ t_scene	*parse_rt_line(
 		i++;
 	}
 	free_2darray((void **)info);
-	validate_unique_tag(scene, obj);
 	validate_object_filled(obj, i);
 	return (obj);
 }

@@ -57,6 +57,34 @@ static char	**read_rt_lines(const char file_path[static 1])
 	return ((char **)lines);
 }
 
+static void	validate_unique_tag(
+				const t_scene *const scene,
+				const t_tag tag)
+{
+	const t_scene	*cur = scene;
+	int				count;
+
+	count = 0;
+	while (true)
+	{
+		if (tag == *(t_tag *)cur->content)
+			count++;
+		cur = cur->next;
+		if (count > 1 || cur == scene)
+			break ;
+	}
+	if (count != 1)
+		exit_with_message("camera, ambient light and light source"
+			" must be unique in a scene");
+}
+
+static void	validate_scene_tag(const t_scene *const scene)
+{
+	validate_unique_tag(scene, CAMERA);
+	validate_unique_tag(scene, AMBIENT_LIGHT);
+	validate_unique_tag(scene, LIGHT_SOURCE);
+}
+
 t_scene	*parse_rt_file(const char file_path[static 1])
 {
 	const char *const *const	lines = (const char **)read_rt_lines(file_path);
@@ -69,10 +97,11 @@ t_scene	*parse_rt_file(const char file_path[static 1])
 	{
 		ft_list_push_back(
 			(t_list **)&scene,
-			parse_rt_line(scene, lines[i])
+			parse_rt_line(lines[i])
 			);
 		i++;
 	}
 	free_2darray((void **)lines);
+	validate_scene_tag(scene);
 	return ((t_scene *)scene);
 }

@@ -49,9 +49,7 @@ void	assign_cylinder_info(
 t_color	parse_color(const char str[static 1]);
 t_vec3	parse_vec3(const char str[static 1]);
 double	parse_double(const char str[static 1]);
-t_scene	*parse_rt_line(
-			const t_scene *const scene,
-			const char line[static 1]);
+t_scene	*parse_rt_line(const char line[static 1]);
 t_scene	*parse_rt_file(const char file_path[static 1]);
 void	exit_with_message(const char msg[static 1])
 		__attribute__((noreturn));
