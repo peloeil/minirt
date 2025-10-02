@@ -79,6 +79,8 @@ static t_ray	find_cylinder_caps_ray_intersection(
 	if (cylinder.radius
 		< vec3_length(ray.intersection, cylinder.caps[type].position))
 		return (ray);
+	if (vec3_dot_prod(line.direction, cylinder.caps[!type].normal) < EPSILON)
+		return (ray);
 	ray.hit_normal = cylinder.caps[type].normal;
 	ray.color = cylinder.color;
 	ray.hit_object = CYLINDER;
