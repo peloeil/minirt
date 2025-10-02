@@ -44,7 +44,7 @@ t_color	calculate_phong_reflection(
 			vec3_norm(vec3_sub(light_source.position, ray.intersection)) \
 		}, \
 		scene, \
-		false
+		false \
 	);
 	const t_color	i_ambient = calculate_ambient_reflection(\
 		ray.color, amb_light \
