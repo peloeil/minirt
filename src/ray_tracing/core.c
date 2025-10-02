@@ -38,7 +38,7 @@ t_eq_roots	solve_quadratic_equation(t_quad_coefs coefs)
 
 double	select_nearest_line_t_coef(const t_eq_roots eq_roots)
 {
-	if (eq_roots.root1 < eq_roots.root2)
+	if (0.0 < eq_roots.root1 && eq_roots.root1 < eq_roots.root2)
 		return (eq_roots.root1);
 	return (eq_roots.root2);
 }
