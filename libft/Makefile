@@ -127,7 +127,7 @@ NUM_FILES := $(words $(SRC))
 
 # コンパイルの設定
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -fPIE
+CFLAGS := -Wall -Wextra -Werror
 ARFLAGS := -rcs
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
