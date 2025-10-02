@@ -28,10 +28,10 @@ static void	validate_rt_file_path(const char file_path[static 1])
 	const char *const	ext = file_path - 3 + len;
 
 	if (fd == -1)
-		exit(EXIT_FAILURE);
+		exit_with_message("rt file: failed to open rt file");
 	close(fd);
 	if (len < 3 || ft_strcmp(ext, ".rt") != 0)
-		exit(EXIT_FAILURE);
+		exit_with_message("rt file: file extension must be \".rt\"");
 }
 
 int	main(const int argc, const char *const argv[static argc])

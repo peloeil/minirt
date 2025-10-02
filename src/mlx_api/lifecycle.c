@@ -16,6 +16,7 @@
 #include <mlx.h>
 #include <minirt/vec3.h>
 #include <minirt/scene.h>
+#include <minirt/parser.h>
 #include <minirt/mlx_api.h>
 
 static t_image	create_minirt_image(
@@ -32,7 +33,7 @@ t_display	create_minirt_display(const t_camera *const camera)
 
 	display.mlx_ptr = mlx_init();
 	if (!display.mlx_ptr)
-		exit(EXIT_FAILURE);
+		exit_with_message("minilibx: failed to create minilibx");
 	mlx_get_screen_size(display.mlx_ptr, &display.x_len, &display.y_len);
 	display.x_len = (int)(display.x_len * WINDOW_SCALE);
 	display.y_len = (int)(display.y_len * WINDOW_SCALE);
@@ -45,7 +46,7 @@ t_display	create_minirt_display(const t_camera *const camera)
 	if (!display.win_ptr || !display.image.img_ptr)
 	{
 		destroy_minirt_display(display);
-		exit(EXIT_FAILURE);
+		exit_with_message("minilibx: failed to create window or image");
 	}
 	display.to_virtual_display = calculate_camera_to_virtual_display(\
 		display.x_len, camera \
