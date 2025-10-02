@@ -10,20 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdbool.h>
 #include <libft/ft_string.h>
 #include <minirt/scene.h>
 #include <minirt/ray_tracing.h>
 
 static t_ray	generate_ray_to_object(
 					const t_line line,
-					const void *const content);
+					const void *const content,
+					const bool ignore_light_source);
 static t_ray	select_nearest_ray_intersection(
 					const t_ray nearest_ray,
 					const t_ray new_ray);
 
 t_ray	find_nearest_ray_intersection(
 			const t_line line,
-			const t_scene *const scene)
+			const t_scene *const scene,
+			const bool ignore_light_source)
 {
 	t_ray			new_ray;
 	t_ray			nearest_ray;
@@ -32,7 +35,9 @@ t_ray	find_nearest_ray_intersection(
 	ft_bzero(&nearest_ray, sizeof(nearest_ray));
 	while (true)
 	{
-		new_ray = generate_ray_to_object(line, node->content);
+		new_ray = generate_ray_to_object(\
+			line, node->content, ignore_light_source \
+		);
 		nearest_ray = select_nearest_ray_intersection(nearest_ray, new_ray);
 		node = node->next;
 		if (scene == node)
@@ -43,7 +48,8 @@ t_ray	find_nearest_ray_intersection(
 
 static t_ray	generate_ray_to_object(
 					const t_line line,
-					const void *const content)
+					const void *const content,
+					const bool ignore_light_source)
 {
 	t_ray		ray;
 	const t_tag	tag = *(t_tag *)content;
@@ -61,7 +67,7 @@ static t_ray	generate_ray_to_object(
 		ray = find_cylinder_ray_intersection(\
 			line, *(const t_cylinder *)content \
 		);
-	else if (tag == LIGHT_SOURCE)
+	else if (tag == LIGHT_SOURCE && !ignore_light_source)
 	{
 		ray = find_sphere_ray_intersection(\
 			line, (*(const t_light_source *)content).sphere \

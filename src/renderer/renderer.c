@@ -65,7 +65,7 @@ static t_ray	create_ray(
 {
 	const t_line	ray_line = create_ray_line(pixel, camera, display);
 
-	return (find_nearest_ray_intersection(ray_line, scene));
+	return (find_nearest_ray_intersection(ray_line, scene, true));
 }
 
 static t_line	create_ray_line(
