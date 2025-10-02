@@ -26,7 +26,7 @@ void	assign_sphere_info(
 	{
 		node->radius = parse_double(info) / 2;
 		if (node->radius < 0.0)
-			exit_with_message("shpere: diameter must be positive");
+			exit_with_message("sphere: diameter must be positive");
 	}
 	if (i == 3)
 		node->color = parse_color(info);
