@@ -22,12 +22,10 @@ typedef struct s_string
 	size_t	capacity;
 }	t_string;
 
-// str->str が確保されていないことが保証されている場合にのみ使う
 int	ft_str_new(t_string *str);
 int	ft_str_with_capacity(t_string *str, size_t capacity);
 int	ft_str_from(t_string *str, const char *s);
 
-// str->str が確保されていることが保証されている場合にのみ使う
 int	ft_str_reserve(t_string *str, size_t additional);
 int	ft_str_push(t_string *str, char c);
 int	ft_str_push_str(t_string *str, const char *s);
