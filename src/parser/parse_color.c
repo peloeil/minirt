@@ -38,6 +38,22 @@ static uint8_t	parse_8bit_value(const char str[static 1])
 	return ((uint8_t)res);
 }
 
+static int	num_of_comma(const char str[static 1])
+{
+	size_t	i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == ',')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 t_color	parse_color(const char str[static 1])
 {
 	const char *const *const	rgb = (const char **)ft_split(str, ',');
@@ -46,6 +62,8 @@ t_color	parse_color(const char str[static 1])
 
 	if (rgb == NULL)
 		exit_with_message("malloc() failed");
+	if (num_of_comma(str) != 2)
+		exit_with_message("invalid number of fields in a color string");
 	i = 0;
 	if (rgb[i] != NULL)
 		color.red = parse_8bit_value(rgb[i++]);

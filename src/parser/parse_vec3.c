@@ -15,6 +15,22 @@
 #include <stdlib.h>
 #include <libft/ft_string.h>
 
+static int	num_of_comma(const char str[static 1])
+{
+	size_t	i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == ',')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 t_vec3	parse_vec3(const char str[static 1])
 {
 	const char *const *const	xyz = (const char **)ft_split(str, ',');
@@ -23,6 +39,8 @@ t_vec3	parse_vec3(const char str[static 1])
 
 	if (xyz == NULL)
 		exit_with_message("malloc() failed");
+	if (num_of_comma(str) != 2)
+		exit_with_message("invalid number of fields in a vector string");
 	i = 0;
 	if (xyz[i] != NULL)
 		res.x = parse_double(xyz[i++]);
