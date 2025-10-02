@@ -48,7 +48,7 @@ t_vec3	parse_vec3(const char str[static 1])
 		res.y = parse_double(xyz[i++]);
 	if (xyz[i] != NULL)
 		res.z = parse_double(xyz[i++]);
-	if (i != 3 || xyz[i] != NULL)
+	if (i != 3)
 		exit_with_message("invalid number of fields in a vector string");
 	free_2darray((void **)xyz);
 	return (res);
