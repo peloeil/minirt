@@ -8,9 +8,6 @@ CLEAR := $(ESC)[K
 
 # ディレクトリ設定
 OUT_DIR := $(CURDIR)
-ifneq ($(shell echo -n $$IN_DOCKER),)
-	OUT_DIR := /tmp/miniRT
-endif
 OBJ_DIR := $(OUT_DIR)/obj
 SRC_DIR := ./src
 INC_DIR := ./include
@@ -87,9 +84,8 @@ LIB := $(LIBFT) $(MLX)
 
 # コンパイル方法
 .DEFAULT_GOAL := all
-CC := gcc
-# CC := cc
-CFLAGS := -Wall -Wextra -Werror -MMD -MP -Og -ggdb3
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -MMD -MP
 MLXFLAGS := -lX11 -lXext -lm
 INCFLAGS := $(addprefix -I, \
 	$(INC_DIR) \
@@ -147,114 +143,3 @@ fclean: | $(MLX_DIR)
 	@printf "%-15s: remove $(MLX_DIR)\n" $(shell basename $(NAME))
 
 re: fclean all
-
-# docker 関連ルール
-.PHONY: docker-check docker-build docker-test docker-dev docker-run
-docker-check:
-	@docker image build \
-		--build-arg HOST_CWD=$(CURDIR) \
-		--output=. \
-		--progress=plain \
-		--tag minirt-check \
-		--target check .
-
-docker-build:
-	@docker image build --tag minirt-build --target build .
-
-docker-test:
-	@docker image build --tag minirt-test --target test .
-
-docker-dev:
-	@xhost +local:docker
-	@docker image build --tag minirt-dev --target dev .
-	@docker container run \
-		--rm \
-		--interactive \
-		--tty \
-		--mount type=bind,source=.,target=/minirt-src \
-		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
-		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
-		--mount type=bind,source=$$HOME/.gitconfig,target=$$HOME/.gitconfig \
-		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
-		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
-		--env DISPLAY=$$DISPLAY \
-		--env HOST_CWD=$$PWD \
-		--user $(shell id -u):$(shell id -g) \
-		minirt-dev
-
-docker-run:
-	@xhost +local:docker
-	@docker image build --tag minirt --target final .
-	@docker container run \
-		--rm \
-		--interactive \
-		--tty \
-		--mount type=bind,source=/etc/group,target=/etc/group,readonly \
-		--mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly \
-		--mount type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix \
-		--mount type=bind,source=$$HOME/.Xauthority,target=$$HOME/.Xauthority,readonly \
-		--env DISPLAY=$$DISPLAY \
-		--user $(shell id -u):$(shell id -g) \
-		minirt
-
-# デバッグ関連ルール
-.PHONY: analyze fortify sanitize
-analyze: CFLAGS += -fanalyzer
-analyze: re
-
-fortify: CFLAGS += -O2 -D_FORTIFY_SOURCE=2
-fortify: re
-
-sanitize: CFLAGS += -fsanitize=address,leak,undefined
-sanitize: re
-
-# その他のルール
-.PHONY: test format check norm lint
-
-test: $(LIB) $(OBJ_TEST)
-	@echo "------------ test ------------"
-	@mkdir -p $(OUT_DIR)/exec
-	@mkdir -p $(OUT_DIR)/log
-	@for test in $(TEST); do \
-		if [ -f $$test ]; then \
-			test_name=$$(basename $$test .c); \
-			exec_file=$(OUT_DIR)/exec/$${test_name}.exec; \
-			$(CC) $(CFLAGS) $(INCFLAGS) $$test $(OBJ_TEST) $(LIB) $(MLXFLAGS) -o $$exec_file; \
-			printf "%-30s: " "$$test"; \
-			case "$$test" in \
-				./test/parser/parser.c ) \
-					exec_file="./test/parser/parser.sh $$exec_file $(OUT_DIR)/log"; \
-			esac; \
-			if $$exec_file > $(OUT_DIR)/log/$${test_name}.log 2>&1; then \
-				printf "$(BRIGHT_GREEN)SUCCESS$(END)\n"; \
-			else \
-				printf "$(BRIGHT_RED)FAILED$(END)\n"; \
-			fi; \
-		fi; \
-	done;
-	@$(RM) -rf $(OUT_DIR)/exec
-
-format: $(SRC)
-	@c_formatter_42 $(SRC)
-
-check: norm lint
-
-norm:
-	@-$(MAKE) --directory=$(LIBFT_DIR) --no-print-directory norm
-	@-norminette $(SRC) $(INC)
-
-COMPILE_COMMANDS := $(OUT_DIR)/compile_commands.json
-lint:
-	@if [ -f /.dockerenv ] || ! [ -n "$$IN_DOCKER" ]; then \
-		$(MAKE) $(COMPILE_COMMANDS); \
-	fi
-	@if [ -f /.dockerenv ] || [ -n "$$IN_DOCKER" ]; then \
-		sed -i 's@$(HOST_CWD)@/minirt-src@g' $(COMPILE_COMMANDS); \
-	fi
-	@-clang-tidy -p $(OUT_DIR) $(SRC)
-	@sed -i 's@/minirt-src@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
-	@sed -i 's@/tmp/miniRT@$(HOST_CWD)@g' $(COMPILE_COMMANDS)
-
-$(COMPILE_COMMANDS): fclean $(SRC) $(INC)
-	@bear --output $(COMPILE_COMMANDS) -- $(MAKE) --no-print-directory all
-	@compdb -p $(OUT_DIR) list | sponge $(COMPILE_COMMANDS)
